@@ -1,0 +1,26 @@
+{
+  "name": "automart",
+  "version": "1.0.0",
+  "description": "Auto Mart is an online marketplace for automobiles of diverse makes, model or body type. ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Moise1/AutoMart.git"
+  },
+  "keywords": [
+    "automobile",
+    "ecommerce",
+    "nodejs",
+    "express",
+    "postgresql"
+  ],
+  "author": "Moise",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Moise1/AutoMart/issues"
+  },
+  "homepage": "https://github.com/Moise1/AutoMart#readme"
+}
