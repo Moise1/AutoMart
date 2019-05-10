@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/signin.css">
+    <link rel="stylesheet" href="../css/admin_login.css">
     <link rel="stylesheet" href="../assets/css/all.css">
     <link rel="shortcut icon" type="image/x-icon" href="../images//coins.png">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -21,26 +21,16 @@
                         </span>
                         <h2>Auto<span id="auto-mart">Mart</span></h2>
                     </a>
-        
-                    <div class="register-buttons">
-                        <a href="/"><button class="signin-btn">Sign Up</button></a>
-                        <a href="./admin_login.html" id="adminLogin">
-                            <i class="admin-login fas fa-user-tie">
-                                <p>Admin</p>
-                            </i>
-                        </a>
-                    </div>
                 </header>
         
                 <main class="content-container">
         
                     <form action="#" class="form-content">
-                        <h3>Sign In</h3>
+                        <h3>Admin Sign In</h3>
                      
-                       <input type="email" name="email" id="email" placeholder="Email" required>
+                       <input type="name" name="username" id="username" placeholder="Username" required>
                        <input type="password" name="password" id="password" placeholder="Password" required>
                        <button type="button" class="signin-btn" onclick="formValidator()">Sign In</button>
-                       <p id="reset"><a href="./reset.html">I forgot my password</a></p>
                        <p id="wrongInput"></p>
                     </form>
                 </main>
@@ -49,6 +39,6 @@
                     <p>&copy; AutoMart 2019</p>
                 </footer>
             </div>
-            <script type="text/javascript" src="../js/signin.js"></script>
+            <script type="text/javascript" src="../js/admin.js"></script>
 </body>
 </html>

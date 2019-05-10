@@ -115,13 +115,6 @@ body {
 
     }
 
-    .customer-care {
-        width: 40%;
-        position: absolute;
-        margin: 4% 3%;
-    }
-
-
     @keyframes BackgroundGradient {
         0% {
             background-position: 0% 50%;
@@ -136,15 +129,27 @@ body {
         }
     }
 
-    .customer-care p {
-        text-align: center;
+    .customer-care {
         padding: 30px;
+        width: 40%;
+        position: absolute;
+        margin: 6% 3%;
+        display: flex;
         background: linear-gradient(132deg, blue, #fff, blue);
         background-size: 500% 500%;
         animation: BackgroundGradient 20s ease infinite;
         border-radius: 6px;
     }
 
+    
+
+    .customer-care #typer{
+        margin: auto;
+    }
+
+    @keyframes blink{
+        to { opacity: .0; }
+      }
 
     .content-container form {
         width: 400px;

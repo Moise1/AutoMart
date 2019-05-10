@@ -1,5 +1,5 @@
 
-function formValidator() {
+formValidator = () => {
     const result = document.getElementById("wrongInput");
     const pwd = document.getElementById("password").value;
     const email = document.getElementById('email').value;
