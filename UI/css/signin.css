@@ -1,0 +1,741 @@
+body{
+    background: rgba(220, 220, 220, 0.5);
+    padding: 0; 
+    margin: 0; 
+    font-family: 'Ubuntu', sans-serif; 
+}
+
+/* Desktop screen */
+
+    @media only screen and (min-width: 1224px) and (orientation: landscape) {
+
+        a{
+            text-decoration: none;
+            color: #000;
+        }
+    
+        .main-container {
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            height: auto;
+            overflow: hidden;
+            
+        }
+    
+        .header{
+            display: flex;
+            background: #fff;
+            grid-column: span 13;
+            grid-row: 1;
+            height: 60px;
+            position: sticky;
+            border-bottom: 1px solid #DBE0E4;
+            box-shadow: 0 14px 18px rgba(0,0,0,0.10);
+        }
+    
+    
+        .header .logo {
+            display: flex;
+            width: 11%;
+            height: inherit;
+    
+        } 
+        .header i{
+            margin: 20px;
+            font-size: 25px;    
+    
+        } 
+    
+        .register-buttons{
+            margin-left: 70%;
+            justify-content: space-between;
+            width: 20%;
+            font-family: 'Ubuntu', sans-serif;
+    
+        }
+    
+        .register-buttons a button{
+            
+            cursor: pointer;
+            color: #fff;
+            margin: 19px auto;
+            padding: 6px;
+            width: 100px;
+            border: none;
+            background: #013243;
+            font-size: 15px;
+            border-radius: 5px;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.20), 0 10px 10px rgba(0,0,0,0.20);
+        }
+    
+        #adminLogin{
+            position: absolute;
+            margin-top: -15px;
+            margin-left: 10px;
+            height: 78px;
+    
+        }
+    
+        #adminLogin:hover{
+            color: #013243;
+        }
+    
+        #adminLogin i{
+            margin-top: 30px;
+            display: flex;
+        }
+    
+    
+        #adminLogin p{
+            margin-top: 0;
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 15px;
+            margin-top: 11px;
+            padding: 2px;
+    
+        }
+    
+        #auto-mart{
+            color: #013243;
+            margin: 0;
+        }
+        .content-container{
+            grid-column:  1/13;
+            grid-row: 2/6;
+            
+            
+        }
+
+        .content-container form {
+            width: 400px;
+            margin: 8% 35% auto;
+            height: 360px;
+            background: #013243;
+            opacity: 0.8;
+            padding: 15px;
+            border-radius: 6px; 
+        }
+
+        .content-container form > input{
+            margin: auto;
+            display: block;
+            padding: 7px;
+            width: 40%;
+            margin: 35px auto;
+            border-radius: 20px;
+            outline: none;
+            border: 2px solid #fff;
+            background: none;
+            text-align: center;
+            color: #fff;
+    
+        }
+    
+        .content-container form > input:focus{
+            width: 50%;
+           
+        }
+
+        #reset{
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        #reset a{
+            color: #fff;
+        }
+
+        
+    
+        form h3{
+            text-align: center;
+            color: #fff;
+        }
+    
+    
+        form button{
+            cursor: pointer;
+            margin: 10px 90px auto;
+            width: 55%;
+            padding: 7px;
+            border-radius: 20px;
+            outline: none;
+            border: 2px solid #fff;
+            background: #000;
+            text-align: center;
+            color: #fff;
+            font-weight: bold;
+    
+        }
+
+        #wrongInput {
+            color: 	#FF0000;
+            text-align: center;
+        }
+        .footer{
+            grid-column: span 13;
+            grid-row: 6;
+        }
+    
+        .footer p{
+            margin-top: 100px;
+            text-align: center;
+            font-size: 23px;
+            font-weight: bold;
+            color: #013243;
+            
+        }
+}
+
+/* Ipad screen */
+
+@media only screen and (max-width: 1024px) and (orientation: landscape){
+
+
+    a{
+        text-decoration: none;
+        color: #000;
+    }
+
+    .main-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        height: auto;
+        overflow: hidden;
+        
+    }
+
+    .header{
+        display: flex;
+        background: #fff;
+        grid-column: span 13;
+        grid-row: 1;
+        height: 60px;
+        position: sticky;
+        border-bottom: 1px solid #DBE0E4;
+        box-shadow: 0 14px 18px rgba(0,0,0,0.10);
+    }
+
+
+    .header .logo {
+        display: flex;
+        width: 11%;
+        height: inherit;
+
+    } 
+    .header i{
+        margin: 20px;
+        font-size: 25px;    
+
+    } 
+
+    .register-buttons{
+        margin-left: 65%;
+        justify-content: space-between;
+        width: 20%;
+        font-family: 'Ubuntu', sans-serif;
+
+    }
+
+    .register-buttons a button{
+        
+        cursor: pointer;
+        color: #fff;
+        margin: 19px auto;
+        padding: 6px;
+        width: 100px;
+        border: none;
+        background: #013243;
+        font-size: 15px;
+        border-radius: 5px;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.20), 0 10px 10px rgba(0,0,0,0.20);
+    }
+
+    #adminLogin{
+        position: absolute;
+        margin-top: -15px;
+        margin-left: 10px;
+        height: 78px;
+
+    }
+
+    #adminLogin:hover{
+        color: #013243;
+    }
+
+    #adminLogin i{
+        margin-top: 30px;
+        display: flex;
+    }
+
+
+    #adminLogin p{
+        margin-top: 0;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 15px;
+        margin-top: 11px;
+        padding: 2px;
+
+    }
+
+    #auto-mart{
+        color: #013243;
+        margin: 0;
+    }
+    .content-container{
+        grid-column:  1/13;
+        grid-row: 2/6;
+        
+        
+    }
+
+    .content-container form {
+        width: 400px;
+        margin: 8% 30% auto;
+        height: 360px;
+        background: #013243;
+        opacity: 0.8;
+        padding: 15px;
+        border-radius: 6px; 
+    }
+
+    .content-container form > input{
+        margin: auto;
+        display: block;
+        padding: 7px;
+        width: 40%;
+        margin: 35px auto;
+        border-radius: 20px;
+        outline: none;
+        border: 2px solid #fff;
+        background: none;
+        text-align: center;
+        color: #fff;
+
+    }
+
+    .content-container form > input:focus{
+        width: 50%;
+       
+    }
+
+    #reset{
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    #reset a{
+        color: #fff;
+    }
+
+    
+
+    form h3{
+        text-align: center;
+        color: #fff;
+    }
+
+
+    form button{
+        cursor: pointer;
+        margin: 10px 90px auto;
+        width: 55%;
+        padding: 7px;
+        border-radius: 20px;
+        outline: none;
+        border: 2px solid #fff;
+        background: #000;
+        text-align: center;
+        color: #fff;
+        font-weight: bold;
+
+    }
+
+    #wrongInput {
+        color: 	#FF0000;
+        text-align: center;
+    }
+    .footer{
+        grid-column: span 13;
+        grid-row: 6;
+    }
+
+    .footer p{
+        margin-top: 100px;
+        text-align: center;
+        font-size: 23px;
+        font-weight: bold;
+        color: #013243;  
+    }
+
+    
+}
+
+
+/* Mobile Screen  (IphoneX ) */
+
+@media only screen and (max-width: 700px) and (orientation: portrait){
+
+    a{
+        text-decoration: none;
+        color: #000;
+    }
+
+    .main-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        height: auto;
+        overflow: hidden;
+        
+    }
+
+    .header{
+        display: flex;
+        background: #fff;
+        grid-column: span 13;
+        grid-row: 1;
+        height: 60px;
+        position: sticky;
+        border-bottom: 1px solid #DBE0E4;
+        box-shadow: 0 14px 18px rgba(0,0,0,0.10);
+    }
+
+
+    .header .logo {
+        display: flex;
+        width: 11%;
+        height: inherit;
+
+    } 
+    .header i{
+        margin: 20px;
+        font-size: 25px;    
+
+    } 
+
+    .register-buttons{
+        margin-left: 50%;
+        justify-content: space-between;
+        width: 20%;
+        font-family: 'Ubuntu', sans-serif;
+
+    }
+
+    .register-buttons a button{
+        
+        cursor: pointer;
+        color: #fff;
+        margin: 19px auto;
+        padding: 6px;
+        width: 100px;
+        border: none;
+        background: #013243;
+        font-size: 15px;
+        border-radius: 5px;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.20), 0 10px 10px rgba(0,0,0,0.20);
+    }
+
+    #adminLogin{
+        position: absolute;
+        margin-top: -15px;
+        margin-left: 10px;
+        height: 78px;
+
+    }
+
+    #adminLogin:hover{
+        color: #013243;
+    }
+
+    #adminLogin i{
+        margin-top: 30px;
+        display: flex;
+    }
+
+
+    #adminLogin p{
+        margin-top: 0;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 15px;
+        margin-top: 11px;
+        padding: 2px;
+
+    }
+
+    #auto-mart{
+        color: #013243;
+        margin: 0;
+    }
+    .content-container{
+        grid-column:  1/13;
+        grid-row: 2/6;
+        
+        
+    }
+
+    .content-container form {
+        width: 400px;
+        margin: 8% 15% auto;
+        height: 360px;
+        background: #013243;
+        opacity: 0.8;
+        padding: 15px;
+        border-radius: 6px; 
+    }
+
+    .content-container form > input{
+        margin: auto;
+        display: block;
+        padding: 7px;
+        width: 40%;
+        margin: 35px auto;
+        border-radius: 20px;
+        outline: none;
+        border: 2px solid #fff;
+        background: none;
+        text-align: center;
+        color: #fff;
+
+    }
+
+    .content-container form > input:focus{
+        width: 50%;
+       
+    }
+
+    #reset{
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    #reset a{
+        color: #fff;
+    }
+
+    
+
+    form h3{
+        text-align: center;
+        color: #fff;
+    }
+
+
+    form button{
+        cursor: pointer;
+        margin: 10px 90px auto;
+        width: 55%;
+        padding: 7px;
+        border-radius: 20px;
+        outline: none;
+        border: 2px solid #fff;
+        background: #000;
+        text-align: center;
+        color: #fff;
+        font-weight: bold;
+
+    }
+
+    #wrongInput {
+        color: 	#FF0000;
+        text-align: center;
+    }
+    .footer{
+        grid-column: span 13;
+        grid-row: 6;
+    }
+
+    .footer p{
+        margin-top: 100px;
+        text-align: center;
+        font-size: 23px;
+        font-weight: bold;
+        color: #013243;    
+    }
+}
+
+
+/* Mobile screen (Pixel 2) */
+
+@media only screen and (min-width: 300px) and (orientation: portrait){
+
+    a{
+        text-decoration: none;
+        color: #000;
+    }
+
+    .main-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        height: auto;
+        overflow: hidden;
+        
+    }
+
+    .header{
+        display: flex;
+        background: #fff;
+        grid-column: span 13;
+        grid-row: 1;
+        height: 60px;
+        position: sticky;
+        border-bottom: 1px solid #DBE0E4;
+        box-shadow: 0 14px 18px rgba(0,0,0,0.10);
+    }
+
+
+    .header .logo {
+        display: flex;
+        width: 10%;
+        height: inherit;
+
+    } 
+    .header i{
+        margin: 10px;
+        font-size: 25px;    
+
+    } 
+
+    .register-buttons{
+        margin-left: 40%;
+        justify-content: space-between;
+        width: 15%;
+        font-family: 'Ubuntu', sans-serif;
+
+    }
+
+    .register-buttons a button{
+        
+        cursor: pointer;
+        color: #fff;
+        margin: 19px auto;
+        padding: 6px;
+        width: 80px;
+        border: none;
+        background: #013243;
+        font-size: 15px;
+        border-radius: 5px;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.20), 0 10px 10px rgba(0,0,0,0.20);
+    }
+
+    #adminLogin{
+        position: absolute;
+        margin-top: -80px;
+        margin-left: 80px;
+        height: 60px;
+
+    }
+
+    #adminLogin:hover{
+        color: #013243;
+    }
+
+    #adminLogin i{
+        margin-top: 30px;
+        display: flex;
+    }
+
+
+    #adminLogin p{
+        margin-top: 0;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 15px;
+        margin-top: 11px;
+        padding: 2px;
+
+    }
+
+    #auto-mart{
+        color: #013243;
+        margin: 0;
+    }
+    .content-container{
+        grid-column:  1/13;
+        grid-row: 2/6;
+        
+        
+    }
+
+    .content-container form {
+        width: 300px;
+        margin: 8% 5%;
+        height: 360px;
+        background: #013243;
+        opacity: 0.8;
+        padding: 15px;
+        border-radius: 6px; 
+    }
+
+    .content-container form > input{
+        margin: auto;
+        display: block;
+        padding: 7px;
+        width: 40%;
+        margin: 35px auto;
+        border-radius: 20px;
+        outline: none;
+        border: 2px solid #fff;
+        background: none;
+        text-align: center;
+        color: #fff;
+
+    }
+
+    .content-container form > input:focus{
+        width: 50%;
+       
+    }
+
+    #reset{
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    #reset a{
+        color: #fff;
+    }
+
+    
+
+    form h3{
+        text-align: center;
+        color: #fff;
+    }
+
+
+    form button{
+        cursor: pointer;
+        margin: 10px 70px auto;
+        width: 55%;
+        padding: 7px;
+        border-radius: 20px;
+        outline: none;
+        border: 2px solid #fff;
+        background: #000;
+        text-align: center;
+        color: #fff;
+        font-weight: bold;
+
+    }
+
+    #wrongInput {
+        color: 	#FF0000;
+        text-align: center;
+    }
+    .footer{
+        grid-column: span 13;
+        grid-row: 6;
+    }
+
+    .footer p{
+        margin-top: 100px;
+        text-align: center;
+        font-size: 23px;
+        font-weight: bold;
+        color: #013243;    
+    }
+
+}
