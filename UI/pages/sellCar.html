@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../assets/css/all.css">
+    <link rel="stylesheet" href="../css/sellCar.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../images/coins.png">
+    <title>AutoMart | Car Sale</title>
+</head>
+
+<body>
+    <div class="main-container">
+        <header class="header">
+            <a class="logo" href="/">
+
+                <span id="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </span>
+                <h3>Auto<span id="auto-mart">Mart</span></h3>
+            </a>
+        </header>
+
+
+        <main class="content-container">
+            <div class="sell-ad">
+                <button type="button" onclick="document.getElementById('form').style.display='block'">Post New Ad
+                </button>
+            </div>
+
+            <div class="no-ad">
+                <p>Advertise your car for sale .</p>
+            </div>
+
+            <div class="posted-cars">
+                    <ul class="cars-list">
+                            <li class="car-item"><img
+                                src="https://res.cloudinary.com/mo1/image/upload/v1557615003/man-truck_r9mhwi.jpg" alt="">
+                            <ul class="details-list" contenteditable="true">
+                                <li class="detail-item">Manufacturer: MAN SE Corporation</li>
+                                <li class="detail-item">Body Type: Truck</li>
+                                <li class="detail-item">Model: MAN TGX 18.680, V8</li>
+                                <li class="detail-item">State: New</li>
+                                <li class="detail-item">Price: $60, 000</li>
+    
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+        </main>
+
+
+        <div class="form-container" id="form">
+            <span class="close" title="Close Form" id="closebtn">&times;</span>
+
+            <form action="" class="form-content">
+
+                <label for="manufacturer">Manufacturer *
+                    <input type="text" name="manufacturer" id="manufacturer" required>
+                </label>
+
+                <label for="body-type"> Body Type *
+                    <input type="text" name="body-type" id="bodyType" required>
+                </label>
+
+                <label for="model">Model *
+                    <input type="text" name="model" id="model" required>
+                </label>
+
+                <label for="model">Price *
+                    <input type="text" name="price" id="price" required>
+                </label>
+
+                <label for="state">State *
+                    <select name="status" id="status">
+                        <option value="">Select</option>
+                        <option value="new">New</option>
+                        <option value="used">Used</option>
+
+                    </select>
+                </label>
+
+                <label for="status">Status *
+                    <input type="text" name="status" id="status" required>
+                </label>
+
+                <label for="picture">Upload Picture *
+                        <input type="file" name="picture" id="picture" accept="images/*" class="inputfile" required>
+                </label>
+
+                <div class="clearfix">
+
+                    <button type="button" class="cancelbtn">Cancel</button>
+                    <button type="button" class="createbtn">Post</button>
+                </div>
+            </form>
+
+        </div>
+
+        <footer class="footer">
+            <p>&copy; AutoMart 2019</p>
+        </footer>
+    </div>
+
+    <script type="text/javascript" src="../js/sellCar.js"></script>
+</body>
+
+</html>

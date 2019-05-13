@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Ubuntu', sans-serif;
-    background: url('../images/car1.jpg') no-repeat center center fixed;
+    background: url('https://res.cloudinary.com/mo1/image/upload/v1557573222/car1_xvcw5i.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -166,6 +166,8 @@ body {
         display: block;
         padding: 7px;
         width: 40%;
+        -webkit-transition: width .35s ease-in-out;
+        transition: width .35s ease-in-out;
         margin: 35px auto;
         border-radius: 20px;
         outline: none;
@@ -368,6 +370,8 @@ body {
         display: block;
         padding: 7px;
         width: 40%;
+        -webkit-transition: width .35s ease-in-out;
+        transition: width .35s ease-in-out;
         margin: 35px auto;
         border-radius: 20px;
         outline: none;
@@ -575,6 +579,8 @@ body {
         display: block;
         padding: 7px;
         width: 40%;
+        -webkit-transition: width .35s ease-in-out;
+        transition: width .35s ease-in-out;
         margin: 35px auto;
         border-radius: 20px;
         outline: none;
@@ -627,7 +633,7 @@ body {
 
 }
 
-
+/* Small mobile phone */
 
 @media only screen and (min-width: 300px) and (orientation: portrait){
 
@@ -676,7 +682,7 @@ body {
     .register-buttons {
         display: flex;
         margin-top: 10px;
-        margin-left: 45%;
+        margin-left: 42%;
         justify-content: space-between;
         width: 20%;
         font-family: 'Ubuntu', sans-serif;
@@ -765,7 +771,7 @@ body {
 
     .content-container form {
         width: 300px;
-        margin: 60% 10%;
+        margin: 60% 5%;
         height: 470px;
         background: #013243;
         opacity: 0.8;
@@ -778,6 +784,8 @@ body {
         display: block;
         padding: 7px;
         width: 40%;
+        -webkit-transition: width .35s ease-in-out;
+        transition: width .35s ease-in-out;
         margin: 35px auto;
         border-radius: 20px;
         outline: none;
