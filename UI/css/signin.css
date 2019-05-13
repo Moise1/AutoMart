@@ -122,6 +122,8 @@ body{
             display: block;
             padding: 7px;
             width: 40%;
+            -webkit-transition: width .35s ease-in-out;
+            transition: width .35s ease-in-out;
             margin: 35px auto;
             border-radius: 20px;
             outline: none;
@@ -306,6 +308,8 @@ body{
         display: block;
         padding: 7px;
         width: 40%;
+        -webkit-transition: width .35s ease-in-out;
+        transition: width .35s ease-in-out;
         margin: 35px auto;
         border-radius: 20px;
         outline: none;
@@ -491,6 +495,8 @@ body{
         display: block;
         padding: 7px;
         width: 40%;
+        -webkit-transition: width .35s ease-in-out;
+        transition: width .35s ease-in-out;
         margin: 35px auto;
         border-radius: 20px;
         outline: none;
@@ -674,6 +680,8 @@ body{
         display: block;
         padding: 7px;
         width: 40%;
+        -webkit-transition: width .35s ease-in-out;
+        transition: width .35s ease-in-out;
         margin: 35px auto;
         border-radius: 20px;
         outline: none;

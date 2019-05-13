@@ -1,0 +1,841 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Ubuntu', sans-serif;
+    background: rgba(220, 220, 220, 0.5);
+}
+
+/* Desktop Screen */
+
+@media only screen and (min-width: 1224px) and (orientation: landscape) {
+
+    *,
+    *:before,
+    *:after {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    * {
+        outline: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .main-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        height: auto;
+        overflow: hidden;
+    }
+
+    .header {
+        display: flex;
+        background: #fff;
+        grid-column: span 13;
+        grid-row: 1;
+        height: 60px;
+        position: sticky;
+        border-bottom: 1px solid #DBE0E4;
+        box-shadow: 0 14px 18px rgba(0, 0, 0, 0.10);
+    }
+
+
+    .header .logo {
+        display: flex;
+        width: 11%;
+        height: inherit;
+
+    }
+
+    .header i {
+        margin: 20px;
+        font-size: 25px;
+
+    }
+
+    .content-container {
+        grid-column: 2/12;
+    }
+
+    .content-container button {
+        margin: 5% 40% auto;
+        width: 190px;
+        padding: 30px;
+        border: none;
+        cursor: pointer;
+        background: #013243;
+        color: #fff;
+        border-radius: 6px;
+    }
+
+
+    .content-container .no-ad p {
+        margin-left: 40%;
+
+    }
+
+    .cars-list, .details-list {
+        list-style-type: none;
+    }
+
+    .cars-list {
+        margin-top: 50px;
+    }
+
+    .cars-list img{
+        width: 250px; 
+        border-radius: 6px;
+    }
+
+    .details-list li {
+        margin-left: -40px;
+    }
+
+    /* Ad form */
+
+    input,
+    select {
+        width: 100%;
+        padding: 15px;
+        margin: 2px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+        border-radius: 5px;
+    }
+
+   
+
+    input,
+    select:focus {
+        background-color: #ddd;
+      
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+    .cancelbtn {
+        padding: 14px 20px;
+        background-color: #f44336;
+    }
+
+    .cancelbtn,
+    .createbtn {
+        float: left;
+        width: 40%;
+        margin: 12.5px;
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+
+    .form-container {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding-top: 50px;
+        overflow: hidden;
+
+    }
+
+
+    /* Form Content/Box */
+
+    .form-content {
+        max-width: 500px;
+        background-color: #fefefe;
+        margin: -30px auto 15% auto;
+        border: 1px solid #888;
+        border-radius: 10px;
+        padding: 15px;
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+    .form-content label {
+        padding: 20px;
+    }
+
+    .close {
+        position: absolute;
+        right: 35px;
+        top: 15px;
+        font-size: 40px;
+        font-weight: bold;
+        color: #f1f1f1;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #f44336;
+        cursor: pointer;
+    }
+
+
+    .clearfix {
+        margin-top: 110px;
+        display: flex;
+        margin-left: -250px;
+    }
+
+    .footer {
+        grid-column: span 13;
+        grid-row: 6;
+    }
+
+    .footer p {
+        margin-top: 15%;
+        text-align: center;
+        font-size: 23px;
+        font-weight: bold;
+        color: #013243;
+    }
+
+
+}
+
+
+/* Ipad screen size */
+
+@media only screen and (max-width: 1024px) and (orientation: landscape) {
+
+    * {
+        outline: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .main-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        height: auto;
+        overflow: hidden;
+    }
+
+    .header {
+        display: flex;
+        background: #fff;
+        grid-column: span 13;
+        grid-row: 1;
+        height: 60px;
+        position: sticky;
+        border-bottom: 1px solid #DBE0E4;
+        box-shadow: 0 14px 18px rgba(0, 0, 0, 0.10);
+    }
+
+
+    .header .logo {
+        display: flex;
+        width: 11%;
+        height: inherit;
+
+    }
+
+    .header i {
+        margin: 20px;
+        font-size: 25px;
+
+    }
+
+    .content-container {
+        grid-column: 3/12;
+    }
+
+    .content-container button {
+        margin: 5% 35% auto;
+        width: 190px;
+        padding: 30px;
+        border: none;
+        cursor: pointer;
+        background: #013243;
+        color: #fff;
+        border-radius: 6px;
+    }
+
+    .content-container .no-ad p {
+        margin-left: 35%;
+    }
+
+
+     /* Ad form */
+
+     input,
+     select {
+         width: 100%;
+         padding: 15px;
+         margin: 2px 0 22px 0;
+         display: inline-block;
+         border: none;
+         background: #f1f1f1;
+         border-radius: 5px;
+     }
+ 
+    
+ 
+     input,
+     select:focus {
+         background-color: #ddd;
+       
+     }
+ 
+     button {
+         background-color: #4CAF50;
+         color: white;
+         padding: 14px 20px;
+         margin: 8px 0;
+         border: none;
+         cursor: pointer;
+         width: 100%;
+         opacity: 0.9;
+        }
+ 
+     .cancelbtn {
+         padding: 14px 20px;
+         background-color: #f44336;
+     }
+ 
+     .cancelbtn,
+     .createbtn {
+         float: left;
+         width: 40%;
+         margin: 12.5px;
+         padding: 15px;
+         border-radius: 5px;
+     }
+ 
+ 
+     .form-container {
+         display: none;
+         position: fixed;
+         z-index: 1;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         overflow: auto;
+         background-color: rgba(0, 0, 0, 0.5);
+         padding-top: 50px;
+         overflow: hidden;
+        }
+ 
+ 
+     /* Form Content/Box */
+ 
+     .form-content {
+         max-width: 500px;
+         background-color: #fefefe;
+         margin: -30px auto 15% auto;
+         border: 1px solid #888;
+         border-radius: 10px;
+         padding: 15px;
+         display: grid;
+         grid-template-columns: auto auto;
+        }
+ 
+ 
+     .form-content label {
+         padding: 20px;
+     }
+ 
+ 
+ 
+     .close {
+         position: absolute;
+         right: 35px;
+         top: 15px;
+         font-size: 40px;
+         font-weight: bold;
+         color: #f1f1f1;
+     }
+ 
+     .close:hover,
+     .close:focus {
+         color: #f44336;
+         cursor: pointer;
+     }
+ 
+
+     .cars-list, .details-list {
+        list-style-type: none;
+    }
+
+    .cars-list {
+        margin-top: 50px;
+    }
+
+    .cars-list img{
+        width: 250px; 
+        border-radius: 6px;
+    }
+
+    .details-list li {
+        margin-left: -40px;
+    }
+
+     .clearfix {
+         margin-top: 110px;
+         display: flex;
+         margin-left: -250px;
+        }
+
+    .footer {
+        grid-column: span 13;
+        grid-row: 6;
+    }
+
+    .footer p {
+        margin-top: 40%;
+        text-align: center;
+        font-size: 23px;
+        font-weight: bold;
+        color: #013243;
+    }
+
+}
+
+
+/* Mobile screen size  Iphon X */
+
+@media only screen and (max-width: 700px) and (orientation: portrait) {
+
+    * {
+        outline: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .main-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        height: auto;
+        overflow: hidden;
+    }
+
+    .header {
+        display: flex;
+        background: #fff;
+        grid-column: span 13;
+        grid-row: 1;
+        height: 60px;
+        position: sticky;
+        border-bottom: 1px solid #DBE0E4;
+        box-shadow: 0 14px 18px rgba(0, 0, 0, 0.10);
+    }
+
+
+    .header .logo {
+        display: flex;
+        width: 47%;
+        height: inherit;
+
+    }
+
+    .header i {
+        margin: 20px;
+        font-size: 25px;
+
+    }
+
+    .content-container {
+        grid-column: span 13;
+    }
+
+    .content-container button {
+        margin: 10% 25% auto;
+        width: 190px;
+        padding: 30px;
+        border: none;
+        cursor: pointer;
+        background: #013243;
+        color: #fff;
+        border-radius: 6px;
+    }
+
+    
+    .content-container .no-ad p {
+        margin-left: 25%;
+
+    }
+
+
+     /* Ad form */
+
+     input,
+     select {
+         width: 100%;
+         padding: 15px;
+         margin: 2px 0 22px 0;
+         display: inline-block;
+         border: none;
+         background: #f1f1f1;
+         border-radius: 5px;
+     }
+ 
+    
+ 
+     input,
+     select:focus {
+         background-color: #ddd;
+       
+     }
+ 
+     button {
+         background-color: #4CAF50;
+         color: white;
+         padding: 14px 20px;
+         margin: 8px 0;
+         border: none;
+         cursor: pointer;
+         width: 100%;
+         opacity: 0.9;
+     }
+ 
+     .cancelbtn {
+         padding: 14px 20px;
+         background-color: #f44336;
+     }
+ 
+     .cancelbtn,
+     .createbtn {
+         float: left;
+         width: 40%;
+         margin: 12.5px;
+         padding: 15px;
+         border-radius: 5px;
+     }
+ 
+ 
+     .form-container {
+         display: none;
+         position: fixed;
+         z-index: 1;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         overflow: auto;
+         background-color: rgba(0, 0, 0, 0.5);
+         padding-top: 50px;
+     }
+
+     .cars-list, .details-list {
+        list-style-type: none;
+    }
+
+    .cars-list {
+        margin-top: 50px;
+    }
+
+    .cars-list img{
+        width: 250px; 
+        border-radius: 6px;
+    }
+
+    .details-list li {
+        margin-left: -40px;
+    }
+ 
+ 
+     /* Form Content/Box */
+ 
+     .form-content {
+         max-width: 500px;
+         background-color: #fefefe;
+         margin: -30px auto 15% auto;
+         border: 1px solid #888;
+         border-radius: 10px;
+         padding: 15px;
+         display: grid;
+         grid-template-columns: auto;
+     }
+ 
+ 
+     .form-content label {
+         padding: 20px;
+     }
+ 
+ 
+ 
+     .close {
+         position: absolute;
+         right: 35px;
+         top: 15px;
+         font-size: 40px;
+         font-weight: bold;
+         color: #f1f1f1;
+     }
+ 
+     .close:hover,
+     .close:focus {
+         color: #f44336;
+         cursor: pointer;
+     }
+
+     .clearfix {
+        margin-top: 50px;
+        display: flex;
+        margin-left: 10px; 
+    }
+
+    .clearfix button{
+        margin: 10px;
+    }
+    .footer {
+        grid-column: span 13;
+        grid-row: 6;
+    }
+
+    .footer p {
+        margin-top: 95%;
+        text-align: center;
+        font-size: 23px;
+        font-weight: bold;
+        color: #013243;
+    }
+
+
+}
+
+/* Extra small mobile screens  */
+
+@media only screen and (min-width: 300px) and (orientation: portrait) {
+
+    * {
+        outline: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .main-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        height: auto;
+        overflow: hidden;
+    }
+
+    .header {
+        display: flex;
+        background: #fff;
+        grid-column: span 13;
+        grid-row: 1;
+        height: 60px;
+        position: sticky;
+        border-bottom: 1px solid #DBE0E4;
+        box-shadow: 0 14px 18px rgba(0, 0, 0, 0.10);
+    }
+
+
+    .header .logo {
+        display: flex;
+        width: 47%;
+        height: inherit;
+    }
+
+    .header i {
+        margin: 20px;
+        font-size: 25px;
+
+    }
+
+    .content-container {
+        grid-column: span 13;
+    }
+
+    .content-container button {
+        margin: 10% 25% auto;
+        width: 190px;
+        padding: 30px;
+        border: none;
+        cursor: pointer;
+        background: #013243;
+        color: #fff;
+        border-radius: 6px;
+    }
+
+    .content-container .no-ad p {
+        margin-left: 25%;
+
+    }
+
+
+
+     /* Ad form */
+
+     input{
+        width: 100%;
+        padding: 15px;
+        margin: 5px -10px -24px -10px;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+        border-radius: 6px;
+    }
+
+    input:focus {
+        background-color: #ddd;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+        border-radius: 6px;
+    }
+
+    .cancelbtn {
+        padding: 14px 20px;
+        background-color: #f44336;
+    }
+
+    .cancelbtn,
+    .createbtn {
+        float: left;
+        width: 40%;
+        margin: 13.5px auto;
+        padding: 15px;
+    }
+
+
+    .form-container {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: -15px;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding-top: 50px;
+    }
+
+
+    /* Form Content/Box */
+
+    .form-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto;
+        border: 1px solid #888;
+        width: 80%;
+        border-radius: 10px;
+        padding: 15px;
+        display: grid; 
+        grid-template-columns: auto;
+    }
+
+
+    .form-content label{
+        padding: 20px;
+    }
+
+
+    /* Style the horizontal ruler */
+    
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+
+    .cancelbtn,
+    .createbtn {
+        width: 100%;
+    }
+    
+
+     .close {
+         position: absolute;
+         right: 35px;
+         top: 15px;
+         font-size: 40px;
+         font-weight: bold;
+         color: #f1f1f1;
+     }
+ 
+     .close:hover,
+     .close:focus {
+         color: #f44336;
+         cursor: pointer;
+     }
+
+     .clearfix {
+        margin-top: 50px;
+        display: flex;
+        margin-left: 10px; 
+    }
+
+    .clearfix button{
+        margin: 10px;
+    }
+
+
+     .cars-list, .details-list {
+        list-style-type: none;
+    }
+
+    .cars-list {
+        margin-top: 50px;
+    }
+
+    .cars-list img{
+        width: 250px; 
+        border-radius: 6px;
+    }
+
+    .details-list li {
+        margin-left: -40px;
+    }
+
+ 
+    
+    .footer {
+        grid-column: span 13;
+        grid-row: 6;
+    }
+
+    .footer p {
+        margin-top: 95%;
+        text-align: center;
+        font-size: 23px;
+        font-weight: bold;
+        color: #013243;
+    }
+}
