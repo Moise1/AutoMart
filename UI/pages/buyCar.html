@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../assets/css/all.css">
+    <link rel="stylesheet" href="../css/buyCar.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../images/coins.png">
+    <title> AutoMart | Car Purchase</title>
+</head>
+
+<body>
+    <div class="main-container">
+        <header class="header">
+            <a class="logo" href="/">
+
+                <span id="logo-icon">
+                    <i class="fas fa-coins"></i>
+                </span>
+                <h3>Auto<span id="auto-mart">Mart</span></h3>
+            </a>
+        </header>
+
+        <main class="content-container">
+
+            <h4>Buy the car of your choice!</h4>
+            <div class="cars">
+                <ul class="cars-list">
+                    <li class="car-item">
+                        <img src="https://res.cloudinary.com/mo1/image/upload/v1557573166/benz_vi5k2l.jpg"
+                            onclick="getModalOne()" alt="">
+                        <ul class="details-list">
+                            <li class="detail-item">Manufacturer: Mercedez-Benz</li>
+                            <li class="detail-item">Body Type: 2dr Car</li>
+                            <li class="detail-item">Model: 2018 Mercedes-Benz E-Class E 400 RWD</li>
+                            <li class="detail-item">State: New</li>
+                            <li class="detail-item">Status: Available</li>
+                            <li class="detail-item">Price: $ 50,000</li>
+                        </ul>
+                    </li>
+                    <li class="car-item"><img
+                            src="https://res.cloudinary.com/mo1/image/upload/v1557615003/man-truck_r9mhwi.jpg"
+                            onclick="getModalTwo()" alt="">
+                        <ul class="details-list">
+                            <li class="detail-item">Manufacturer: MAN SE Corporation</li>
+                            <li class="detail-item">Body Type: Truck</li>
+                            <li class="detail-item">Model: MAN TGX 18.680, V8</li>
+                            <li class="detail-item">State: New</li>
+                            <li class="detail-item">Status: Available</li>
+                            <li class="detail-item">Price: $ 60,000</li>
+
+                        </ul>
+                    </li>
+                    <li class="car-item"><img
+                            src="https://res.cloudinary.com/mo1/image/upload/v1557615118/van_oaqqwv.png"
+                            onclick="getModalThree()" alt="">
+                        <ul class="details-list">
+                            <li class="detail-item">Manufacturer: Opel</li>
+                            <li class="detail-item">Body Type: Sport Nav Van</li>
+                            <li class="detail-item">Model: 19 Renault Trafic</li>
+                            <li class="detail-item">State: Used</li>
+                            <li class="detail-item">Status: Available</li>
+                            <li class="detail-item">Price: $ 40,000</li>
+
+                        </ul>
+                    </li>
+                    <li class="car-item"><img
+                            src="https://res.cloudinary.com/mo1/image/upload/v1557615972/pickup_ixwoky.jpg"
+                            onclick="getModalFour()" alt="">
+                        <ul class="details-list">
+                            <li class="detail-item">Manufacturer: Toyota</li>
+                            <li class="detail-item">Body Type: Pickup</li>
+                            <li class="detail-item">Model: Toyota Pickup</li>
+                            <li class="detail-item">State: used</li>
+                            <li class="detail-item">Status: Available</li>
+                            <li class="detail-item">Price: $ 80,000</li>
+
+                        </ul>
+                    </li>
+                    <li class="car-item"><img
+                            src="https://res.cloudinary.com/mo1/image/upload/v1557891106/bulldozer_rzeq1g.jpg"
+                            onclick="getModalFive()" alt="">
+                        <ul class="details-list">
+                            <li class="detail-item">Manufacturer: CAT</li>
+                            <li class="detail-item">Body Type: Bulldozer</li>
+                            <li class="detail-item">Model: Bulldozer</li>
+                            <li class="detail-item">State: New</li>
+                            <li class="detail-item">Status: Available</li>
+                            <li class="detail-item">Price: $ 90,000</li>
+                        </ul>
+                    </li>
+                    <li class="car-item"><img
+                            src="https://res.cloudinary.com/mo1/image/upload/v1557615581/trailer_k5onik.jpg"
+                            onclick="getModalSix()" alt="">
+                        <ul class="details-list">
+                            <li class="detail-item">Manufacturer: Johnson Trailier Co.</li>
+                            <li class="detail-item">Body Type: Trailer</li>
+                            <li class="detail-item">Model: Wood Floor Car Hauler Trailer </li>
+                            <li class="detail-item">State: New</li>
+                            <li class="detail-item">Status: Available</li>
+                            <li class="detail-item">Price: $ 100,000</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- Single Car modal popup -->
+            <div class="modal-container">
+                <div class="modal-wrapper" id="modalOne">
+                    <span class="close" title="Close" id="closeOne" onclick="closeModalOne()">&times;</span>
+                    <div class="modal-pic">
+                        <img src="https://res.cloudinary.com/mo1/image/upload/v1557573166/benz_vi5k2l.jpg" alt="">
+                    </div>
+
+                    <ul class="modal-items">
+                        <li class="detail-item">Manufacturer: Mercedez-Benz</li>
+                        <li class="detail-item">Body Type: 2dr Car</li>
+                        <li class="detail-item">Model: 2018 Mercedes-Benz E-Class E 400 RWD</li>
+                        <li class="detail-item">State: New</li>
+                        <li class="detail-item">Status: Available</li>
+                        <li class="detail-item" contenteditable="true">Price: $ 50,000</li>
+                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                    </ul>
+                </div>
+
+                <div class="modal-wrapper" id="modalTwo">
+                    <span class="close" title="Close" id="closeTwo" onclick="closeModalTwo()">&times;</span>
+
+                    <div class="modal-pic">
+                        <img src="https://res.cloudinary.com/mo1/image/upload/v1557615003/man-truck_r9mhwi.jpg" alt="">
+                    </div>
+                    <ul class="modal-items">
+                        <li class="detail-item">Manufacturer: MAN SE Corporation</li>
+                        <li class="detail-item">Body Type: Truck</li>
+                        <li class="detail-item">Model: MAN TGX 18.680, V8</li>
+                        <li class="detail-item">State: New</li>
+                        <li class="detail-item">Status: Available</li>
+                        <li class="detail-item" contenteditable="true">Price: $ 60,000</li>
+                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                    </ul>
+                </div>
+
+
+                <div class="modal-wrapper" id="modalThree">
+                    <span class="close" title="Close" id="closeThree" onclick="closeModalThree()">&times;</span>
+
+                    <div class="modal-pic">
+                        <img src="https://res.cloudinary.com/mo1/image/upload/v1557615118/van_oaqqwv.png" alt="">
+                    </div>
+                    <ul class="modal-items">
+                        <li class="detail-item">Manufacturer: Opel</li>
+                        <li class="detail-item">Body Type: Sport Nav Van</li>
+                        <li class="detail-item">Model: 19 Renault Trafic</li>
+                        <li class="detail-item">State: Used</li>
+                        <li class="detail-item">Status: Available</li>
+                        <li class="detail-item" contenteditable="true">Price: $ 40,000</li>
+                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                    </ul>
+                </div>
+
+                <div class="modal-wrapper" id="modalFour">
+                    <span class="close" title="Close" id="closeFour" onclick="closeModalFour()">&times;</span>
+
+                    <div class="modal-pic">
+                        <img src="https://res.cloudinary.com/mo1/image/upload/v1557615972/pickup_ixwoky.jpg" alt="">
+                    </div>
+                    <ul class="modal-items">
+                        <li class="detail-item">Manufacturer: Toyota</li>
+                        <li class="detail-item">Body Type: Pickup</li>
+                        <li class="detail-item">Model: Toyota Pickup</li>
+                        <li class="detail-item">State: used</li>
+                        <li class="detail-item">Status: Available</li>
+                        <li class="detail-item" contenteditable="true">Price: $ 80,000</li>
+                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                    </ul>
+                </div>
+
+                <div class="modal-wrapper" id="modalFive">
+                    <span class="close" title="Close" id="closeFive" onclick="closeModalFive()">&times;</span>
+
+                    <div class="modal-pic">
+                        <img src="https://res.cloudinary.com/mo1/image/upload/v1557891106/bulldozer_rzeq1g.jpg"
+                            alt="">
+                    </div>
+                    <ul class="modal-items">
+                        <li class="detail-item">Manufacturer: CAT</li>
+                        <li class="detail-item">Body Type: Bulldozer</li>
+                        <li class="detail-item">Model: Bulldozer</li>
+                        <li class="detail-item">State: New</li>
+                        <li class="detail-item">Status: Available</li>
+                        <li class="detail-item" contenteditable="true">Price: $ 90,000</li>
+                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                    </ul>
+                </div>
+
+
+                <div class="modal-wrapper" id="modalSix">
+                    <span class="close" title="Close" id="closeSix" onclick="closeModalSix()">&times;</span>
+                    <div class="modal-pic">
+                        <img src="https://res.cloudinary.com/mo1/image/upload/v1557615581/trailer_k5onik.jpg" alt="">
+                    </div>
+                    <ul class="modal-items">
+
+                        <li class="detail-item">Manufacturer: Johnson Trailier Co.</li>
+                        <li class="detail-item">Body Type: Trailer</li>
+                        <li class="detail-item">Model: Wood Floor Car Hauler Trailer </li>
+                        <li class="detail-item">State: New</li>
+                        <li class="detail-item">Status: Available</li>
+                        <li class="detail-item" contenteditable="true">Price: $ 100,000</li>
+                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; AutoMart 2019</p>
+        </footer>
+    </div>
+    <script type="text/javascript" src="../js/carModal.js"></script>
+</body>
+
+</html>
