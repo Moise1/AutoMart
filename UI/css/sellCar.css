@@ -86,6 +86,8 @@ body {
 
     .cars-list {
         margin-top: 50px;
+        display: grid;
+        grid-template-columns: auto auto auto;
     }
 
     .cars-list img{
@@ -95,6 +97,12 @@ body {
 
     .details-list li {
         margin-left: -40px;
+    }
+
+    .details-list button{
+        margin: 5% 15% auto  -10%;
+        width: auto;
+        padding: 5px;
     }
 
     /* Ad form */
@@ -405,6 +413,12 @@ body {
         margin-left: -40px;
     }
 
+    .details-list button{
+        margin: 5% 15% auto  -10%;
+        width: auto;
+        padding: 5px;
+    }
+
      .clearfix {
          margin-top: 110px;
          display: flex;
@@ -573,6 +587,13 @@ body {
 
     .details-list li {
         margin-left: -40px;
+    }
+
+
+    .details-list button{
+        margin: 5% 15% auto  -10%;
+        width: auto;
+        padding: 5px;
     }
  
  
@@ -841,6 +862,11 @@ body {
         margin-left: -40px;
     }
 
+    .details-list button{
+        margin: 5% 15% auto  -10%;
+        width: auto;
+        padding: 5px;
+    }
  
     
     .footer {
