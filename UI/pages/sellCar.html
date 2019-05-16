@@ -26,8 +26,7 @@
 
         <main class="content-container">
             <div class="sell-ad">
-                <button type="button" onclick="document.getElementById('form').style.display='block'">Post New Ad
-                </button>
+                <button type="button" class="post-btn" onclick="document.getElementById('form').style.display='block'">Post New Ad</button>
             </div>
 
             <div class="no-ad">
@@ -36,7 +35,10 @@
 
             <div class="posted-cars">
                     <ul class="cars-list">
-                            <li class="car-item"><img
+                            <li class="car-item">
+                                <div id="sold"></div>
+                                <div id="fraud"></div>
+                                <img
                                 src="https://res.cloudinary.com/mo1/image/upload/v1557615003/man-truck_r9mhwi.jpg" alt="">
                             <ul class="details-list" contenteditable="true">
                                 <li class="detail-item">Manufacturer: MAN SE Corporation</li>
@@ -44,6 +46,8 @@
                                 <li class="detail-item">Model: MAN TGX 18.680, V8</li>
                                 <li class="detail-item">State: New</li>
                                 <li class="detail-item">Price: $60, 000</li>
+                                <button id="soldBtn" contenteditable="false" onclick="markSold()">Mark as Sold</button>
+                                <button id="fraudBtn" contenteditable="false" onclick="markFraud()">Report Fraud</button>
     
                             </ul>
                         </li>
