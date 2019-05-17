@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../assets/css/all.css">
+    <link rel="stylesheet" href="../css/admin_dashboard.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../images/coins.png">
+    <title>AutoMart | Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="main-container">
+        <header>
+            <div class="admin">
+                <img src="https://res.cloudinary.com/mo1/image/upload/v1557996795/john_lllrmh.jpg" alt="">
+                <div class="identity">
+                    <a href="#">
+                        <p>John Doe | Admin</p>
+                    </a>
+                </div>
+
+                <span class="bell-icon">
+                    <i class="fas fa-bell"></i>
+                </span>
+
+                <span class="setting-icon">
+
+                    <i class="fas fa-cog" id="drop-cog"></i>
+                </span>
+            </div>
+        </header>
+
+        <!-- For extra mobile phone screens  -->
+        <nav role="navigation">
+            <div id="menuToggle">
+
+                <input type="checkbox" />
+
+                <div></div>
+                <div></div> 
+                <div></div>
+
+                <ul id="menu">
+                        <a  class="item" href="#"><i class="fas fa-desktop"></i>Dashboard</a>
+                        <a class="item" href="#"><i class="fas fa-tasks"></i>Manage Ads</a>
+                </ul>
+            </div>
+        </nav>
+
+
+        <aside class="side-content">
+            <a href="/"  class="logo-section">
+                <span>
+                    <i class="fas fa-coins"></i>
+                </span>
+                <h3 id="logo-text">Auto<span id="auto-mart">Mart</span></h3>
+
+            </a>
+
+            <ul class="side-content-list">
+
+                <a href="#" id="accounts">
+                    <li>
+                        <span class="content-side-icons"><i class="fas fa-desktop"></i></span>
+                        Dashboard
+                    </li>
+                </a>
+
+                <a href="#">
+                    <li>
+                        <span class="content-side-icons"><i class="fas fa-tasks"></i></span>
+                        Manage Ads
+                    </li>
+                </a>
+            </ul>
+        </aside>
+
+        <main id="dashboard-info">
+                <h3>Manage Ads</h3>
+            <div class="accounts-table">
+                <table cellspacing="0">
+                    <thead>
+                        <tr class="table-head">
+                            <th class="column">Car</th>
+                            <th class="column">Manufacturer</th>
+                            <th class="column">Body Type</th>
+                            <th class="column">Model</th>
+                            <th class="column">State</th>
+                            <th class="column">Status</th>
+                            <th class="column">Price</th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="data-head" data-id="1" data-toggle="modal" data-target="#accountModal">
+                            <td class="data">
+                                <img src="https://res.cloudinary.com/mo1/image/upload/v1557573166/benz_vi5k2l.jpg" alt="">
+                            </td>
+                            <td class="data">Mercedes Benz</td>
+                            <td class="data">2dr Car</td>
+                            <td class="data">2018 Mercedes-Benz E-Class E 400 RWD</td>
+                            <td class="data">New</td>
+                            <td class="data">Available</td>
+                            <td class="data"> $620,000</td>
+                            <td class="data">
+                                <i type="icon"  class="fas fa-trash" onclick="deleteRow(this)"></i>
+                            </td>
+                            <td class="data"></td>
+                        </tr>
+
+
+                        <tr class="data-head" data-id="2" data-toggle="modal" data-target="#accountModal">
+                            <td class="data">
+                                <img src="https://res.cloudinary.com/mo1/image/upload/v1557615003/man-truck_r9mhwi.jpg" alt="">
+                            </td>
+                            <td class="data">MAN SE Corporations</td>
+                            <td class="data">Truck</td>
+                            <td class="data">MAN TGX 18.680, V8</td>
+                            <td class="data">New</td>
+                            <td class="data">Sold</td>
+                            <td class="data"> $800,000</td>
+                            <td class="data">
+                                <i type="icon"  class="fas fa-trash" onclick="deleteRow(this)"></i>
+                            </td>
+                            <td class="data"></td>
+                        </tr>
+
+                        <tr class="data-head" data-id="3" data-toggle="modal" data-target="#accountModal">
+                            <td class="data">
+                                <img src="https://res.cloudinary.com/mo1/image/upload/v1557992850/sports_li1cuq.jpg" alt="">
+                            </td>
+                            <td class="data">Ford</td>
+                            <td class="data">Sports Car</td>
+                            <td class="data">Fort GTWD</td>
+                            <td class="data">New</td>
+                            <td class="data">Available</td>
+                            <td class="data"> $50,000</td>
+                            <td class="data">
+                                <i type="icon"  class="fas fa-trash" onclick="deleteRow(this)"></i>
+                            </td>
+                            <td class="data"></td>
+                        </tr>
+
+                        <tr class="data-head" data-id="3" data-toggle="modal" data-target="#accountModal">
+                            <td class="data">
+                                <img src="https://res.cloudinary.com/mo1/image/upload/v1557615972/pickup_ixwoky.jpg" alt="">
+                            </td>
+                            <td class="data">Toyota</td>
+                            <td class="data">Pickup </td>
+                            <td class="data">Toyota Pickup</td>
+                            <td class="data">Used</td>
+                            <td class="data">Sold</td>
+                            <td class="data"> $500,000</td>
+                            <td class="data">
+                                <i type="icon"  class="fas fa-trash" onclick="deleteRow(this)"></i>
+                            </td>
+                            <td class="data"></td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer class="footer">
+            <p>&copy; AutoMart 2019</p>
+        </footer>
+    </div>
+    <script type="text/javascript" src="../js/admin.js" ></script>
+</body>
+</html>
