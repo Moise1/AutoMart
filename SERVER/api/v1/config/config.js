@@ -5,6 +5,6 @@ dotenv.config();
 let CONFIG = {}; 
 
 CONFIG.adminPwd = process.env.ADMIN_PWD  || 'admin';
-CONFIG.secretKey = process.env.SECRET_KEY || 'secret';
+CONFIG.secretOrPublicKey= process.env.SECRET_OR_PUBLIC_KEY || 'secret';
 
 module.exports  = CONFIG;

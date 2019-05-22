@@ -1,8 +1,6 @@
-
 import hasher from '../helpers/password';
 import CONFIG from '../config/config'
 import tokenMan from '../helpers/tokenMan';
-import lodash from 'lodash';
 
 const adminPassword = async () =>{ 
     const hashedPassword = await hasher.hashingPassword(CONFIG.adminPwd, 10); 
@@ -11,8 +9,11 @@ const adminPassword = async () =>{
 
 const id = 1; 
 const is_admin = true;
+const is_buyer = false;
+const is_seller = false;
+
 const email = 'john@gmail.com';
-const token = tokenMan.tokenizer({id,email, is_admin}); 
+const token = tokenMan.tokenizer({id ,is_admin, is_seller, is_buyer}); 
 
 const  result = adminPassword().then(pwd =>{
     return {
@@ -23,10 +24,12 @@ const  result = adminPassword().then(pwd =>{
         email: email,
         address: 'Lagos',
         password: pwd, 
-        is_admin: is_admin
+        is_admin: is_admin,
+        is_seller: is_seller, 
+        is_buyer: is_buyer
     }
 }).then(res =>{
-    return lodash.omit(res, ["password"]);
+    return res;
 }).catch(err =>{
     throw err;
 })
