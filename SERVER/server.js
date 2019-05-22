@@ -1,11 +1,14 @@
 import express from 'express';  
 import userRouter from './api/v1/routes/userRouter';
+import adRouter from './api/v1/routes/adRouter';
 
-
-const app = express(); 
+const app = express();
+ 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(userRouter);
+app.use(adRouter);
+
 
 
 app.get('/', (req, res) =>{
