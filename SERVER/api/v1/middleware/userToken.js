@@ -46,7 +46,7 @@ const buyerAccess = (req, res, next) => {
     } else {
         return res.status(403).json({
             status: 403,
-            message: 'Sorry, only buyer access only!'
+            message: 'Sorry,  buyer access only!'
         })
     }
 };
