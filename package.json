@@ -1,7 +1,7 @@
 {
   "name": "automart",
   "version": "1.0.0",
-  "description": "Auto Mart is an online marketplace for automobiles of diverse makes, model or body type. ",
+  "description": "Auto Mart is an online marketplace for automobiles of diverse makes, model or body type.",
   "main": "server.js",
   "scripts": {
     "start": "babel-watch  ./SERVER/server.js",
