@@ -6,7 +6,7 @@
 
 ## Get Started 
 
-[AutoMart](https://moise1.github.io/AutoMart/UI/) Auto Mart is an online marketplace for automobiles of diverse makes, model or body type.
+[AutoMart](https://moise1.github.io/AutoMart/UI/)  is an online marketplace for automobiles of diverse makes, model or body type.
 
 ###  Required features for user: 
 
