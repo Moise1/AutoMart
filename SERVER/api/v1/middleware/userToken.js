@@ -14,7 +14,7 @@ const userAccess = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     if (!token) return res.status(401).json({
         status: 401,
-        message: 'Access  Denied.'
+        message: 'Access Denied.'
     });
     try {
         const decryptedToken = jwt.verify(token, CONFIG.secretOrPublicKey);

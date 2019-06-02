@@ -18,5 +18,4 @@ userRouter.post('/api/v1/auth/signup', userSignUp);
 userRouter.post('/api/v1/auth/signin', userSignIn);
 
 
-
 export default userRouter;
