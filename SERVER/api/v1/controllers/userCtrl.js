@@ -45,9 +45,9 @@ const User = {
                     is_buyer
                 }),
                 id: id,
-                email: email.toLowerCase(),
                 first_name: first_name,
                 last_name: last_name,
+                email: email.toLowerCase(),
                 password: hashed_password,
                 address: address,
                 is_admin: is_admin,
@@ -59,11 +59,9 @@ const User = {
             Promise.all(users).then(values => {
                 return res.status(201).json({
                     status: 201,
-                    message: 'Successfully Signed Up',
+                    message: 'Successfully Signed Up!',
                     data: values
                 })
-            }).catch(err => {
-                throw err.message;
             });
 
         } catch (err) {

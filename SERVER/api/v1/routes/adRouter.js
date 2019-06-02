@@ -15,7 +15,7 @@ import {
 const {
     createAd,
     getAllCars,
-    getOneAd, 
+    getOneAd,
     updateAd,
     deleteAd
 } = Ad;

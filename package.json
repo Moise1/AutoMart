@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "babel-watch  ./SERVER/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test nyc --reporter=text --reporter=lcov mocha --timeout 1000 --require @babel/polyfill --require @babel/register SERVER/api/v1/tests/**/*.test.js --exit"
   },
   "repository": {
     "type": "git",
@@ -46,6 +46,7 @@
     "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/preset-stage-0": "^7.0.0",
     "@babel/register": "^7.4.0",
+    "assert": "^2.0.0",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "coveralls": "^3.0.3",

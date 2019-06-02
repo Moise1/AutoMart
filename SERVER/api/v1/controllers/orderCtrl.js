@@ -62,13 +62,13 @@ const Order = {
 
     async updateOrder(req, res){
 
+        const new_price = req.body;
         let m = moment();
         const modified_on = m.format('hh:mm a, DD-MM-YYYY'); 
        
         try{
             const findOrder = orders.find(order => order.order_id === parseInt(req.params.order_id));
-            const new_price = req.body;
-
+        
             if(!findOrder){
                 return res.status(404).json({
                     status: 404, 
@@ -77,10 +77,9 @@ const Order = {
             }; 
 
             if(findOrder.status === 'pending'){
-
                 findOrder.old_price_offered = findOrder.price_offered;
                 Reflect.ownKeys(new_price).forEach(key =>{
-                    findOrder.new_price_offered = "$" + new_price[key].replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+                    findOrder.new_price_offered = "$" + new_price[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
                 }); 
 
                 findOrder.modified_on = modified_on;

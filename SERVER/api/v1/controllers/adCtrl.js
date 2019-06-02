@@ -69,14 +69,14 @@ const Ad = {
             if (req.query.status === "available") {
                 // cars with just "available" status.
                 const available = ads.filter(ad => ad.status === "available");
-                res.status(200).json({
+                return res.status(200).json({
                     status: 200,
                     message: 'Here are all available cars',
                     data: available
+
                 });
-                next();
             };
-            
+        
             if (req.query.status === "avilable" &&  "$" + req.query.min_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") >= minCarPrice && "$" + req.query.max_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) {
                 // Available cars within a certain range.    
                 const priceRange = ads.filter(ad => ad.status ===  "available" &&  ad.price >= minCarPrice && ad.price <= maxCarPrice);
@@ -124,7 +124,7 @@ const Ad = {
             return res.status(200).json({
                 status: 200,
                 message: 'Congs, here\'s your result!',
-                data: findAd
+                data: [findAd]
             })
 
         } catch (err) {
