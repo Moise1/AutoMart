@@ -1,3 +1,7 @@
+[![Coverage Status](https://coveralls.io/repos/github/Moise1/AutoMart/badge.svg?branch=develop)](https://coveralls.io/github/Moise1/AutoMart?branch=develop)
+[![Build Status](https://travis-ci.com/Moise1/AutoMart.svg?branch=develop)](https://travis-ci.com/Moise1/AutoMart)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f127564517d3a59e3b7c/maintainability)](https://codeclimate.com/github/Moise1/AutoMart/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/f127564517d3a59e3b7c/test_coverage)](https://codeclimate.com/github/Moise1/AutoMart/test_coverage)
 # AutoMart 
 
 ## Get Started 
@@ -47,7 +51,7 @@ You must have the following tools installed in order to run this project: <br/>
 
 | HTTP Verb     | Endpoint      | Role | Authorized Entity  |
 | ------------- | ------------- | ------ |          ----------- |
-| POST  | /api/v1/auth/car  |    seller post a car sale ad             | User(seller)
+| POST  | /api/v1/car  |    seller post a car sale ad             | User(seller)
 | GET  | /api/v1/car/car_id  |  seller get a specific car sale ad           | User(seller)
 | PATCH  | /api/v1/car/:car_id/price  |  seller update the price a specific car sale ad           | User(seller)
 | GET  | /api/v1/car/:car_id/status  |  seller update the status a specific car sale ad           | User(seller)
