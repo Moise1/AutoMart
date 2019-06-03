@@ -8,6 +8,8 @@
 
 [AutoMart](https://moise1.github.io/AutoMart/UI/)  is an online marketplace for automobiles of diverse makes, model or body type.
 
+Access AutoMart's API from [Heroku](https://moise-automart.herokuapp.com/).
+
 ###  Required features for user: 
 
 * User(buyer or seller)  can sign up .<br/>
