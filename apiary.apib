@@ -1,0 +1,106 @@
+FORMAT: 1A
+HOST: https://moise-automart.herokuapp.com/
+
+# AutoMart-API
+
+AutoMart is an online marketplace for automobiles of diverse makes, model or body type. With
+AutoMart, users can sell their cars or buy from trusted dealerships or private sellers.
+
+## User Authentication | Sign Up  [/api/v1/auth/signup]
+
+### Sign Up [POST]
+
+**EndPoint** `/api/v1/auth/signup` 
+
+**Description** Every new user should sign up before accessing the app's
+functionalities.
+
++ Request (application/json)
+
+        {
+            "first_name":"roger",
+            "last_name":"george",
+            "email":"roger@gmail.com",
+            "password":"10000",
+            "address":"ATHENE",
+            "is_buyer":"false",
+            "is_seller":"true"
+        }
+        
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "status": 201,
+                "message": "Successfully Signed Up!",
+                "data": [
+                    {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNfYWRtaW4iOnRydWUsImlzX3NlbGxlciI6ZmFsc2UsImlzX2J1eWVyIjpmYWxzZSwiaWF0IjoxNTU5NzY5NTUxLCJleHAiOjE1OTEzMDU1NTF9.UJCC2rcxKJ40zbDIrQiIOSPtrT41Hj00VtmQOgJQiBE",
+                        "id": 1,
+                        "first_name": "john",
+                        "last_name": "doe",
+                        "email": "john@gmail.com",
+                        "address": "Lagos",
+                        "password": "$2a$10$9z6tE9SyYobnrAo7bMFfoOyQ.bIneDYPkc9IxTrnMo/yCApLRFTwK",
+                        "is_admin": true,
+                        "is_seller": false,
+                        "is_buyer": false
+                    }, {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfYWRtaW4iOmZhbHNlLCJpc19zZWxsZXIiOiJ0cnVlIiwiaXNfYnV5ZXIiOiJmYWxzZSIsImlhdCI6MTU1OTc2OTU2MSwiZXhwIjoxNTkxMzA1NTYxfQ.GnHBQjd-ySk-6_wTzwWDb7KH8_ADoitEKOmTIr7OEbo",
+                        "id": 2,
+                        "first_name": "roger",
+                        "last_name": "george",
+                        "email": "roger@gmail.com",
+                        "password": "$2a$10$/X0JFVefBSaacPWoAJHdh.RF384mMQayJBimoM.jGHBVg80Nnm2de",
+                        "address": "ATHENE",
+                        "is_admin": false,
+                        "is_buyer": false,
+                        "is_seller": true
+                    }
+                ]
+            }
+    
+        
+        
+
+## User Authentication | Sign In [/api/v1/auth/signin]
+
+### Sign In [POST]
+
+**EndPoint** `/api/v1/auth/signin`
+
+**Description** Every returning user should sign in before accessing the app's
+functionalities if they've been logged out. 
+
++ Request (application/json)
+
+        {
+            
+            "email":"roger@gmail.com",
+            "password":"10000",
+        }
+        
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "status": 200,
+                "message": "Successfully Signed In!",
+                "data": [
+                    {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNfYWRtaW4iOmZhbHNlLCJpc19zZWxsZXIiOiJ0cnVlIiwiaXNfYnV5ZXIiOiJmYWxzZSIsImlhdCI6MTU1OTkwMzY3MSwiZXhwIjoxNTkxNDM5NjcxfQ.jacKk0jLovFRtZApPsdgRlNM-d4dbZbZP_5aTyIf6Ws",
+                        "id": 2,
+                        "first_name": "roger",
+                        "last_name": "george",
+                        "email": "roger@gmail.com",
+                        "password": "$2a$10$RIOXeVp6ovoQDIvlDqYSKuModX3jhR2kj5tzkfMUvVtHpqQhid92y",
+                        "address": "ATHENE",
+                        "is_admin": false,
+                        "is_buyer": false
+                        "is_seller": true,
+                        
+                    }
+                ]
+            }
