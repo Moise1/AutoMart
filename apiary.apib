@@ -10,9 +10,11 @@ AutoMart, users can sell their cars or buy from trusted dealerships or private s
 
 ### Sign Up [POST]
 
-**EndPoint** `/api/v1/auth/signup` 
+**EndPoint:** 
+`/api/v1/auth/signup` 
 
-**Description** Every new user should sign up before accessing the app's
+**Description:**
+Every new user should sign up before accessing the app's
 functionalities.
 
 + Request (application/json)
@@ -68,9 +70,11 @@ functionalities.
 
 ### Sign In [POST]
 
-**EndPoint** `/api/v1/auth/signin`
+**EndPoint:**
+`/api/v1/auth/signin`
 
-**Description** Every returning user should sign in before accessing the app's
+**Description:**
+Every returning user should sign in before accessing the app's
 functionalities if they've been logged out. 
 
 + Request (application/json)
@@ -101,6 +105,337 @@ functionalities if they've been logged out.
                         "is_buyer": false
                         "is_seller": true,
                         
+                    }
+                ]
+            }
+            
+            
+
+## Seller create a new car sale ad [/api/v1/car]
+
+### New car sale ad [POST]
+
+**Endpoint:** 
+`/api/v1/car` 
+
+**Description:** 
+A seller would be able to post sale ad for their vehicles.
+
++ Request (application/json)
+
+        {
+            
+            "manufacturer":"Tanzania Motors"
+            "body_type":"Toyota"
+            "model":"Toyota'
+            "state": "new"
+            "status":"sold"
+            "price": "6000000"
+        }
+        
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "status": 201,
+                "message": "Ad Successfully Created!",
+                "data": [
+                    {
+                        "car_id": 1,
+                        "owner": "zem@gmail.com",
+                        "manufacturer": "Tanzania Motors",
+                        "body_type": "Toyota",
+                        "model": "Toyota",
+                        "state": "new",
+                        "status": "sold",
+                        "price": "$6,000,000",
+                        "created_on": "12:03 pm , 08-06-2019"
+                        
+                    }
+                ]
+            }
+
+
+
+### All cars [GET]
+
+**Endpoint:** 
+`/api/v1/car` 
+
+**Description:** 
+A seller would be able get a list of all the vehicles.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "status": 200,
+                "message": "Here are all the cars!",
+                "data": [
+                    {
+                        "car_id": 1,
+                        "owner": "zem@gmail.com",
+                        "manufacturer": "Tanzania Motors",
+                        "body_type": "Toyota",
+                        "model": "Toyota",
+                        "state": "new",
+                        "status": "sold",
+                        "price": "$6,000,000",
+                        "created_on": "12:03 pm , 08-06-2019"
+                        
+                    },{
+                        "car_id": 2,
+                        "owner": "zem@gmail.com",
+                        "manufacturer": "Kenya Motors",
+                        "body_type": "Car",
+                        "model": "Benz 2019",
+                        "state": "new",
+                        "status": "available",
+                        "price": "$9,000,000",
+                        "created_on": "12:53 pm , 08-06-2019"
+                    }
+                ]
+            }
+
+
+## Seller gets a single car sale ad [/api/v1/car/{car_id}]
+
+### A single car [GET]
+
+**Endpoint:** 
+`/api/v1/car/:car_id` 
+
+**Description:** 
+A seller would be able get a single car sale ad.
+
++ Parameters 
+
+    + car_id (required, number, `1`) - An id of a car sale ad.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "status": 200,
+                "message": "Congs, here's your result!",
+                "data": [
+                    {
+                        "car_id": 1,
+                        "owner": "zem@gmail.com",
+                        "manufacturer": "Tanzania Motors",
+                        "body_type": "Toyota",
+                        "model": "Toyota",
+                        "state": "new",
+                        "status": "sold",
+                        "price": "$6,000,000",
+                        "created_on": "12:03 pm , 08-06-2019"
+                        
+                    }
+                ]
+            }
+
+
+
+
+## Seller update status of a car sale ad [/api/v1/car/{car_id}/status]
+
+### Update status [PATCH]
+
+**Endpoint:** 
+`/api/v1/car/:car_id/status` 
+
+**Description:** 
+A seller would be able to update a specific car sale ad.
+
+
++ Parameters 
+
+    + car_id (required, number, `1`) 
+
++ Request (appliation/json) 
+
+        {
+            "status":"available"
+        }
+
++ Response 200 (application/json) 
+
+    + Body
+
+            {
+                "status": 200,
+                "message": "Ad successfully updated!",
+                "data": [
+                    {
+                        "car_id": 1,
+                        "owner": "zem@gmail.com",
+                        "manufacturer": "Tanzania Motors",
+                        "body_type": "Toyota",
+                        "model": "Toyota",
+                        "state": "new",
+                        "status": "available",
+                        "price": "$6,000,000",
+                        "created_on": "12:03 pm , 08-06-2019", 
+                        "modified_on": "08:27 pm,  09-06-2019"
+                        
+                    }
+                ]
+            }
+
+
+## Seller update price of a car sale ad [/api/v1/car/{car_id}/price]
+
+### Update status [PATCH]
+
+**Endpoint:** 
+`/api/v1/car/:car_id/price` 
+
+**Description:** 
+A seller would be able to update a specific car sale ad.
+
+
++ Parameters 
+
+    + car_id (required, number, `1`) 
+
++ Request (appliation/json) 
+
+        {
+            "price":"$5,000,000"
+        }
+
++ Response 200 (application/json) 
+
+    + Body
+
+            {
+                "status": 200,
+                "message": "Ad successfully updated!",
+                "data": [
+                    {
+                        "car_id": 1,
+                        "owner": "zem@gmail.com",
+                        "manufacturer": "Tanzania Motors",
+                        "body_type": "Toyota",
+                        "model": "Toyota",
+                        "state": "new",
+                        "status": "available",
+                        "price": "$5,000,000",
+                        "created_on": "12:03 pm , 08-06-2019", 
+                        "modified_on": "08:27 pm,  09-06-2019"
+                        
+                    }
+                ]
+            }
+
+
+
+### Delete car sale ad [DELETE]
+
+**Endpoint:** 
+`/api/v1/car/:car_id` 
+
+**Description:** 
+A seller would be able to delete a specific car sale ad.
+
+
++ Parameters 
+
+    + car_id (required, number, `1`) 
+
++ Response 200 (application/json) 
+
+     + Body
+
+            {
+                "status": 200,
+                "message": "Car sale ad number 1 successfully deleted!"
+            }
+    
+
+## Buyer make a purchase order [/api/v1/order]
+
+### New purchase order [POST]
+
+**Endpoint:** 
+`/api/v1/order` 
+
+**Description:** 
+A buyer would be able to make a purchase order.
+
++ Request (application/json) 
+
+        {
+            
+            "price_offered":"$50,000,000",
+            "status":"pending"
+            "car_id": 1
+        }
+
++ Response 201 (application/json) 
+
+    + Body
+
+            {
+                "status": 201,
+                "message": "Purchase Order Successfully Created!",
+                "data": [
+                    {
+                        "order_id": 1,
+                        "buyer": 2,
+                        "car_id": 1,
+                        "price": "$9,000,000",
+                        "price_offered": "$50,000,000",
+                        "status": "pending",
+                        "created_on": "08:54 pm, 09-06-2019"
+                        
+                    }
+                ]
+            }
+
+## Buyer update price of a purchase order [/api/v1/order/{order_id}/price]
+
+### Update price [PATCH]
+
+**Endpoint:** 
+`/api/v1/car/:order_id/price` 
+
+**Description:** 
+A buyer would be able to update the price of a specific purchase order.
+
+
++ Parameters 
+
+    + order_id (required, number, `1`) 
+
++ Request (appliation/json) 
+
+        {
+            "new_offered_price":"$40,000,000"
+        }
+
++ Response 200 (application/json) 
+
+    + Body
+
+            {
+                "status": 200,
+                "message": "Order's  Price Successfully Updated!",
+                "data": [
+                    {
+                        "order_id": 1,
+                        "buyer": 2,
+                        "car_id": 1,
+                        "price": "$9,000,000",
+                        "price_offered": "$50,000,000",
+                        "status": "pending",
+                        "created_on": "08:54 pm, 09-06-2019",
+                        "old_price_offered": "$50,000,000",
+                        "new_price_offered": "$4,000,000",
+                        "modified_on": "09:05 pm, 09-06-2019"
                     }
                 ]
             }
