@@ -60,7 +60,7 @@ const User = {
                 return res.status(201).json({
                     status: 201,
                     message: 'Successfully Signed Up!',
-                    data: values
+                    data: values[values.length -1]
                 })
             });
 
