@@ -48,6 +48,7 @@ describe('User Authentication:', () => {
             .post('/api/v1/auth/signup')
             .send(validSignUp)
             .end((err, res) => {
+                // console.log('Sign up',res.body);
                 expect(res.body.status).to.be.eql(201);
                 expect(res.body).to.be.an('object'); 
                 expect(res.body.data).to.be.an('object'); 
@@ -75,6 +76,7 @@ describe('User Authentication:', () => {
             .post('/api/v1/auth/signin')
             .send(validLogin)
             .end((err, res) => {
+                // console.log('log in:', res.body);
                 expect(res.body.status).to.be.eql(200);
                 expect(res.body).to.be.an('object'); 
                 expect(res.body.data).to.be.an('array'); 
@@ -88,6 +90,7 @@ describe('User Authentication:', () => {
             .post('/api/v1/auth/signin')
             .send(invalidLogin)
             .end((err, res) => {
+                // console.log('Don\'t log in', res.body);
                 expect(res.body.status).to.be.eql(401);
                 expect(res.body).to.be.an('object'); 
                 expect(res.body.error).to.deep.equal('Invalid Password');

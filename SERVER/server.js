@@ -2,6 +2,7 @@ import express from 'express';
 import userRouter from './api/v1/routes/userRouter';
 import adRouter from './api/v1/routes/adRouter';
 import orderRouter from './api/v1/routes/orderRouter';
+import flagRouter from './api/v1/routes/flagRouter'; 
 
 
 const app = express();
@@ -11,6 +12,8 @@ app.use(express.json());
 app.use(userRouter);
 app.use(adRouter);
 app.use(orderRouter);
+app.use(flagRouter);
+
 
 
 

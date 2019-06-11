@@ -1,11 +1,10 @@
 import hasher from '../helpers/password';
-import CONFIG from '../config/config'
 import tokenMan from '../helpers/tokenMan';
 
 
 
 const adminPassword = async()=>{
-    const hash = await hasher.hashingPassword(CONFIG.adminPwd, 10); 
+    const hash = await hasher.hashingPassword('john123', 10); 
     return hash;
 }
 let id = 1 ; 
