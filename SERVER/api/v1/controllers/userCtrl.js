@@ -29,8 +29,6 @@ const User = {
             email,
             password,
             address,
-            is_seller,
-            is_buyer
         } = req.body
 
         const hashed_password = await hasher.hashingPassword(password, 10);
@@ -41,8 +39,6 @@ const User = {
                 token: tokenMan.tokenizer({
                     id,
                     is_admin,
-                    is_seller,
-                    is_buyer
                 }),
                 id: id,
                 first_name: first_name,
@@ -51,12 +47,17 @@ const User = {
                 password: hashed_password,
                 address: address,
                 is_admin: is_admin,
-                is_buyer: Boolean(is_buyer == "true"),
-                is_seller: Boolean(is_seller == "true"),
             }
-
+            
+            // Check whether the email is already taken. 
+    
+            if(users.some(us => us.email === email)) return res.status(400).json({
+                status: 400, 
+                error: 'Sorry! Email already taken.'
+            }) 
             users.push(newUser);
-            Promise.all(users).then(values => {
+
+            Promise.all(users).then(async values => {
                 return res.status(201).json({
                     status: 201,
                     message: 'Successfully Signed Up!',
@@ -111,8 +112,6 @@ const User = {
                     id: userFinder.id,
                     email: userFinder.email,
                     is_admin: userFinder.is_admin,
-                    is_seller: userFinder.is_seller,
-                    is_buyer: userFinder.is_buyer
                 });
                 return res.header('Authorization', `Bearer ${token}`).status(200).json({
                     status: 200,

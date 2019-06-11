@@ -7,7 +7,6 @@ import Order from '../controllers/orderCtrl';
 import {
     tokenExists,
     userAccess,
-    buyerAccess,
     adminAccess
 } from '../middleware/userToken';
 
@@ -21,7 +20,7 @@ const orderRouter = express.Router();
 
 orderRouter.use(json());
 
-orderRouter.post('/api/v1/order', tokenExists, userAccess, buyerAccess ,createOrder)
-orderRouter.patch('/api/v1/order/:order_id/price', tokenExists, userAccess, buyerAccess ,updateOrder)
+orderRouter.post('/api/v1/order', tokenExists, userAccess, createOrder)
+orderRouter.patch('/api/v1/order/:order_id/price', tokenExists, userAccess, updateOrder)
 
 export default orderRouter; 
