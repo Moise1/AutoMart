@@ -8,4 +8,7 @@ node_modules
 .nyc_output 
 
 #coverage 
-coverage
+coverage 
+
+#assets 
+UI/assets 

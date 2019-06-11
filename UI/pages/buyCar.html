@@ -21,7 +21,34 @@
                 </span>
                 <h3>Auto<span id="auto-mart">Mart</span></h3>
             </a>
+
+            <div class="user-options">
+                <ul class="list-items">
+                    <li class="item"><a href="./cars.html">Back</a></li>
+                    <li class="item"><a href="/">Log out</a></li>
+                    </li>
+                </ul>
+
+            </div>
         </header>
+
+        <!-- For mobile screens -->
+
+        <nav role="navigation">
+
+            <div id="menuToggle">
+                <input type="checkbox" />
+
+                <div></div>
+                <div></div>
+                <div></div>
+
+                <ul id="menu">
+                    <li class="item"><a href="./cars.html">Back</a></li>
+                    <li class="item"><a href="/index.html">Log out</a></li>
+                </ul>
+            </div>
+        </nav>
 
         <main class="content-container">
 
@@ -38,6 +65,7 @@
                             <li class="detail-item">State: New</li>
                             <li class="detail-item">Status: Available</li>
                             <li class="detail-item">Price: $ 50,000</li>
+                            <button type="button" class="fraud-btn" onclick="document.getElementById('form').style.display='block'">Report Fraud</button>
                         </ul>
                     </li>
                     <li class="car-item"><img
@@ -50,6 +78,7 @@
                             <li class="detail-item">State: New</li>
                             <li class="detail-item">Status: Available</li>
                             <li class="detail-item">Price: $ 60,000</li>
+                            <button type="button" class="fraud-btn" onclick="document.getElementById('form').style.display='block'">Report Fraud</button>
 
                         </ul>
                     </li>
@@ -63,6 +92,7 @@
                             <li class="detail-item">State: Used</li>
                             <li class="detail-item">Status: Available</li>
                             <li class="detail-item">Price: $ 40,000</li>
+                            <button type="button" class="fraud-btn" onclick="document.getElementById('form').style.display='block'">Report Fraud</button>
 
                         </ul>
                     </li>
@@ -76,6 +106,7 @@
                             <li class="detail-item">State: used</li>
                             <li class="detail-item">Status: Available</li>
                             <li class="detail-item">Price: $ 80,000</li>
+                            <button type="button" class="fraud-btn" onclick="document.getElementById('form').style.display='block'">Report Fraud</button>
 
                         </ul>
                     </li>
@@ -89,6 +120,8 @@
                             <li class="detail-item">State: New</li>
                             <li class="detail-item">Status: Available</li>
                             <li class="detail-item">Price: $ 90,000</li>
+                            <button type="button" class="fraud-btn" onclick="document.getElementById('form').style.display='block'">Report Fraud</button>
+
                         </ul>
                     </li>
                     <li class="car-item"><img
@@ -101,6 +134,8 @@
                             <li class="detail-item">State: New</li>
                             <li class="detail-item">Status: Available</li>
                             <li class="detail-item">Price: $ 100,000</li>
+                            <button type="button" class="fraud-btn" onclick="document.getElementById('form').style.display='block'">Report Fraud</button>
+
                         </ul>
                     </li>
                 </ul>
@@ -122,7 +157,7 @@
                         <li class="detail-item">State: New</li>
                         <li class="detail-item">Status: Available</li>
                         <li class="detail-item" contenteditable="true">Price: $ 50,000</li>
-                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                        <button role="button" type="button" class="buy-btn">Buy Now</button>
                     </ul>
                 </div>
 
@@ -139,7 +174,7 @@
                         <li class="detail-item">State: New</li>
                         <li class="detail-item">Status: Available</li>
                         <li class="detail-item" contenteditable="true">Price: $ 60,000</li>
-                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                        <button role="button" type="button" class="buy-btn">Buy Now</button>
                     </ul>
                 </div>
 
@@ -157,7 +192,7 @@
                         <li class="detail-item">State: Used</li>
                         <li class="detail-item">Status: Available</li>
                         <li class="detail-item" contenteditable="true">Price: $ 40,000</li>
-                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                        <button role="button" type="button" class="buy-btn">Buy Now</button>
                     </ul>
                 </div>
 
@@ -174,7 +209,7 @@
                         <li class="detail-item">State: used</li>
                         <li class="detail-item">Status: Available</li>
                         <li class="detail-item" contenteditable="true">Price: $ 80,000</li>
-                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                        <button role="button" type="button" class="buy-btn">Buy Now</button>
                     </ul>
                 </div>
 
@@ -192,7 +227,7 @@
                         <li class="detail-item">State: New</li>
                         <li class="detail-item">Status: Available</li>
                         <li class="detail-item" contenteditable="true">Price: $ 90,000</li>
-                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                        <button role="button" type="button" class="buy-btn">Buy Now</button>
                     </ul>
                 </div>
 
@@ -210,17 +245,41 @@
                         <li class="detail-item">State: New</li>
                         <li class="detail-item">Status: Available</li>
                         <li class="detail-item" contenteditable="true">Price: $ 100,000</li>
-                        <button role="button" type="button" class="buy-tbn">Buy Now</button>
+                        <button role="button" type="button" class="buy-btn">Buy Now</button>
                     </ul>
                 </div>
             </div>
         </main>
+
+
+        <div class="form-container" id="form">
+            <span class="close" title="Close Form" id="closebtn">&times;</span>
+
+            <form action="" class="form-content">
+
+                <label for="title">Title *
+                    <input type="text" name="title" id="title" required>
+                </label>
+
+                <label for="description"> Fraud Description *
+                    <textarea name="" cols="50" rows="5"></textarea>
+                </label>
+
+                <div class="clearfix">
+                    <button type="button" class="cancelbtn">Cancel</button>
+                    <button type="button" class="createbtn">Report</button>
+                </div>
+            </form>
+
+        </div>
 
         <footer class="footer">
             <p>&copy; AutoMart 2019</p>
         </footer>
     </div>
     <script type="text/javascript" src="../js/carModal.js"></script>
+    <script type="text/javascript" src="../js/fraudCar.js"></script>
+
 </body>
 
 </html>

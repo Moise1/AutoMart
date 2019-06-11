@@ -4,12 +4,12 @@ import {
     json
 } from 'express';
 import Ad from '../controllers/adCtrl';
+
 import {
     tokenExists,
     userAccess,
-    sellerAccess,
     adminAccess,
-    buyerAccess
+    
 } from '../middleware/userToken';
 
 const {
@@ -24,11 +24,11 @@ const adRouter = express.Router();
 
 adRouter.use(json());
 
-adRouter.post('/api/v1/car', tokenExists, userAccess, sellerAccess ,createAd);
+adRouter.post('/api/v1/car', tokenExists, userAccess, createAd);
 adRouter.get('/api/v1/car', tokenExists, userAccess, getAllCars);
-adRouter.get('/api/v1/car/:car_id', tokenExists, userAccess, sellerAccess, getOneAd);
-adRouter.patch('/api/v1/car/:car_id/status', tokenExists, userAccess, sellerAccess, updateAd);
-adRouter.patch('/api/v1/car/:car_id/price', tokenExists, userAccess, sellerAccess, updateAd);
+adRouter.get('/api/v1/car/:car_id', tokenExists, userAccess, getOneAd);
+adRouter.patch('/api/v1/car/:car_id/status', tokenExists, userAccess, updateAd);
+adRouter.patch('/api/v1/car/:car_id/price', tokenExists, userAccess, updateAd);
 adRouter.delete('/api/v1/car/:car_id', tokenExists, userAccess, adminAccess, deleteAd);
 
 

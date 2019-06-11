@@ -50,7 +50,7 @@ describe('User Authentication:', () => {
             .end((err, res) => {
                 expect(res.body.status).to.be.eql(201);
                 expect(res.body).to.be.an('object'); 
-                expect(res.body.data).to.be.an('array'); 
+                expect(res.body.data).to.be.an('object'); 
                 expect(res.body.message).to.deep.equal('Successfully Signed Up!');
                 done();
             });

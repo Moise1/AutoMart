@@ -1,6 +1,7 @@
 import Joi from 'joi'; 
 
 const signUpFields = (user) => {
+    
     const schema = {
         first_name: Joi.string().regex(/^\S+$/).min(3).max(20).required(),
         last_name: Joi.string().regex(/^\S+$/).min(3).max(20).required(),
