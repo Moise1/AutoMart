@@ -2,6 +2,7 @@ import orders from '../models/orderModel';
 import orderFields from '../helpers/orderValidator';
 import ads from '../models/adModel'; 
 import moment from 'moment';
+import lodash from 'lodash';
 
 
 const Order = {
@@ -42,6 +43,13 @@ const Order = {
                 created_on: created_on
             };
 
+            // Checking whether the user and the car id already working.
+            
+            if(orders.some(order => order.buyer === newOrder.buyer && order.car_id === newOrder.car_id)) return res.status(400).json({
+                status: 400, 
+                error: 'Sorry! You can\'t purchase this car more than once.'
+            })
+
             orders.push(newOrder); 
             return res.status(201).json({
                 status: 201, 
@@ -62,13 +70,14 @@ const Order = {
 
     async updateOrder(req, res){
 
-        const new_price = req.body;
+        let new_price = req.body;
         let m = moment();
         const modified_on = m.format('hh:mm a, DD-MM-YYYY'); 
+        
+
        
         try{
             const findOrder = orders.find(order => order.order_id === parseInt(req.params.order_id));
-        
             if(!findOrder){
                 return res.status(404).json({
                     status: 404, 
@@ -77,17 +86,16 @@ const Order = {
             }; 
 
             if(findOrder.status === 'pending'){
-                findOrder.old_price_offered = findOrder.price_offered;
+
+                findOrder.old_price_offered = findOrder.new_price_offered;
                 Reflect.ownKeys(new_price).forEach(key =>{
-                    findOrder.new_price_offered = "$" + new_price[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+                    findOrder.new_price_offered = "$" + new_price[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }); 
-
                 findOrder.modified_on = modified_on;
-
                 return res.status(200).json({
                     status: 200, 
                     message: 'Order\'s  Price Successfully Updated!', 
-                    data: [findOrder]
+                    data: [lodash.omit(findOrder, ['price_offered'])]
                 })
             }else{
                 return res.status(400).json({

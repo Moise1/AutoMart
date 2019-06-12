@@ -46,7 +46,7 @@ describe('Testing Purchase Order', () => {
             .set('Authorization', `Bearer ${buyerToken}`)
             .send(validOrder)
             .end((err, res) => {
-                let order_id = 2;
+                let order_id = 1;
                 chai
                     .request(app)
                     .patch(`/api/v1/order/${order_id}/price`)

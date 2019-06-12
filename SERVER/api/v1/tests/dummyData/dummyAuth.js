@@ -37,5 +37,26 @@ export default {
         id: 3, 
         email: 'olivier@gmail.com',
         is_admin: false, 
+    }, 
+    anotherUser: {
+        first_name: 'jane', 
+        last_name: 'kale', 
+        email: 'jane@gmail.com', 
+        password: 'ma12345',
+        address: 'kigali'
+    },
+
+    updatedUser: {
+        first_name: 'jane', 
+        last_name: 'kale', 
+        email: 'jane@gmail.com', 
+        password: 'ma12345',
+        address: 'kigali', 
+        is_admin: 'true'
+    }, 
+    tokenizedAdmin: {
+        id: 1, 
+        email: 'john@gmail.com', 
+        is_admin: true
     }
 }

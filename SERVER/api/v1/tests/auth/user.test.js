@@ -4,13 +4,20 @@ import chai, {
 import chaiHttp from 'chai-http';
 import app from '../../../../server';
 import dummyAuth from '../dummyData/dummyAuth';
+import tokenMan from '../../helpers/tokenMan';
 
 const {
     validSignUp,
     invalidSignUp, 
     validLogin, 
-    invalidLogin
+    invalidLogin, 
+    updatedUser, 
+    tokenizedAdmin, 
+    anotherUser
 } = dummyAuth
+
+
+const adminToken = tokenMan.tokenizer(tokenizedAdmin);
 
 chai.use(chaiHttp);
 
@@ -48,7 +55,6 @@ describe('User Authentication:', () => {
             .post('/api/v1/auth/signup')
             .send(validSignUp)
             .end((err, res) => {
-                // console.log('Sign up',res.body);
                 expect(res.body.status).to.be.eql(201);
                 expect(res.body).to.be.an('object'); 
                 expect(res.body.data).to.be.an('object'); 
@@ -76,10 +82,9 @@ describe('User Authentication:', () => {
             .post('/api/v1/auth/signin')
             .send(validLogin)
             .end((err, res) => {
-                // console.log('log in:', res.body);
                 expect(res.body.status).to.be.eql(200);
                 expect(res.body).to.be.an('object'); 
-                expect(res.body.data).to.be.an('array'); 
+                expect(res.body.data).to.be.an('object'); 
                 expect(res.body.message).to.deep.equal('Successfully Signed In!');
                 done();
             });
@@ -90,11 +95,34 @@ describe('User Authentication:', () => {
             .post('/api/v1/auth/signin')
             .send(invalidLogin)
             .end((err, res) => {
-                // console.log('Don\'t log in', res.body);
                 expect(res.body.status).to.be.eql(401);
                 expect(res.body).to.be.an('object'); 
                 expect(res.body.error).to.deep.equal('Invalid Password');
                 done();
             });
     })
+
+    it('Should update the is_admin status of the existing user', (done)=>{
+        chai
+            .request(app)
+            .post('/api/v1/auth/signup')
+            .send(anotherUser)
+            .end(() => {
+
+                let id = 3; 
+                chai 
+                .request(app)
+                .patch(`/api/v1/users/${id}`)
+                .set('Authorization', `Bearer ${adminToken}`)
+                .send(updatedUser) 
+                .end((err, res)=>{
+                    expect(res.body).to.be.an('object'); 
+                    expect(res.body.status).to.equal(200); 
+                    expect(res.body.data).to.be.an('object'); 
+                    expect(res.body.message).to.deep.equal(`User number ${id} successfully updated!`); 
+                    done();
+                })
+            });
+    })
+
 })

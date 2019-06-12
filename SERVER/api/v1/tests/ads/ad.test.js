@@ -37,7 +37,7 @@ describe('Car Sale Ad Test', () => {
             .end((err, res) => {
                 expect(res.body).to.be.an('object'); 
                 expect(res.body.status).to.be.equal(201); 
-                expect(res.body.data).to.be.an('array'); 
+                expect(res.body.data).to.be.an('object'); 
                 expect(res.body.message).to.deep.equal('Ad Successfully Created!');
                 done();
             })
@@ -170,7 +170,7 @@ describe('Car Sale Ad Test', () => {
         .post('/api/v1/car')
         .set('Authorization', `Bearer ${sellerToken}`)
         .send(validAdOne)
-        .end((err, res) => {
+        .end(() => {
            
             let car_id = 1;
             chai
@@ -220,7 +220,7 @@ describe('Car Sale Ad Test', () => {
         .post('/api/v1/car')
         .set('Authorization', `Bearer ${sellerToken}`)
         .send(validAdOne)
-        .end((err, res) => {
+        .end(() => {
            
             let car_id = 1;
             chai

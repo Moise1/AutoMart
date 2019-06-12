@@ -44,7 +44,7 @@ const Ad = {
             return res.status(201).json({
                 status: 201,
                 message: 'Ad Successfully Created!',
-                data: ads
+                data: ads[ads.length -1]
             })
         } catch (err) {
             return res.status(500).json({
@@ -95,9 +95,9 @@ const Ad = {
                 })
             }
 
-            return res.status(404).json({
-            status: 404,
-             error: 'No results match your search'
+            return res.status(403).json({
+            status: 403,
+             error: 'Sorry! You\'re not the admin'
             });
 
         } catch (err) {
