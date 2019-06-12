@@ -10,6 +10,8 @@
 
 Access AutoMart's API from [Heroku](https://moise-automart.herokuapp.com/).
 
+Check my API documentation on [Apiary](https://automartapi.docs.apiary.io/#reference)
+
 ###  Required features for user: 
 
 * User(buyer or seller)  can sign up .<br/>
