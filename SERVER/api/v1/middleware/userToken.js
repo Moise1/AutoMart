@@ -37,7 +37,7 @@ const adminAccess = (req, res, next) => {
     } else {
         return res.status(403).json({
             status: 403,
-            messsage: 'Sorry! admin access only!'
+            messsage: 'Sorry! you\'re not the admin.'
         });
     }
 };

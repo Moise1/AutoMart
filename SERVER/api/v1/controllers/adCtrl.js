@@ -44,7 +44,7 @@ const Ad = {
             return res.status(201).json({
                 status: 201,
                 message: 'Ad Successfully Created!',
-                data: ads[ads.length -1]
+                data: ads[ads.length - 1]
             })
         } catch (err) {
             return res.status(500).json({
@@ -76,10 +76,10 @@ const Ad = {
 
                 });
             };
-        
-            if (req.query.status === "avilable" &&  "$" + req.query.min_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") >= minCarPrice && "$" + req.query.max_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) {
+
+            if (req.query.status === "avilable" && "$" + req.query.min_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") >= minCarPrice && "$" + req.query.max_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) {
                 // Available cars within a certain range.    
-                const priceRange = ads.filter(ad => ad.status ===  "available" &&  ad.price >= minCarPrice && ad.price <= maxCarPrice);
+                const priceRange = ads.filter(ad => ad.status === "available" && ad.price >= minCarPrice && ad.price <= maxCarPrice);
                 return res.status(200).json({
                     staus: 200,
                     message: 'Cars within that price range',
@@ -87,17 +87,17 @@ const Ad = {
                 })
             };
 
-            if(req.user.is_admin === true){
+            if (req.user.is_admin === true) {
                 return res.status(200).json({
-                    status: 200, 
-                    message: 'Here are all the cars!', 
+                    status: 200,
+                    message: 'Here are all the cars!',
                     data: ads
                 })
             }
 
             return res.status(403).json({
-            status: 403,
-             error: 'Sorry! You\'re not the admin'
+                status: 403,
+                error: 'Sorry! You\'re not the admin'
             });
 
         } catch (err) {
@@ -165,28 +165,29 @@ const Ad = {
                 error: err.message
             });
         }
-    }, 
+    },
 
-    async deleteAd(req, res){
+    async deleteAd(req, res) {
+
         const findAd = ads.find(ad => ad.car_id === parseInt(req.params.car_id));
+        
+        if (!findAd) {
+            return res.status(404).json({
+                status: 404,
+                error: `Car sale ad number ${req.params.car_id} is not found!`
+            });
+        };
 
-        try{
-            if (!findAd) {
-                return res.status(404).json({
-                    status: 404,
-                    error: `Car sale ad number ${req.params.car_id} is not found!`
+        try {
+                const index = ads.indexOf(findAd);
+                ads.splice(index, 1);
+                return res.status(200).json({
+                    status: 200,
+                    message: `Car sale ad number ${req.params.car_id} successfully deleted!`,
                 });
-            };
-
-            const index = ads.indexOf(findAd);
-            ads.splice(index, 1);
-            return res.status(200).json({
-                status: 200, 
-                message: `Car sale ad number ${req.params.car_id} successfully deleted!`,
-            })
-        }catch(err){
+        } catch (err) {
             return res.status(500).json({
-                status: 500, 
+                status: 500,
                 error: err.message
             })
         }

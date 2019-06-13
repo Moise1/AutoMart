@@ -45,9 +45,9 @@ const Order = {
 
             // Checking whether the user and the car id already working.
             
-            if(orders.some(order => order.buyer === newOrder.buyer && order.car_id === newOrder.car_id)) return res.status(400).json({
-                status: 400, 
-                error: 'Sorry! You can\'t purchase this car more than once.'
+            if(orders.some(order => order.buyer === newOrder.buyer && order.car_id === newOrder.car_id)) return res.status(409).json({
+                status: 409, 
+                error: 'Sorry! The purchase order already exists.'
             })
 
             orders.push(newOrder); 
