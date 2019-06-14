@@ -52,8 +52,8 @@ const User = {
             
             // Check whether the email is already taken. 
     
-            if(users.some(us => us.email === email)) return res.status(400).json({
-                status: 400, 
+            if(users.some(us => us.email === email)) return res.status(409).json({
+                status: 409, 
                 error: 'Sorry! Email already taken.'
             }) 
             users.push(newUser);
