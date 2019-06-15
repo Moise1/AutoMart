@@ -49,7 +49,7 @@ typingEffect();
 		 return;
         
     };
-    window.location.assign('./pages/cars.html');
+    window.location.assign('./pages/buyCar.html');
 }
 
 
