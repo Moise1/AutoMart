@@ -1,10 +1,9 @@
-import users from '../models/userModel';
+import userModel from '../models/userModel';
 import tokenMan from '../helpers/tokenMan';
 import {
     signUpFields,
     loginFields
 } from '../helpers/userValidator';
-import hasher from '../helpers/password';
 import decryptor from '../helpers/password';
 import lodash from 'lodash';
 
@@ -22,49 +21,32 @@ const User = {
             error: error.details[0].message
         });
 
-        const id = users.length + 1;
-        const is_admin = false;
-        const {
-            first_name,
-            last_name,
-            email,
-            password,
-            address
-        } = req.body
-
-        const hashed_password = await hasher.hashingPassword(password, 10);
-
         try {
 
-            const newUser = {
-                token: tokenMan.tokenizer({
-                    id,
-                    is_admin,
-                }),
-                id: id,
-                first_name: first_name,
-                last_name: last_name,
-                email: email.toLowerCase(),
-                password: hashed_password,
-                address: address,
-                is_admin: is_admin,
-            }
-            
-            // Check whether the email is already taken. 
-    
-            if(users.some(us => us.email === email)) return res.status(409).json({
-                status: 409, 
-                error: 'Sorry! Email already taken.'
-            }) 
-            users.push(newUser);
+            // Find if email is already taken! 
 
-            Promise.all(users).then(async values => {
-                return res.status(201).json({
-                    status: 201,
-                    message: 'Successfully Signed Up!',
-                    data: lodash.omit(values[values.length -1], ['password'])
+            const oneMail = await userModel.findMail(req.body.email);
+            if (oneMail.rows.length !== 0) {
+                return res.status(409).json({
+                    status: 409,
+                    message: 'Email already taken!'
                 })
+            }
+            const {
+                rows
+            } = await userModel.create(req.body);
+
+            const token = tokenMan.tokenizer({
+                id: rows[0].id,
+                is_admin: rows[0].is_admin
             });
+            const returnedResponse = {
+                status: 201,
+                message: 'Successfully Signed Up!',
+                userToken: token,
+                data: lodash.omit(rows[0], ['password'])
+            };
+            return res.status(201).json(returnedResponse);
 
         } catch (err) {
             return res.status(500).json({
@@ -74,7 +56,6 @@ const User = {
         }
     },
 
-    // User Sign In
     async userSignIn(req, res) {
         const {
             error
@@ -86,41 +67,46 @@ const User = {
         });
 
         try {
+
             const {
                 email,
                 password
             } = req.body;
 
+            // Check if email exists.
+            const {
+                rows
+            } = await userModel.findMail(email);
 
-            Promise.all(users).then( async values => {
-                const userFinder = values.find(user => user.email === email);
+            if (rows.length == 0) {
+                return res.status(404).json({
+                    status: 404,
+                    error: 'User not found!'
+                })
+            };
 
-                if (!userFinder) {
-                    return res.status(404).json({
-                        status: 404,
-                        error: `User with email ${email} is not found!`
-                    })  
-                };
-                const matched = await decryptor.isSame(password, userFinder.password);
-                if (!matched) {
-                    return res.status(401).json({
-                        status: 401,
-                        error: 'Invalid Password'
-                    })
-                }
+            const matcher = await decryptor.isSame(password, rows[0].password);
 
-                const token = await tokenMan.tokenizer({
-                    id: userFinder.id,
-                    email: userFinder.email,
-                    is_admin: userFinder.is_admin,
-                });
-                return res.header('Authorization', `Bearer ${token}`).status(200).json({
-                    status: 200,
-                    message: 'Successfully Signed In!',
-                    data: lodash.omit(userFinder, ['password'])
-                });
-
+            if (!matcher) return res.status(401).json({
+                status: 401,
+                error: 'Invalid Password!'
             });
+
+            const accessToken = tokenMan.tokenizer({
+                id: rows[0].id,
+                email: rows[0].email,
+                is_admin: rows[0].is_admin
+            });
+
+            const returnedResponse = {
+                status: 200,
+                message: 'Successfully Signed In!',
+                data: [{
+                    accessToken
+                }]
+            }
+
+            return res.header('Authorization', `Bearer ${accessToken}`).status(200).json(returnedResponse);
 
         } catch (err) {
             return res.status(500).json({
@@ -128,34 +114,43 @@ const User = {
                 error: err.message
             })
         }
-    }, 
+    },
 
-    // Set user's admin status to true 
+    // Update the user's admin status.
 
     async updateUser(req, res){
 
-        const findUser = users.find(user => user.id === parseInt(req.params.id));
         try{
-                if(!findUser) return res.status(404).json({
-                    status: 404, 
-                    error: `User number ${req.params.id} not found!`
-                }); 
-                
-                findUser.is_admin = Boolean(req.body.is_admin === 'true');  
+               
+    const {
+        id
+    } = req.params;
 
-                return res.status(200).json({
-                    status: 200, 
-                    message: `User number ${req.params.id} successfully updated!`,
-                    data: lodash.omit(findUser, ['password'])
-                });
 
+    const uniqueUser = await userModel.findUser(id);
+
+    if(uniqueUser.rows.length === 0) {
+        return res.status(404).json({
+            status: 404,
+            error: `User ${id} not found!`
+        })
+    }
+
+    const {
+        rows
+    } = await userModel.updateUser(id, req.body);
+    return res.status(200).json({
+        status: 200,
+        message: 'User successfully updated!',
+        data: lodash.omit(rows[0], ['password'])
+    })
         }catch(err){
             return res.status(500).json({
                 status: 500, 
                 error: err.message
             })
         }
-        
+
     }
 }
 

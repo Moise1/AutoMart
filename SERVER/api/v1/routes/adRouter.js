@@ -16,7 +16,8 @@ const {
     createAd,
     getAllCars,
     getOneAd,
-    updateAd,
+    updateStatus,
+    updatePrice,
     deleteAd
 } = Ad;
 
@@ -27,8 +28,8 @@ adRouter.use(json());
 adRouter.post('/api/v1/car', tokenExists, userAccess, createAd);
 adRouter.get('/api/v1/car', tokenExists, userAccess, getAllCars);
 adRouter.get('/api/v1/car/:car_id', tokenExists, userAccess, getOneAd);
-adRouter.patch('/api/v1/car/:car_id/status', tokenExists, userAccess, updateAd);
-adRouter.patch('/api/v1/car/:car_id/price', tokenExists, userAccess, updateAd);
+adRouter.patch('/api/v1/car/:car_id/status', tokenExists, userAccess, updateStatus);
+adRouter.patch('/api/v1/car/:car_id/price', tokenExists, userAccess, updatePrice);
 adRouter.delete('/api/v1/car/:car_id', tokenExists, userAccess, adminAccess, deleteAd);
 
 
