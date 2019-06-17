@@ -81,7 +81,7 @@ const User = {
             if (rows.length == 0) {
                 return res.status(404).json({
                     status: 404,
-                    error: 'User not found!'
+                    error: 'User with this email is not found!'
                 })
             };
 
