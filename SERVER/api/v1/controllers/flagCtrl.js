@@ -1,4 +1,4 @@
-import flags from '../models/flagModel'; 
+import frauds from '../models/flagModel'; 
 import flagFields from '../helpers/flagValidator';
 import ads from '../models/adModel';
 import moment from 'moment'; 
@@ -29,19 +29,26 @@ const Flag = {
                 error: `Sorry, car number ${req.body.car_id} not found!`
             })
     
-            const newFlag = {
-                id: flags.length + 1, 
+            const newFraud = {
+                id: frauds.length + 1, 
                 car_id: findAd.car_id, 
                 reason: reason, 
                 description: description, 
                 created_on: created_on
             }
 
-            flags.push(newFlag); 
+            // Checking whether the car has been flagged before.
+            
+            if(frauds.some(fraud => fraud.car_id === newFraud.car_id)) return res.status(409).json({
+                status: 409, 
+                error: `Sorry! This car number ${req.body.car_id} is already flagged!`
+            });
+
+            frauds.push(newFraud); 
             return res.status(201).json({
                 status: 201, 
                 message: 'Fraud Report Created!', 
-                data: flags[flags.length -1]
+                data: frauds[frauds.length -1]
             })
 
         }catch(error){

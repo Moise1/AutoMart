@@ -137,11 +137,12 @@ const Ad = {
 
     // Seller update the status or price of the car/car ad.
 
-    async updateAd(req, res) {
+    async updateStatus(req, res) {
         const findAd = ads.find(ad => ad.car_id === parseInt(req.params.car_id));
         let m = moment();
         const modified_on = m.format('hh:mm a,  DD-MM-YYYY');
         try {
+
             if (!findAd) {
                 return res.status(404).json({
                     status: 404,
@@ -150,12 +151,41 @@ const Ad = {
             };
 
             findAd.status = req.body.status || findAd.status;
+            findAd.modified_on = modified_on;
+
+            return res.status(200).json({
+                status: 200,
+                message: 'Ad\'s status  successfully updated!',
+                data: [findAd]
+            });
+
+        } catch (err) {
+            return res.status(500).json({
+                status: 500,
+                error: err.message
+            });
+        }
+    },
+
+    async updatePrice(req, res){
+        const findAd = ads.find(ad => ad.car_id === parseInt(req.params.car_id));
+        let m = moment();
+        const modified_on = m.format('hh:mm a,  DD-MM-YYYY');
+
+        try {
+            if (!findAd) {
+                return res.status(404).json({
+                    status: 404,
+                    error: `Car sale ad number ${req.params.car_id} is not found!`
+                });
+            };
+
             findAd.price = "$" + req.body.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") || findAd.price;
             findAd.modified_on = modified_on;
 
             return res.status(200).json({
                 status: 200,
-                message: 'Ad successfully updated!',
+                message: 'Ad\'s price successfully updated!',
                 data: [findAd]
             });
 
