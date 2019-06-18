@@ -198,7 +198,7 @@ class Ad {
     }
 
     static async deleteAd(req, res) {
-        
+
         try {
             const {
                 car_id
