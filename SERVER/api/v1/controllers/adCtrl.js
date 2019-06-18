@@ -151,7 +151,6 @@ class Ad{
     }
 
     // Seller update the status or price of the car/car ad.
-
     static  async updateStatus(req, res) {
         const findAd = ads.find(ad => ad.car_id === parseInt(req.params.car_id));
         let m = moment();
