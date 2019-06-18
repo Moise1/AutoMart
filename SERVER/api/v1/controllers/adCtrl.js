@@ -1,4 +1,5 @@
-import ads from '../models/adModel';
+import adModel from '../models/adModel';
+import userModel from '../models/userModel';
 import adFields from '../helpers/adValidator';
 import moment from 'moment';
 
@@ -15,37 +16,30 @@ const Ad = {
             error: error.details[0].message
         });
 
-        let m = moment();
-        const created_on = m.format('hh:mm a , DD-MM-YYYY');
-
-        const {
-            manufacturer,
-            body_type,
-            model,
-            state,
-            price,
-            status
-        } = req.body;
 
         try {
-            const owner = req.user.email;
-            const newAd = {
-                car_id: ads.length + 1,
-                owner: owner,
-                manufacturer: manufacturer,
-                body_type: body_type,
-                model: model,
-                state: state,
-                status: status || "available",
-                price: "$" + parseFloat(price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                created_on: created_on
-            };
-            ads.push(newAd);
+
+            const owner_email = req.user.email; 
+
+            const owner_data = await userModel.findMail(owner_email); 
+
+            if (!owner_data.rows.length === 0) {
+                return res.status(404).json({
+                    status: 404,
+                    error: 'User with that email not found!'
+                })
+            }; 
+            const {
+                rows
+            } = await adModel.makeAd(req.body, owner_data.rows[0].email); 
+
             return res.status(201).json({
                 status: 201,
-                message: 'Ad Successfully Created!',
-                data: ads[ads.length - 1]
-            })
+                message: 'Car sale ad successfully created!',
+                data: rows[0]
+            });
+
+    
         } catch (err) {
             return res.status(500).json({
                 status: 500,
