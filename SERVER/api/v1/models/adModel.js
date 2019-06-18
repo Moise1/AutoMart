@@ -40,6 +40,26 @@ class CarSaleAd{
         return queryResult;
 
     }
+
+    // Return all cars (sold & available)
+    async allCars(){
+        const queryText = 'SELECT * FROM ads'; 
+        const queryResult = await db.query(queryText) 
+        return queryResult;
+    }
+
+    //  Get a car's status
+    async availableCars(theAvailable){
+        const queryText = 'SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.email  WHERE ads.status=$1'; 
+        const queryResult = await db.query(queryText, [theAvailable]); 
+        return queryResult; 
+    } 
+
+    async priceRange(certainPrices){
+        const queryText = 'SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.email  WHERE ads.status=$1 AND ads.price=$2'; 
+        const queryResult = await db.query(queryText, [certainPrices]); 
+        return queryResult;
+    }
 }
 
 export default new CarSaleAd;

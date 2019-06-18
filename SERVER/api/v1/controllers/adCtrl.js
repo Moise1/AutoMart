@@ -19,19 +19,20 @@ const Ad = {
 
         try {
 
-            const owner_email = req.user.email; 
+            const owner_email= req.user.email; 
 
             const owner_data = await userModel.findMail(owner_email); 
 
             if (!owner_data.rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
-                    error: 'User with that email not found!'
+                    error: 'User not found!'
                 })
             }; 
             const {
                 rows
-            } = await adModel.makeAd(req.body, owner_data.rows[0].email); 
+            } = await adModel.makeAd(req.body, owner_data.rows[0].email);
+            
 
             return res.status(201).json({
                 status: 201,
@@ -56,36 +57,42 @@ const Ad = {
             min: 0,
             max: 500000000000
         }
-        const maxCarPrice = "$" + range.max.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        const minCarPrice = "$" + range.min.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        const maxCarPrice =  range.max;
+        const minCarPrice = range.min;
 
         try {
             if (req.query.status === "available") {
+
                 // cars with just "available" status.
-                const available = ads.filter(ad => ad.status === "available");
+                const available_cars = req.query.status;
+               const {rows} = await adModel.availableCars(available_cars); 
+
                 return res.status(200).json({
                     status: 200,
                     message: 'Here are all available cars',
-                    data: available
+                    data: rows
 
                 });
             };
 
-            if (req.query.status === "avilable" && "$" + req.query.min_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") >= minCarPrice && "$" + req.query.max_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) {
+            if (req.query.status === "avilable" &&  req.query.min_price >= minCarPrice && req.query.max_price <= maxCarPrice) {
                 // Available cars within a certain range.    
-                const priceRange = ads.filter(ad => ad.status === "available" && ad.price >= minCarPrice && ad.price <= maxCarPrice);
+                const somePrices= req.query.status && req.query.min_price && req.query.max_price;
+                const {rows} = await adModel.priceRange(somePrices);
                 return res.status(200).json({
                     staus: 200,
                     message: 'Cars within that price range',
-                    data: priceRange
+                    data: rows
                 })
             };
 
             if (req.user.is_admin === true) {
+                
+                const {rows} = await adModel.allCars(); 
                 return res.status(200).json({
                     status: 200,
                     message: 'Here are all the cars!',
-                    data: ads
+                    data: rows
                 })
             }
 
