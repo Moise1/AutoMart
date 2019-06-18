@@ -21,7 +21,7 @@ class TableDropper {
     async dropTables(){
 
         const removeTables = 
-        `DROP TABLE IF EXISTS users CASCADE;`;
+        `DROP TABLE IF EXISTS users, ads CASCADE;`;
 
          this.pool.query(removeTables)
          .then((res) => {
@@ -31,10 +31,6 @@ class TableDropper {
              console.log(err);
          });
     }
-
-
-    
-
 }
 
 new TableDropper();
