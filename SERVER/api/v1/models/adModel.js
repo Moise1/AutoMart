@@ -71,6 +71,15 @@ class CarSaleAd{
 
     }
 
+    async removeAd(id) {
+        const {
+            rows
+        } = await this.specificAd(id);
+        const queryText = 'DELETE FROM ads WHERE car_id=$1';
+        const queryResult = await db.query(queryText, [rows[0].car_id]);
+        return queryResult;
+    }
+
     //  Get a car's status
     async availableCars(theAvailable){
         const queryText = 'SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.email  WHERE ads.status=$1'; 
