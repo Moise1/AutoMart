@@ -1,6 +1,5 @@
 import db from '../db/dbIndex'; 
 import moment from 'moment'; 
-import { stat } from 'fs';
 
 class CarSaleAd{
     async makeAd(req, owner){
@@ -55,6 +54,21 @@ class CarSaleAd{
         const queryText = 'SELECT * FROM ads WHERE car_id=$1';
         const queryResult = await db.query(queryText, [id]);
         return queryResult; 
+    }
+
+    async theUpdater(id, input){
+        const theMoment = moment(); 
+        const {
+            rows
+        } = await this.specificAd(id);
+        const status = input.status;
+        const price = input.price;
+        const modified_on = theMoment.format('YYYY-MM-DD');
+
+        const queryText = 'UPDATE ads SET status=$1, price=$2, modified_on=$3 WHERE car_id=$4 RETURNING *';
+        const queryResult = await db.query(queryText, [status, price, modified_on, rows[0].car_id]);
+        return queryResult;
+
     }
 
     //  Get a car's status
