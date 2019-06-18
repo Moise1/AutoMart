@@ -123,20 +123,23 @@ class Ad{
     // Seller get a single car/car ad. 
     
      static async getOneAd(req, res) {
-
-        const findAd = ads.find(ad => ad.car_id === parseInt(req.params.car_id));
+        
         try {
-            if (!findAd) {
+
+            const {car_id} = req.params; 
+
+            const {rows} = await adModel.specificAd(parseInt(car_id)); 
+
+            if (rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
-                    error: `Car sale ad number ${req.params.car_id} is not found!`
+                    error: `Car sale ad number ${car_id} is not found!`
                 })
             };
-
             return res.status(200).json({
                 status: 200,
                 message: 'Congs, here\'s your result!',
-                data: [findAd]
+                data: rows[0]
             })
 
         } catch (err) {

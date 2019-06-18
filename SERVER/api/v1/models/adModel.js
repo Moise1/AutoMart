@@ -49,6 +49,14 @@ class CarSaleAd{
         return queryResult;
     }
 
+    // Return a specific car sale ad. 
+
+    async specificAd(id){
+        const queryText = 'SELECT * FROM ads WHERE car_id=$1';
+        const queryResult = await db.query(queryText, [id]);
+        return queryResult; 
+    }
+
     //  Get a car's status
     async availableCars(theAvailable){
         const queryText = 'SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.email  WHERE ads.status=$1'; 
