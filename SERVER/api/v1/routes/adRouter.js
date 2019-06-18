@@ -12,25 +12,16 @@ import {
     
 } from '../middleware/userToken';
 
-const {
-    createAd,
-    getAllCars,
-    getOneAd,
-    updateStatus,
-    updatePrice,
-    deleteAd
-} = Ad;
-
 const adRouter = express.Router();
 
 adRouter.use(json());
 
-adRouter.post('/api/v1/car', tokenExists, userAccess, createAd);
-adRouter.get('/api/v1/car', tokenExists, userAccess, getAllCars);
-adRouter.get('/api/v1/car/:car_id', tokenExists, userAccess, getOneAd);
-adRouter.patch('/api/v1/car/:car_id/status', tokenExists, userAccess, updateStatus);
-adRouter.patch('/api/v1/car/:car_id/price', tokenExists, userAccess, updatePrice);
-adRouter.delete('/api/v1/car/:car_id', tokenExists, userAccess, adminAccess, deleteAd);
+adRouter.post('/api/v1/car', tokenExists, userAccess, Ad.createAd);
+adRouter.get('/api/v1/car', tokenExists, userAccess, Ad.getAllCars);
+adRouter.get('/api/v1/car/:car_id', tokenExists, userAccess, Ad.getOneAd);
+adRouter.patch('/api/v1/car/:car_id/status', tokenExists, userAccess, Ad.updateStatus);
+adRouter.patch('/api/v1/car/:car_id/price', tokenExists, userAccess, Ad.updatePrice);
+adRouter.delete('/api/v1/car/:car_id', tokenExists, userAccess, adminAccess, Ad.deleteAd);
 
 
 export default adRouter;

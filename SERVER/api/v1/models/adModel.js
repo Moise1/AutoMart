@@ -1,5 +1,6 @@
 import db from '../db/dbIndex'; 
 import moment from 'moment'; 
+import { stat } from 'fs';
 
 class CarSaleAd{
     async makeAd(req, owner){
@@ -55,9 +56,14 @@ class CarSaleAd{
         return queryResult; 
     } 
 
-    async priceRange(certainPrices){
-        const queryText = 'SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.email  WHERE ads.status=$1 AND ads.price=$2'; 
-        const queryResult = await db.query(queryText, [certainPrices]); 
+    async findPrice(){
+        const queryText = 'SELECT ads.price FROM  ads';
+        const queryResult = await db.query(queryText);
+        return queryResult; 
+    }
+    async priceRange(carStatus, minimum, maximum){
+        const queryText = 'SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.email  WHERE ads.status=$1 AND ads.price >=$2 AND ads.price <=$3'; 
+        const queryResult = await db.query(queryText, [carStatus, minimum, maximum]); 
         return queryResult;
     }
 }
