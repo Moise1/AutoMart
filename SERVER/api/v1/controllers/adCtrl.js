@@ -3,10 +3,10 @@ import userModel from '../models/userModel';
 import adFields from '../helpers/adValidator';
 import moment from 'moment';
 
-const Ad = {
+class Ad {
 
     // Create a new car/car ad. 
-    async createAd(req, res) {
+    static async createAd(req, res) {
         const {
             error
         } = adFields(req.body);
@@ -19,19 +19,20 @@ const Ad = {
 
         try {
 
-            const owner_email = req.user.email; 
+            const owner_email = req.user.email;
 
-            const owner_data = await userModel.findMail(owner_email); 
+            const owner_data = await userModel.findMail(owner_email);
 
             if (!owner_data.rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
-                    error: 'User with that email not found!'
+                    error: 'User not found!'
                 })
-            }; 
+            };
             const {
                 rows
-            } = await adModel.makeAd(req.body, owner_data.rows[0].email); 
+            } = await adModel.makeAd(req.body, owner_data.rows[0].email);
+
 
             return res.status(201).json({
                 status: 201,
@@ -39,7 +40,7 @@ const Ad = {
                 data: rows[0]
             });
 
-    
+
         } catch (err) {
             return res.status(500).json({
                 status: 500,
@@ -47,51 +48,74 @@ const Ad = {
             })
         }
 
-    },
+    }
 
     // User get all unsold cars. 
-    async getAllCars(req, res, next) {
-
-        const range = {
-            min: 0,
-            max: 500000000000
-        }
-        const maxCarPrice = "$" + range.max.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        const minCarPrice = "$" + range.min.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    static async getAllCars(req, res, next) {
 
         try {
+
+            let {
+                rows
+            } = await adModel.findPrice();
+            const thePrice = rows;
+            // console.log('The Price:',thePrice);
+
+            if (req.query.status === 'available' && req.query.min_price >= thePrice && req.query.max_price <= thePrice) {
+
+                // Available cars within a certain range. 
+                const finishedFilter = [req.query.status, req.query.min_price, req.query.max_price];
+
+                // console.log('The Range:', inSomeRange); 
+                const {
+                    inRange
+                } = await adModel.priceRange(finishedFilter);
+
+
+                if (!theAVailable[0]) {
+                    return res.status(404).json({
+                        status: 404,
+                        error: 'No cars in that price range!'
+                    })
+                }
+                return res.status(200).json({
+                    staus: 200,
+                    message: 'Cars within that price range',
+                    data: inRange
+                });
+            };
+
             if (req.query.status === "available") {
+
                 // cars with just "available" status.
-                const available = ads.filter(ad => ad.status === "available");
+                const available_cars = req.query.status;
+                const {
+                    rows
+                } = await adModel.availableCars(available_cars);
+
                 return res.status(200).json({
                     status: 200,
                     message: 'Here are all available cars',
-                    data: available
+                    data: rows
 
                 });
             };
 
-            if (req.query.status === "avilable" && "$" + req.query.min_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") >= minCarPrice && "$" + req.query.max_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) {
-                // Available cars within a certain range.    
-                const priceRange = ads.filter(ad => ad.status === "available" && ad.price >= minCarPrice && ad.price <= maxCarPrice);
-                return res.status(200).json({
-                    staus: 200,
-                    message: 'Cars within that price range',
-                    data: priceRange
-                })
-            };
-
             if (req.user.is_admin === true) {
+
+                const {
+                    rows
+                } = await adModel.allCars();
                 return res.status(200).json({
                     status: 200,
                     message: 'Here are all the cars!',
-                    data: ads
+                    data: rows
                 })
             }
 
             return res.status(403).json({
                 status: 403,
-                error: 'Sorry! You\'re not the admin'
+                error: 'Sorry! Only admin authorized.'
             });
 
         } catch (err) {
@@ -101,24 +125,32 @@ const Ad = {
             })
         }
 
-    },
+    }
 
     // Seller get a single car/car ad. 
-    async getOneAd(req, res) {
 
-        const findAd = ads.find(ad => ad.car_id === parseInt(req.params.car_id));
+    static async getOneAd(req, res) {
+
         try {
-            if (!findAd) {
+
+            const {
+                car_id
+            } = req.params;
+
+            const {
+                rows
+            } = await adModel.specificAd(parseInt(car_id));
+
+            if (rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
-                    error: `Car sale ad number ${req.params.car_id} is not found!`
+                    error: `Car sale ad number ${car_id} is not found!`
                 })
             };
-
             return res.status(200).json({
                 status: 200,
                 message: 'Congs, here\'s your result!',
-                data: [findAd]
+                data: rows[0]
             })
 
         } catch (err) {
@@ -127,30 +159,34 @@ const Ad = {
                 error: err.message
             });
         }
-    },
+    }
 
     // Seller update the status or price of the car/car ad.
 
-    async updateStatus(req, res) {
-        const findAd = ads.find(ad => ad.car_id === parseInt(req.params.car_id));
-        let m = moment();
-        const modified_on = m.format('hh:mm a,  DD-MM-YYYY');
+    static async updateCarAd(req, res) {
+
+
         try {
 
-            if (!findAd) {
+            const {
+                car_id
+            } = req.params;
+            const theCar = await adModel.specificAd(parseInt(car_id));
+
+            if (theCar.rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
-                    error: `Car sale ad number ${req.params.car_id} is not found!`
+                    error: `Car sale ad number ${theCar} is not found!`
                 });
             };
 
-            findAd.status = req.body.status || findAd.status;
-            findAd.modified_on = modified_on;
-
+            const {
+                rows
+            } = await adModel.theUpdater(car_id, req.body);
             return res.status(200).json({
                 status: 200,
-                message: 'Ad\'s status  successfully updated!',
-                data: [findAd]
+                message: 'The Ad\'s  successfully updated!',
+                data: rows[0]
             });
 
         } catch (err) {
@@ -159,56 +195,29 @@ const Ad = {
                 error: err.message
             });
         }
-    },
+    }
 
-    async updatePrice(req, res){
-        const findAd = ads.find(ad => ad.car_id === parseInt(req.params.car_id));
-        let m = moment();
-        const modified_on = m.format('hh:mm a,  DD-MM-YYYY');
+    static async deleteAd(req, res) {
 
         try {
-            if (!findAd) {
+            const {
+                car_id
+            } = req.params
+            const {
+                rows
+            } = await adModel.specificAd(parseInt(car_id));
+
+            if (rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
-                    error: `Car sale ad number ${req.params.car_id} is not found!`
+                    error: `Car sale ad number ${car_id} is not found!`
                 });
             };
-
-            findAd.price = "$" + req.body.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") || findAd.price;
-            findAd.modified_on = modified_on;
-
+            await adModel.removeAd(car_id);
             return res.status(200).json({
                 status: 200,
-                message: 'Ad\'s price successfully updated!',
-                data: [findAd]
+                message: `Car sale ad number ${car_id} successfully deleted!`,
             });
-
-        } catch (err) {
-            return res.status(500).json({
-                status: 500,
-                error: err.message
-            });
-        }
-    },
-
-    async deleteAd(req, res) {
-
-        const findAd = ads.find(ad => ad.car_id === parseInt(req.params.car_id));
-        
-        if (!findAd) {
-            return res.status(404).json({
-                status: 404,
-                error: `Car sale ad number ${req.params.car_id} is not found!`
-            });
-        };
-
-        try {
-                const index = ads.indexOf(findAd);
-                ads.splice(index, 1);
-                return res.status(200).json({
-                    status: 200,
-                    message: `Car sale ad number ${req.params.car_id} successfully deleted!`,
-                });
         } catch (err) {
             return res.status(500).json({
                 status: 500,

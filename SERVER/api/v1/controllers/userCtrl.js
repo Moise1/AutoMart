@@ -8,10 +8,10 @@ import decryptor from '../helpers/password';
 import lodash from 'lodash';
 
 
-const User = {
+class User{
 
     // User Sign Up
-    async userSignUp(req, res) {
+     static async userSignUp (req, res){
         const {
             error
         } = signUpFields(req.body);
@@ -54,9 +54,9 @@ const User = {
                 error: err.message
             })
         }
-    },
+    }
 
-    async userSignIn(req, res) {
+    static async userSignIn(req, res) {
         const {
             error
         } = loginFields(req.body);
@@ -114,11 +114,10 @@ const User = {
                 error: err.message
             })
         }
-    },
-
+    }
     // Update the user's admin status.
 
-    async updateUser(req, res){
+     static async updateUser(req, res){
 
         try{
                
