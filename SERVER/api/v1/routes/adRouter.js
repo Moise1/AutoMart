@@ -19,8 +19,7 @@ adRouter.use(json());
 adRouter.post('/api/v1/car', tokenExists, userAccess, Ad.createAd);
 adRouter.get('/api/v1/car', tokenExists, userAccess, Ad.getAllCars);
 adRouter.get('/api/v1/car/:car_id', tokenExists, userAccess, Ad.getOneAd);
-adRouter.patch('/api/v1/car/:car_id/status', tokenExists, userAccess, Ad.updateStatus);
-adRouter.patch('/api/v1/car/:car_id/price', tokenExists, userAccess, Ad.updatePrice);
+adRouter.patch('/api/v1/car/:car_id', tokenExists, userAccess, Ad.updateCarAd);
 adRouter.delete('/api/v1/car/:car_id', tokenExists, userAccess, adminAccess, Ad.deleteAd);
 
 

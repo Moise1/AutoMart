@@ -36,9 +36,10 @@ class DBSetter {
                 body_type VARCHAR(50) NOT NULL, 
                 model VARCHAR(50) NOT NULL, 
                 state VARCHAR(50) NOT NULL, 
-                status VARCHAR(50) NOT NULL, 
-                price FLOAT NOT NULL, 
-                created_on DATE NOT NULL);`;
+                status VARCHAR(50), 
+                price FLOAT, 
+                created_on DATE NOT NULL, 
+                modified_on DATE);`;
 
         this.pool.query(tables)
             .then((res) => {
