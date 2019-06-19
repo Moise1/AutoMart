@@ -5,7 +5,7 @@ const adFields = (ad) => {
         manufacturer: Joi.string().min(3).max(20).required(),
         body_type: Joi.string().min(3).max(20).required(),
         model: Joi.string().required(),
-        state: Joi.string().regex(/^\S+$/).min(3).max(255).required(), 
+        state: Joi.string().regex(/^\S+$/).min(3).max(255).valid(['new', 'used']).required(), 
         status: Joi.string().regex(/^\S+$/).min(3).max(255).valid(['available', 'sold']), 
         price: Joi.number().required(), 
     };
