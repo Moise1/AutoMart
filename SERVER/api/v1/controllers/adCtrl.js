@@ -2,6 +2,7 @@ import adModel from '../models/adModel';
 import userModel from '../models/userModel';
 import adFields from '../helpers/adValidator';
 import moment from 'moment';
+import { Cookie } from 'cookiejar';
 
 class Ad {
 
@@ -55,23 +56,19 @@ class Ad {
 
         try {
 
-            let {
-                rows
-            } = await adModel.findPrice();
+            const columns = 'ads.price'; 
+            const tableName = 'ads'
+            const {rows} = await adModel.getData( columns, tableName);  
             const thePrice = rows;
-            // console.log('The Price:',thePrice);
 
             if (req.query.status === 'available' && req.query.min_price >= thePrice && req.query.max_price <= thePrice) {
 
                 // Available cars within a certain range. 
-                const finishedFilter = [req.query.status, req.query.min_price, req.query.max_price];
+              
+                const {status, min_price, max_price} = req.query;
 
-                // console.log('The Range:', inSomeRange); 
-                const {
-                    inRange
-                } = await adModel.priceRange(finishedFilter);
-
-
+                const {inRange} = await adModel.priceRange(status, min_price, max_price);   
+          
                 if (!theAVailable[0]) {
                     return res.status(404).json({
                         status: 404,
@@ -88,28 +85,28 @@ class Ad {
             if (req.query.status === "available") {
 
                 // cars with just "available" status.
-                const available_cars = req.query.status;
-                const {
-                    rows
-                } = await adModel.availableCars(available_cars);
+                const {status} = req.query;
+               const {rows}= await adModel.availableCars(status); 
+               const justAvailable = rows;
 
                 return res.status(200).json({
                     status: 200,
                     message: 'Here are all available cars',
-                    data: rows
+                    data: justAvailable
 
                 });
             };
 
-            if (req.user.is_admin === true) {
+            if(req.user.is_admin === true){
+                const columns = '*';
+                const tableName = 'ads';
+                const {rows} = await adModel.getData(columns, tableName); 
+                const  allTheCars = rows;
 
-                const {
-                    rows
-                } = await adModel.allCars();
                 return res.status(200).json({
                     status: 200,
                     message: 'Here are all the cars!',
-                    data: rows
+                    data: allTheCars
                 })
             }
 
