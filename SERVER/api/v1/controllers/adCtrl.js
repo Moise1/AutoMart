@@ -2,6 +2,8 @@ import adModel from '../models/adModel';
 import userModel from '../models/userModel';
 import adFields from '../helpers/adValidator';
 import ResponseHandler from '../helpers/theResponse'; 
+import moment from 'moment';
+
 
 class Ad {
 
@@ -33,12 +35,10 @@ class Ad {
                 rows
             } = await adModel.makeAd(req.body, owner_data.rows[0].email);
 
-
             return res
             .status(201)
             .json(new ResponseHandler(201, rows[0], null, "Car sale successfully created!").result());
             
-
         } catch (err) {
             return res.status(500).json({
                 status: 500,
@@ -64,7 +64,12 @@ class Ad {
 
                 const {inRange} = await adModel.priceRange(status, min_price, max_price);   
 
+                // Available cars within a certain range. 
+              
+                const {status, min_price, max_price} = req.query;
 
+                const {inRange} = await adModel.priceRange(status, min_price, max_price);   
+          
                 if (!theAVailable[0]) {
                     return res.status(404).json({
                         status: 404,
@@ -84,6 +89,7 @@ class Ad {
                 const {status} = req.query;
                const {rows}= await adModel.availableCars(status); 
                const justAvailable = rows;
+
 
                if(!justAvailable) return res.status(404).json({
                    status: 404, 
@@ -107,7 +113,13 @@ class Ad {
                 return res
                 .status(200)
                 .json(new ResponseHandler(200, allTheCars, null, "Here are all the cars!").result());
-               
+
+                return res.status(200).json({
+                    status: 200,
+                    message: 'Here are all the cars!',
+                    data: allTheCars
+                })
+
             }
 
             return res.status(403).json({
@@ -126,21 +138,27 @@ class Ad {
 
     // Seller get a single car/car ad. 
 
+
     static async getOneAd(req, res) {
 
         try {
 
+
+    static async getOneAd(req, res) {
+
+        try {
             const {car_id} = req.params; 
             const columns = '*';
             const table = 'ads';
             const {rows} = await adModel.specificAd(columns, table , parseInt(car_id)); 
             const theCar = rows; 
-            if (theCar.length === 0) {
+            if (theCar.length === 0){
                 return res.status(404).json({
                     status: 404,
                     error: `Car sale ad number ${car_id} is not found!`
                 })
             };
+          
             return res.status(200).json({
                 status: 200,
                 message: 'Congs, here\'s your result!',
