@@ -129,15 +129,12 @@ class Ad {
 
         try {
 
-            const {
-                car_id
-            } = req.params;
-
-            const {
-                rows
-            } = await adModel.specificAd(parseInt(car_id));
-
-            if (rows.length === 0) {
+            const {car_id} = req.params; 
+            const columns = '*';
+            const table = 'ads';
+            const {rows} = await adModel.getData(columns, table , parseInt(car_id)); 
+            const theCar = rows; 
+            if (theCar.length === 0) {
                 return res.status(404).json({
                     status: 404,
                     error: `Car sale ad number ${car_id} is not found!`
@@ -146,7 +143,7 @@ class Ad {
             return res.status(200).json({
                 status: 200,
                 message: 'Congs, here\'s your result!',
-                data: rows[0]
+                data: theCar[0]
             })
 
         } catch (err) {

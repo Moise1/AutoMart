@@ -42,16 +42,14 @@ class CarSaleAd{
 
     }
 
-    // Return all car's related info
-
-    async getData(dataInQuery, tableName){
-        const queryText = `SELECT ${dataInQuery} FROM  ${tableName}`; 
-        const queryResult = await db.query(queryText);
+    async getData(dataInQuery, tableName, id){
+        const queryText = `SELECT ${dataInQuery} FROM ${tableName} WHERE car_id=$1`; 
+        const queryResult = await db.query(queryText, [id]) 
         return queryResult;
-
     }
 
-     //  Get a car's status
+   
+    //  Get a car's status
     async availableCars(theAvailable){
         const queryText = 'SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.email  WHERE ads.status=$1'; 
         const queryResult = await db.query(queryText, [theAvailable]); 
