@@ -10,17 +10,12 @@ import {
     adminAccess
 } from '../middleware/userToken';
 
-const {
-    createOrder, 
-    updateOrder
-} = Order;
-
 
 const orderRouter = express.Router();
 
 orderRouter.use(json());
 
-orderRouter.post('/api/v1/order', tokenExists, userAccess, createOrder)
-orderRouter.patch('/api/v1/order/:order_id/price', tokenExists, userAccess, updateOrder)
+orderRouter.post('/api/v1/order', tokenExists, userAccess, Order.createOrder);
+orderRouter.patch('/api/v1/order/:order_id/price', tokenExists, userAccess, Order.updateOrder);
 
 export default orderRouter; 

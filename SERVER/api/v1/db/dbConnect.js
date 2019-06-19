@@ -37,9 +37,17 @@ class DBSetter {
                 model VARCHAR(50) NOT NULL, 
                 state VARCHAR(50) NOT NULL, 
                 status VARCHAR(50), 
-                price FLOAT, 
+                price FLOAT UNIQUE, 
                 created_on DATE NOT NULL, 
-                modified_on DATE);`;
+                modified_on DATE);
+            
+                CREATE TABLE IF NOT EXISTS orders(
+                    order_id BIGSERIAL  UNIQUE  NOT NULL, 
+                    buyer  VARCHAR(250) REFERENCES users(email) NOT NULL, 
+                    price_offered FLOAT NOT NULL,
+                    status VARCHAR(50),
+                    created_on DATE NOT NULL, 
+                    modified_on DATE);`;
 
         this.pool.query(tables)
             .then((res) => {

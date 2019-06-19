@@ -1,15 +1,16 @@
-import orders from '../models/orderModel';
+import orderModel from '../models/orderModel';
 import orderFields from '../helpers/orderValidator';
-import ads from '../models/adModel';
-import frauds from '../models/flagModel';
+import adModel from '../models/adModel';
+import userModel from '../models/userModel'; 
+import ResponseHandler from '../helpers/theResponse';
 import moment from 'moment';
 import lodash from 'lodash';
 
 
-const Order = {
+class Order{
     // Buyer make a purchase order
 
-    async createOrder(req, res) {
+    static async createOrder(req, res) {
         const {
             error
         } = orderFields(req.body);
@@ -19,58 +20,36 @@ const Order = {
             error: error.details[0].message
         });
 
-        const buyer = req.user.id;
-        let m = moment();
-        const created_on = m.format('hh:mm a, DD-MM-YYYY');
-        const {
-            status,
-            price_offered
-        } = req.body;
-
-
         try {
-            const findAd = ads.find(ad => ad.car_id === parseInt(req.body.car_id));
-            if (!findAd) {
+            // const columns = '*'; 
+            // const table =  'ads'; 
+            // const priceValue = 'price';
+            // const idValue = 'car_id';
+
+
+            const owner_email = req.user.email;
+            // const theCar = await adModel.specificAd(columns, table, parseInt(idValue));
+            // const thePrice = await adModel.carPrice(); 
+            // console.log(thePrice); 
+
+            const owner_data = await userModel.findMail(owner_email);
+
+            if (!owner_data.rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
-                    error: `Sorry, car number ${req.body.car_id} not found!`
-                });
+                    error: 'User not found!'
+                })
             };
+            const {
+                rows
+            } = await orderModel.makeOrder(req.body, owner_data.rows[0].email);
 
 
-            frauds.forEach((fraud) =>{
-
-                const findFraud = fraud.car_id;
-                if (findFraud === findAd.car_id) {
-                    return res.status(400).json({
-                        status: 400,
-                        error: `Sorry! This car number ${req.body.car_id} was flagged as fraud.`
-                    });
-                };
-            })
-
-            const newOrder = {
-                order_id: orders.length + 1,
-                buyer: buyer,
-                car_id: findAd.car_id,
-                price: findAd.price,
-                price_offered: "$" + price_offered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                status: status,
-                created_on: created_on
-            };
-
-            // Checking whether the user and the car id already working.
-            if (orders.some(order => order.buyer === newOrder.buyer && order.car_id === newOrder.car_id)) return res.status(409).json({
-                status: 409,
-                error: 'Sorry! The purchase order already exists.'
-            });
-
-            orders.push(newOrder);
-            return res.status(201).send({
-                status: 201,
-                message: 'Purchase Order Successfully Created!',
-                data: orders[orders.length - 1]
-            });
+            return res
+            .status(201)
+            .json(new ResponseHandler(201, rows[0], null, "Purchase Order Successfully Created!").result());
+            
+            
         } catch (err) {
             return res.status(500).json({
                 status: 500,
@@ -78,10 +57,10 @@ const Order = {
             });
         }
 
-    },
+    }
 
     // Buyer update the price of a purchase order when it's still pending.
-    async updateOrder(req, res) {
+    static async updateOrder(req, res) {
 
         let new_price = req.body;
         let m = moment();

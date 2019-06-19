@@ -12,7 +12,7 @@ class TableDropper {
             connectionString: process.env.DATABASE_URL || CONFIG.dbPath
         });
         this.pool.on('connect', () => {
-            console.log('Connected to DB');
+            console.log('Tables dropped');
         });
 
         this.dropTables(); 
@@ -21,7 +21,7 @@ class TableDropper {
     async dropTables(){
 
         const removeTables = 
-        `DROP TABLE IF EXISTS users, ads CASCADE;`;
+        `DROP TABLE IF EXISTS users, ads, orders CASCADE;`;
 
          this.pool.query(removeTables)
          .then((res) => {
