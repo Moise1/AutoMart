@@ -42,20 +42,26 @@ class CarSaleAd{
 
     }
 
-    // Return all cars (sold & available)
-    async allCars(){
-        const queryText = 'SELECT * FROM ads'; 
-        const queryResult = await db.query(queryText) 
+    async getData(dataInQuery, tableName, id){
+        const queryText = `SELECT ${dataInQuery} FROM ${tableName} WHERE car_id=$1`; 
+        const queryResult = await db.query(queryText, [id]) 
         return queryResult;
     }
 
-    // Return a specific car sale ad. 
+    // // Return all cars (sold & available)
+    // async allCars(){
+    //     const queryText = 'SELECT * FROM ads'; 
+    //     const queryResult = await db.query(queryText) 
+    //     return queryResult;
+    // }
 
-    async specificAd(id){
-        const queryText = 'SELECT * FROM ads WHERE car_id=$1';
-        const queryResult = await db.query(queryText, [id]);
-        return queryResult; 
-    }
+    // // Return a specific car sale ad. 
+
+    // async specificAd(id){
+    //     const queryText = 'SELECT * FROM ads WHERE car_id=$1';
+    //     const queryResult = await db.query(queryText, [id]);
+    //     return queryResult; 
+    // }
 
     //  Get a car's status
     async availableCars(theAvailable){
