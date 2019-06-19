@@ -1,8 +1,8 @@
 import db from '../db/dbIndex'; 
 import moment from 'moment'; 
-import { stat } from 'fs';
 
 class CarSaleAd{
+
     async makeAd(req, owner){
 
         let theMoment = moment(); 
@@ -42,25 +42,23 @@ class CarSaleAd{
 
     }
 
-    // Return all cars (sold & available)
-    async allCars(){
-        const queryText = 'SELECT * FROM ads'; 
-        const queryResult = await db.query(queryText) 
+    // Return all car's related info
+
+    async getData(dataInQuery, tableName){
+        const queryText = `SELECT ${dataInQuery} FROM  ${tableName}`; 
+        const queryResult = await db.query(queryText);
         return queryResult;
+
     }
 
-    //  Get a car's status
+     //  Get a car's status
     async availableCars(theAvailable){
         const queryText = 'SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.email  WHERE ads.status=$1'; 
         const queryResult = await db.query(queryText, [theAvailable]); 
         return queryResult; 
     } 
 
-    async findPrice(){
-        const queryText = 'SELECT ads.price FROM  ads';
-        const queryResult = await db.query(queryText);
-        return queryResult; 
-    }
+    
     async priceRange(carStatus, minimum, maximum){
         const queryText = 'SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.email  WHERE ads.status=$1 AND ads.price >=$2 AND ads.price <=$3'; 
         const queryResult = await db.query(queryText, [carStatus, minimum, maximum]); 
