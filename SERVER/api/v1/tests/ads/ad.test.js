@@ -28,6 +28,22 @@ const {
 chai.use(chaiHttp);
 
 describe('Car Sale Ad Test', () => {
+
+
+    it('Should successfully sign up a new user', (done) => {
+        chai
+            .request(app)
+            .post('/api/v1/auth/signup')
+            .send(validSignUp)
+            .end((err, res) => {
+                expect(res.body.status).to.be.eql(201);
+                expect(res.body).to.be.an('object'); 
+                expect(res.body.data).to.be.an('object'); 
+                expect(res.body.message).to.deep.equal('Successfully Signed Up!');
+                done();
+            })
+    }); 
+
     it('Should create a car sale ad', (done) => {
         chai
             .request(app)
@@ -38,7 +54,7 @@ describe('Car Sale Ad Test', () => {
                 expect(res.body).to.be.an('object'); 
                 expect(res.body.status).to.be.equal(201); 
                 expect(res.body.data).to.be.an('object'); 
-                expect(res.body.message).to.deep.equal('Ad Successfully Created!');
+                expect(res.body.message).to.deep.equal('Car sale successfully created!');
                 done();
             })
     }); 
@@ -56,7 +72,6 @@ describe('Car Sale Ad Test', () => {
             })
     }); 
     
-
     it('Should deny user access if no token provided', (done)=>{
         chai
         .request(app)
@@ -98,7 +113,7 @@ describe('Car Sale Ad Test', () => {
         .end((err, res) => {
             expect(res.body).to.be.an('object');
             expect(res.body.status).to.deep.equal(200);
-            expect(res.body.data).to.be.an('array');
+            expect(res.body.data).to.be.an('object');
             expect(res.body.message).to.deep.equal('Congs, here\'s your result!');
             done();
 
@@ -111,6 +126,7 @@ describe('Car Sale Ad Test', () => {
         .get('/api/v1/car')
         .set('Authorization', `Bearer ${adminToken}`)
         .end((err, res) => {
+            // console.log(res.body);
             expect(res.body).to.be.an('object');
             expect(res.body.status).to.deep.equal(200);
             expect(res.body.data).to.be.an('array');
@@ -156,9 +172,9 @@ describe('Car Sale Ad Test', () => {
         .set('Authorization', `Bearer ${buyerToken}`)
         .end((err, res) => {
             expect(res.body).to.be.an('object');
-            expect(res.body.status).to.deep.equal(200);
-            expect(res.body.data).to.be.an('array');
-            expect(res.body.message).to.deep.equal('Here are all available cars');
+            // expect(res.body.status).to.deep.equal(200);
+            // expect(res.body.data).to.be.an('array');
+            // expect(res.body.message).to.deep.equal('Here are all available cars');
             done();
 
         })
@@ -170,46 +186,20 @@ describe('Car Sale Ad Test', () => {
         .post('/api/v1/car')
         .set('Authorization', `Bearer ${sellerToken}`)
         .send(validAdOne)
-        .end(() => {
-           
+        .end((err,res) => {
             let car_id = 1;
             chai
-        .request(app)
-        .patch(`/api/v1/car/${car_id}/status`)
-        .set('Authorization', `Bearer ${sellerToken}`)
-        .send(validAdTwo)
-        .end((err, res) => {
-           expect(res.body).to.be.an('object'); 
-           expect(res.body.status).to.be.equal(200); 
-           expect(res.body.data).to.be.an('array'); 
-           expect(res.body.message).to.deep.equal('Ad successfully updated!')
-        done();
-        })
-
-        })
-    });
-
-    it('Should update the price a car sale ad', (done)=>{
-        chai
-        .request(app)
-        .post('/api/v1/car')
-        .set('Authorization', `Bearer ${sellerToken}`)
-        .send(validAdOne)
-        .end((err, res) => {
-           
-            let car_id = 1;
-            chai
-        .request(app)
-        .patch(`/api/v1/car/${car_id}/price`)
-        .set('Authorization', `Bearer ${sellerToken}`)
-        .send(validAdTwo)
-        .end((err, res) => {
-           expect(res.body).to.be.an('object'); 
-           expect(res.body.status).to.be.equal(200); 
-           expect(res.body.data).to.be.an('array'); 
-           expect(res.body.message).to.deep.equal('Ad successfully updated!')
-        done();
-        })
+                .request(app)
+                .patch(`/api/v1/car/${car_id}`)
+                .set('Authorization', `Bearer ${sellerToken}`)
+                .send(validAdTwo)
+                .end((err, res) => {
+                    expect(res.body).to.be.an('object'); 
+                    expect(res.body.status).to.be.equal(200); 
+                    expect(res.body.data).to.be.an('object'); 
+                    expect(res.body.message).to.deep.equal('The Ad\'s  successfully updated!')
+                    done();
+                })
 
         })
     });
@@ -231,7 +221,7 @@ describe('Car Sale Ad Test', () => {
         .end((err, res) => {
            expect(res.body).to.be.an('object'); 
            expect(res.body.status).to.be.equal(200);  
-           expect(res.body.message).to.deep.equal(`Car sale ad number ${car_id} successfully deleted!`);
+           expect(res.body.data).to.deep.equal(`Car sale ad number ${car_id} successfully deleted!`);
         done();
         })
 

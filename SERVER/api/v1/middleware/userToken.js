@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import CONFIG from '../config/config';
+import keys from '../config/config';
 
 
 const tokenExists = (req, res, next) => {
@@ -19,7 +19,7 @@ const userAccess = (req, res, next) => {
     });
     
     try {
-        const decryptedToken = jwt.verify(token, CONFIG.secretOrPublicKey);
+        const decryptedToken = jwt.verify(token, keys.SECRET_OR_PUBLIC_KEY);
         req.user = decryptedToken;
         next();
 

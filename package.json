@@ -8,7 +8,7 @@
     "db:migrate": "node --require @babel/register ./SERVER/api/v1/db/dbConnect.js",
     "db:droptables": "node --require @babel/register ./SERVER/api/v1/db/dropTables.js",
     "start": "npm run db:droptables && npm run db:migrate && npm run admin && babel-watch  ./SERVER/server.js",
-    "test": "NODE_ENV=test nyc --reporter=text --reporter=lcov mocha --timeout 1000 --require @babel/polyfill --require @babel/register SERVER/api/v1/tests/**/*.test.js --exit",
+    "test": "NODE_ENV=test  npm run db:droptables && npm run db:migrate && npm run admin && NODE_ENV=test nyc  --reporter=text --reporter=lcov mocha --timeout 1000 --require @babel/polyfill --require @babel/register ./SERVER/api/v1/tests/**/*.test.js --exit",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -17,7 +17,7 @@
   },
   "keywords": [
     "automobile",
-    "ecommerce",
+    "ecommerce",  
     "nodejs",
     "express",
     "postgresql"

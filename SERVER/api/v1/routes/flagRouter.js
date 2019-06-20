@@ -1,25 +1,25 @@
-import express from 'express';
-import {
-    Router,
-    json
-} from 'express';
-import Flag from '../controllers/flagCtrl';
+// import express from 'express';
+// import {
+//     Router,
+//     json
+// } from 'express';
+// import Flag from '../controllers/flagCtrl';
 
-import {
-    tokenExists,
-    userAccess,
-    adminAccess,
-} from '../middleware/userToken';
+// import {
+//     tokenExists,
+//     userAccess,
+//     adminAccess,
+// } from '../middleware/userToken';
 
-const {
-    createFlag
-} = Flag;
+// const {
+//     createFlag
+// } = Flag;
 
-const flagRouter = express.Router();
+// const flagRouter = express.Router();
 
-flagRouter.use(json());
+// flagRouter.use(json());
 
-flagRouter.post('/api/v1/flag', tokenExists, userAccess, createFlag);
+// flagRouter.post('/api/v1/flag', tokenExists, userAccess, createFlag);
 
 
-export default flagRouter;
+// export default flagRouter;

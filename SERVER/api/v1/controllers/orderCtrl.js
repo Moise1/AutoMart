@@ -20,11 +20,10 @@ class Order{
         });
 
         try {
-            const columns = '*'; 
-            const table =  'ads'; 
+    
             const owner_email = req.user.email;
             const {car_id} = req.body; 
-            const theCar = await adModel.specificAd(columns, table, parseInt(car_id));
+            const theCar = await adModel.specificAd(parseInt(car_id));
             const owner_data = await userModel.findMail(owner_email);
 
             if (owner_data.rows.length === 0) {
