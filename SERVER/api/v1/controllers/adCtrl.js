@@ -4,6 +4,7 @@ import adFields from '../helpers/adValidator';
 import ResponseHandler from '../helpers/theResponse'; 
 import lodash from 'lodash';
 
+
 class Ad {
 
     // Create a new car/car ad. 
@@ -34,12 +35,10 @@ class Ad {
                 rows
             } = await adModel.makeAd(req.body, owner_data.rows[0].id);
 
-
             return res
             .status(201)
             .json(new ResponseHandler(201, lodash.omit(rows[0], ['modified_on']), null, "Car sale successfully created!").result());
             
-
         } catch (err) {
             return res.status(500).json({
                 status: 500,
@@ -65,7 +64,12 @@ class Ad {
 
                 const {inRange} = await adModel.priceRange(status, min_price, max_price);   
 
+                // Available cars within a certain range. 
+              
+                const {status, min_price, max_price} = req.query;
 
+                const {inRange} = await adModel.priceRange(status, min_price, max_price);   
+          
                 if (!theAVailable[0]) {
                     return res.status(404).json({
                         status: 404,
@@ -86,10 +90,12 @@ class Ad {
                const {rows}= await adModel.availableCars(status); 
                const justAvailable = rows;
 
+
                if(!justAvailable) return res.status(404).json({
                    status: 404, 
                    error: 'No cars left in store'
                })
+
 
                 return res.status(200).json({
                     status: 200,
@@ -107,7 +113,6 @@ class Ad {
                 return res
                 .status(200)
                 .json(new ResponseHandler(200, rows, null, "Here are all the cars!").result());
-               
             }
 
             return res.status(403).json({
@@ -126,10 +131,10 @@ class Ad {
 
     // Seller get a single car/car ad. 
 
+
     static async getOneAd(req, res) {
 
         try {
-
             const {car_id} = req.params; 
             const {rows} = await adModel.specificAd(parseInt(car_id)); 
             if (rows.length === 0) {
@@ -142,7 +147,7 @@ class Ad {
             return res
             .status(200) 
             .json(new ResponseHandler(200, lodash.omit(rows[0], ['modified_on']) , null, 'Congs, here\'s your result!').result());
-           
+ 
 
         } catch (err) {
             return res.status(500).json({
