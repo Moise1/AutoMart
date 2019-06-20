@@ -135,6 +135,19 @@ describe('Car Sale Ad Test', () => {
         })
     })
 
+    it('It should not return available cars', (done)=>{
+        chai
+        .request(app)
+        .get('/api/v1/car?status=available')
+        .set('Authorization', `Bearer ${buyerToken}`)
+        .end((err, res) => {
+            expect(res.body).to.be.an('object');
+            expect(res.body.status).to.deep.equal(500);
+            done();
+
+        })
+    })
+
     it('Admin should not retrieve all car sale ads without token', (done)=>{
         chai
         .request(app)

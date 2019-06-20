@@ -15,6 +15,6 @@ if (process.env.NODE_ENV === "production") {
     module.exports = devKeys;
   }
   
-  // console.log(process.env.NODE_ENV);
+  console.log("====The Env=====",process.env.NODE_ENV);
   // console.log(process.env.SECRET_OR_PUBLIC_KEY);
   // console.log(process.env.DATABASE_URL);
