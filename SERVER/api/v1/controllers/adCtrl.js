@@ -2,6 +2,7 @@ import adModel from '../models/adModel';
 import userModel from '../models/userModel';
 import adFields from '../helpers/adValidator';
 import ResponseHandler from '../helpers/theResponse'; 
+import lodash from 'lodash';
 
 class Ad {
 
@@ -36,7 +37,7 @@ class Ad {
 
             return res
             .status(201)
-            .json(new ResponseHandler(201, rows[0], null, "Car sale successfully created!").result());
+            .json(new ResponseHandler(201, lodash.omit(rows[0], ['modified_on']), null, "Car sale successfully created!").result());
             
 
         } catch (err) {
@@ -159,14 +160,14 @@ class Ad {
 
     static async updateCarAd(req, res) {
 
-
         try {
 
             const {car_id} = req.params; 
             const columns = '*';
             const table = 'ads';
-            const {rows} = await adModel.specificAd(columns, table , parseInt(car_id)); 
-            if (rows.length === 0) {
+            const theCar = await adModel.specificAd(columns, table , parseInt(car_id));
+
+            if (theCar.length === 0) {
                 return res.status(404).json({
                     status: 404,
                     error: `Car sale ad number ${car_id} is not found!`
@@ -181,15 +182,10 @@ class Ad {
             return res 
             .status(200) 
             .json(new ResponseHandler(200, rows[0], null, 'The Ad\'s  successfully updated!').result());
-            // return res.status(200).json({
-            //     status: 200,
-            //     message: 'The Ad\'s  successfully updated!',
-            //     data: rows[0]
-            // });
-
+           
         } catch (err) {
             return res.status(500).json({
-                status: 500,
+                status:500,
                 error: err.message
             });
         }
@@ -198,13 +194,16 @@ class Ad {
     static async deleteAd(req, res) {
 
         try {
+
+            const columns = '*';
+            const table = 'ads';
             const {
                 car_id
-            } = req.params
+            } = req.params; 
 
             const {
                 rows
-            } = await adModel.specificAd(parseInt(car_id));
+            } = await adModel.specificAd(columns, table, parseInt(car_id));
 
             if (rows.length === 0) {
                 return res.status(404).json({
@@ -213,10 +212,15 @@ class Ad {
                 });
             };
             await adModel.removeAd(car_id);
-            return res.status(200).json({
-                status: 200,
-                message: `Car sale ad number ${car_id} successfully deleted!`,
-            });
+
+            return res 
+            .status(200)
+            .json(new ResponseHandler(200, null, `Car sale ad number ${car_id} successfully deleted!`).result());
+            
+            // return res.status(200).json({
+            //     status: 200,
+            //     message: `Car sale ad number ${car_id} successfully deleted!`,
+            // });
         } catch (err) {
             return res.status(500).json({
                 status: 500,

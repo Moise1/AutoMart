@@ -58,7 +58,7 @@ class CarSaleAd{
         const theMoment = moment(); 
         const {
             rows
-        } = await this.specificAd(dataInQuery, tableName, Idvalue);
+        } = await this.specificAd(Idvalue);
         const status = input.status;
         const price = input.price;
         const modified_on = theMoment.format('YYYY-MM-DD');
@@ -69,10 +69,10 @@ class CarSaleAd{
 
     }
 
-    async removeAd(id) {
+    async removeAd(Idvalue) {
         const {
             rows
-        } = await this.specificAd(id);
+        } = await this.specificAd(Idvalue);
         const queryText = 'DELETE FROM ads WHERE car_id=$1';
         const queryResult = await db.query(queryText, [rows[0].car_id]);
         return queryResult;
