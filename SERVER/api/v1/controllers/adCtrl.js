@@ -58,11 +58,7 @@ class Ad {
             const {rows} = await adModel.getData( columns, tableName);  
             const thePrice = rows;
 
-            if (req.query.status === 'available' && req.query.min_price >= thePrice && req.query.max_price <= thePrice) {
-
-                const {status, min_price, max_price} = req.query;
-
-                const {inRange} = await adModel.priceRange(status, min_price, max_price);   
+            if (req.query.status === 'available' && req.query.min_price >= thePrice && req.query.max_price <= thePrice) {  
 
                 // Available cars within a certain range. 
               
