@@ -52,6 +52,30 @@ class CarSaleAd{
         const queryText = `SELECT ${dataInQuery} FROM ${tableName} WHERE car_id=$1`; 
         const queryResult = await db.query(queryText, [Idvalue]) 
         return queryResult;
+    } 
+
+    async theUpdater(Idvalue, input){
+        const theMoment = moment(); 
+        const {
+            rows
+        } = await this.specificAd(dataInQuery, tableName, Idvalue);
+        const status = input.status;
+        const price = input.price;
+        const modified_on = theMoment.format('YYYY-MM-DD');
+
+        const queryText = 'UPDATE ads SET status=$1, price=$2, modified_on=$3 WHERE car_id=$4 RETURNING *';
+        const queryResult = await db.query(queryText, [status, price, modified_on, rows[0].car_id]);
+        return queryResult;
+
+    }
+
+    async removeAd(id) {
+        const {
+            rows
+        } = await this.specificAd(id);
+        const queryText = 'DELETE FROM ads WHERE car_id=$1';
+        const queryResult = await db.query(queryText, [rows[0].car_id]);
+        return queryResult;
     }
 
     async carPrice(price){

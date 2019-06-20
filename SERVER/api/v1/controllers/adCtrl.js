@@ -162,26 +162,30 @@ class Ad {
 
         try {
 
-            const {
-                car_id
-            } = req.params;
-            const theCar = await adModel.specificAd(parseInt(car_id));
-
-            if (theCar.rows.length === 0) {
+            const {car_id} = req.params; 
+            const columns = '*';
+            const table = 'ads';
+            const {rows} = await adModel.specificAd(columns, table , parseInt(car_id)); 
+            if (rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
-                    error: `Car sale ad number ${theCar} is not found!`
-                });
+                    error: `Car sale ad number ${car_id} is not found!`
+                })
             };
 
             const {
                 rows
             } = await adModel.theUpdater(car_id, req.body);
-            return res.status(200).json({
-                status: 200,
-                message: 'The Ad\'s  successfully updated!',
-                data: rows[0]
-            });
+
+
+            return res 
+            .status(200) 
+            .json(new ResponseHandler(200, rows[0], null, 'The Ad\'s  successfully updated!').result());
+            // return res.status(200).json({
+            //     status: 200,
+            //     message: 'The Ad\'s  successfully updated!',
+            //     data: rows[0]
+            // });
 
         } catch (err) {
             return res.status(500).json({
