@@ -140,7 +140,7 @@ class User{
     } = await userModel.updateUser(id, req.body);
     return res.status(200).json({
         status: 200,
-        message: 'User successfully updated!',
+        message: `User number ${id} successfully updated!`,
         data: lodash.omit(rows[0], ['password'])
     })
         }catch(err){

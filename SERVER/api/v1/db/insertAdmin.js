@@ -1,24 +1,8 @@
-import {
-    Pool
-} from 'pg';
-import CONFIG from '../config/config';
+import db from './dbIndex';
 import hasher from '../helpers/password';
 
-
-class MakeAdmin {
-    constructor() {
-
-        this.pool = new Pool({
-            connectionString: process.env.DATABASE_URL || CONFIG.dbPath
-        });
-        this.pool.on('connect', () => {
-            console.log('Admin created');
-        });
-        this.insertAdmin(); 
-    }
-    async insertAdmin(){
         
-        const admin_password = await hasher.hashingPassword('moise123', 10);
+hasher.hashingPassword('moise123', 10).then( async admin_password=>{
         const adminValues = ['moise', 'rwibutso', 'moise@automart.com', 'kigali', admin_password, true];
         const admin =
             `
@@ -30,10 +14,7 @@ class MakeAdmin {
                 password,  
                 is_admin
             )VALUES($1, $2, $3, $4, $5, $6)`
-        await this.pool.query(admin, adminValues);
-
-    }
-}
-
-new MakeAdmin(); 
+         await db.query(admin, adminValues);
+});
+        
 

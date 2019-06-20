@@ -20,9 +20,9 @@ class Ad {
 
         try {
 
-            const owner_email = req.user.email;
+            const owner_id = req.user.id;
 
-            const owner_data = await userModel.findMail(owner_email);
+            const owner_data = await userModel.findUser(owner_id);
 
             if (!owner_data.rows.length === 0) {
                 return res.status(404).json({
@@ -32,7 +32,7 @@ class Ad {
             };
             const {
                 rows
-            } = await adModel.makeAd(req.body, owner_data.rows[0].email);
+            } = await adModel.makeAd(req.body, owner_data.rows[0].id);
 
 
             return res
@@ -104,10 +104,9 @@ class Ad {
                 const columns = '*';
                 const tableName = 'ads';
                 const {rows} = await adModel.getData(columns, tableName); 
-                const  allTheCars = rows;
                 return res
                 .status(200)
-                .json(new ResponseHandler(200, allTheCars, null, "Here are all the cars!").result());
+                .json(new ResponseHandler(200, rows, null, "Here are all the cars!").result());
                
             }
 
@@ -132,21 +131,18 @@ class Ad {
         try {
 
             const {car_id} = req.params; 
-            const columns = '*';
-            const table = 'ads';
-            const {rows} = await adModel.specificAd(columns, table , parseInt(car_id)); 
-            const theCar = rows; 
-            if (theCar.length === 0) {
+            const {rows} = await adModel.specificAd(parseInt(car_id)); 
+            if (rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
                     error: `Car sale ad number ${car_id} is not found!`
                 })
             };
-            return res.status(200).json({
-                status: 200,
-                message: 'Congs, here\'s your result!',
-                data: theCar[0]
-            })
+
+            return res
+            .status(200) 
+            .json(new ResponseHandler(200, lodash.omit(rows[0], ['modified_on']) , null, 'Congs, here\'s your result!').result());
+           
 
         } catch (err) {
             return res.status(500).json({
@@ -160,28 +156,25 @@ class Ad {
 
     static async updateCarAd(req, res) {
 
+        const {car_id} = req.params; 
+
         try {
 
-            const {car_id} = req.params; 
-            const columns = '*';
-            const table = 'ads';
-            const theCar = await adModel.specificAd(columns, table , parseInt(car_id));
-
-            if (theCar.length === 0) {
+            const theCar = await adModel.specificAd(parseInt(car_id));
+            if (theCar.rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
                     error: `Car sale ad number ${car_id} is not found!`
-                })
+                });
             };
 
             const {
                 rows
             } = await adModel.theUpdater(car_id, req.body);
 
-
             return res 
             .status(200) 
-            .json(new ResponseHandler(200, rows[0], null, 'The Ad\'s  successfully updated!').result());
+            .json(new ResponseHandler(200, rows[0], null,  'The Ad\'s  successfully updated!').result());
            
         } catch (err) {
             return res.status(500).json({
@@ -193,17 +186,16 @@ class Ad {
 
     static async deleteAd(req, res) {
 
+        const {
+            car_id
+        } = req.params; 
+
+
         try {
-
-            const columns = '*';
-            const table = 'ads';
-            const {
-                car_id
-            } = req.params; 
-
+            
             const {
                 rows
-            } = await adModel.specificAd(columns, table, parseInt(car_id));
+            } = await adModel.specificAd(parseInt(car_id));
 
             if (rows.length === 0) {
                 return res.status(404).json({
@@ -215,12 +207,8 @@ class Ad {
 
             return res 
             .status(200)
-            .json(new ResponseHandler(200, null, `Car sale ad number ${car_id} successfully deleted!`).result());
+            .json(new ResponseHandler(200, `Car sale ad number ${car_id} successfully deleted!`).result());
             
-            // return res.status(200).json({
-            //     status: 200,
-            //     message: `Car sale ad number ${car_id} successfully deleted!`,
-            // });
         } catch (err) {
             return res.status(500).json({
                 status: 500,

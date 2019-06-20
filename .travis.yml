@@ -8,6 +8,16 @@ node_js:
 cache: 
   directories: 
     - "node_modules" 
+
+addons: 
+  postgresql: "9.6" 
+    
+services: 
+  - postgresql 
+    
+before_install: 
+  - psql -c 'create database automart_db' -U postgres
+    
     
 
 before_script:
@@ -20,6 +30,7 @@ after_script:
     - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 script:
+    - npm run db:migrate
     - npm test
 
 after_success:

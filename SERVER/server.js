@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(userRouter);
 app.use(adRouter);
 app.use(orderRouter);
-app.use(flagRouter);
+//app.use(flagRouter);
 
 
 

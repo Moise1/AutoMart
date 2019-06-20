@@ -1,11 +1,20 @@
-import dotenv from 'dotenv'; 
+import dotenv from 'dotenv';
+import devKeys from "./dev";
+import testsKeys from './tests';
+import prodKeys from './prod';
 
-dotenv.config(); 
 
-let CONFIG = {}; 
+dotenv.config();
 
-CONFIG.secretOrPublicKey= process.env.SECRET_OR_PUBLIC_KEY || 'secret';
-CONFIG.dbPassword = process.env.DB_PASSWORD || 'myshop';
-CONFIG.dbPath = process.env.DB_PATH;
-
-module.exports  = CONFIG;
+if (process.env.NODE_ENV === "production") {
+    module.exports = prodKeys;
+  }
+  else if (process.env.NODE_ENV === "test") {
+    module.exports = testsKeys;
+  } else {
+    module.exports = devKeys;
+  }
+  
+  // console.log(process.env.NODE_ENV);
+  // console.log(process.env.SECRET_OR_PUBLIC_KEY);
+  // console.log(process.env.DATABASE_URL);

@@ -1,10 +1,4 @@
-import { Pool } from 'pg'; 
-import CONFIG from '../config/config'; 
-
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || CONFIG.dbPath
-});
-
+import pool from './dbConnect';
 
 export default {
     query(queryText, params) {
