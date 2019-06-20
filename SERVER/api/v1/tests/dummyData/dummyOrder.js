@@ -7,5 +7,11 @@ export default {
     }, 
     updatedOrder: {
         new_price_offered: 3000
+    }, 
+    invalidOrder: {
+        price_offered: 'mmm',
+        car_id: '', 
+        status: '', 
     }
+
 }

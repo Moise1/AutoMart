@@ -49,7 +49,7 @@ class CarSaleAd{
     }
 
     async specificAd(Idvalue){
-        const queryText = 'SELECT * FROM ads WHERE car_id=$1'; 
+        const queryText = "SELECT * FROM ads WHERE car_id=$1"; 
         const queryResult = await db.query(queryText, [parseInt(Idvalue)])
         return queryResult;
     } 
@@ -102,7 +102,7 @@ class CarSaleAd{
         const {
             rows
         } = await this.specificAd(id);
-        const queryText = 'DELETE FROM ads WHERE car_id=$1';
+        const queryText = 'DELETE  FROM ads WHERE car_id=$1';
         const queryResult = await db.query(queryText, [rows[0].car_id]);
         return queryResult;
     }

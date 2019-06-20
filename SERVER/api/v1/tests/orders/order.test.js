@@ -14,7 +14,8 @@ const {
 
 const {
     validOrder,
-    updatedOrder
+    updatedOrder,
+    invalidOrder
 } = dummyOrder;
 
 const buyerToken = tokenMan.tokenizer(tokenizedBuyer);
@@ -31,12 +32,40 @@ describe('Testing Purchase Order', () => {
             .set('Authorization', `Bearer ${buyerToken}`)
             .send(validOrder)
             .end((err, res) => {
-                
-                
                 expect(res.body).to.be.an('object');
-                // expect(res.body.status).to.be.equal(201);
-                // expect(res.body.data).to.be.an('array');
-                // expect(res.body.message).to.deep.equal('Purchase Order Successfully Created!');
+                expect(res.body.status).to.be.equal(201);
+                expect(res.body.data).to.be.an('object');
+                expect(res.body.message).to.deep.equal('Purchase Order Successfully Created!');
+                done();
+            })
+    });
+
+    it('Should throw an error if there\'s no token provided: ', (done) => {
+
+        chai
+            .request(app)
+            .post('/api/v1/order')
+            .set('Authorization', '')
+            .send(validOrder)
+            .end((err, res) => {
+                expect(res.body).to.be.an('object');
+                expect(res.body.status).to.deep.equal(401);
+                expect(res.body.message).to.deep.equal('Access Denied.');
+                done();
+            })
+    });
+
+
+    it('Should not create an order with wrong inputs: ', (done) => {
+
+        chai
+            .request(app)
+            .post('/api/v1/order')
+            .set('Authorization', `Bearer ${buyerToken}`)
+            .send(invalidOrder)
+            .end((err, res) => {
+                expect(res.body).to.be.an('object');
+                expect(res.body.status).to.be.equal(400);
                 done();
             })
     });
@@ -55,8 +84,8 @@ describe('Testing Purchase Order', () => {
                     .set('Authorization', `Bearer ${buyerToken}`)
                     .send(updatedOrder)
                     .end((err, res) => {
-                        expect(res.body).to.be.an('object'); 
-                        expect(res.body.status).to.be.equal(200); 
+                        expect(res.body).to.be.an('object');
+                        expect(res.body.status).to.be.equal(200);
                         expect(res.body.data).to.be.an('array');
                         expect(res.body.message).to.deep.equal('Order\'s  Price Successfully Updated!');
                     })

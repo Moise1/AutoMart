@@ -126,7 +126,6 @@ describe('Car Sale Ad Test', () => {
         .get('/api/v1/car')
         .set('Authorization', `Bearer ${adminToken}`)
         .end((err, res) => {
-            // console.log(res.body);
             expect(res.body).to.be.an('object');
             expect(res.body.status).to.deep.equal(200);
             expect(res.body.data).to.be.an('array');
@@ -164,21 +163,6 @@ describe('Car Sale Ad Test', () => {
         })
     })
 
-
-    it('Buyer should get all "available" cars', (done)=>{
-        chai
-        .request(app)
-        .get('/api/v1/car?status=available')
-        .set('Authorization', `Bearer ${buyerToken}`)
-        .end((err, res) => {
-            expect(res.body).to.be.an('object');
-            // expect(res.body.status).to.deep.equal(200);
-            // expect(res.body.data).to.be.an('array');
-            // expect(res.body.message).to.deep.equal('Here are all available cars');
-            done();
-
-        })
-    });
 
     it('Should update the status a car sale ad', (done)=>{
         chai

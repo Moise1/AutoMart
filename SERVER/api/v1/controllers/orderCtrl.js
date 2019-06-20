@@ -21,10 +21,11 @@ class Order{
 
         try {
     
-            const owner_email = req.user.email;
+            const owner_id = req.user.id;
             const {car_id} = req.body; 
             const theCar = await adModel.specificAd(parseInt(car_id));
-            const owner_data = await userModel.findMail(owner_email);
+
+            const owner_data = await userModel.findUser(owner_id);
 
             if (owner_data.rows.length === 0) {
                 return res.status(404).json({
@@ -41,7 +42,7 @@ class Order{
             };
             const {
                 rows
-            } = await orderModel.makeOrder(req.body, owner_data.rows[0].email, theCar.rows[0].car_id);
+            } = await orderModel.makeOrder(req.body, owner_data.rows[0].id, theCar.rows[0].car_id);
 
 
             return res

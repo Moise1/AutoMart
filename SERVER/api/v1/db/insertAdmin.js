@@ -2,7 +2,7 @@ import db from './dbIndex';
 import hasher from '../helpers/password';
 
         
-hasher.hashingPassword('moise123', 10).then( async admin_password=>{
+hasher.hashingPassword('moise123', 10).then( async admin_password =>{
         const adminValues = ['moise', 'rwibutso', 'moise@automart.com', 'kigali', admin_password, true];
         const admin =
             `

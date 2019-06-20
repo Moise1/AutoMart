@@ -1,7 +1,7 @@
 import pool from './index';
 
 pool.on('connect', () => {
-    // console.log('Now Our Banka app is connected to the Database successfully!')
+   
   });
         
  const tables =`
@@ -15,7 +15,7 @@ pool.on('connect', () => {
              is_admin BOOL NOT NULL);
 
              CREATE TABLE IF NOT EXISTS ads(
-                car_id BIGSERIAL  UNIQUE  NOT NULL PRIMARY KEY, 
+                car_id BIGSERIAL UNIQUE  NOT NULL PRIMARY KEY, 
                 owner  INTEGER REFERENCES users(id) NOT NULL, 
                 manufacturer  VARCHAR(50) NOT NULL, 
                 body_type VARCHAR(50) NOT NULL, 
