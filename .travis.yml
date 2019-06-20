@@ -16,7 +16,7 @@ services:
   - postgresql 
     
 before_install: 
-  - psql -c 'create database automart_db' -U postgres
+  - psql -c 'create database automart_test' -U postgres
     
     
 
