@@ -3,7 +3,6 @@ import orderFields from '../helpers/orderValidator';
 import adModel from '../models/adModel';
 import userModel from '../models/userModel'; 
 import ResponseHandler from '../helpers/theResponse';
-import moment from 'moment';
 import lodash from 'lodash';
 
 
@@ -21,33 +20,34 @@ class Order{
         });
 
         try {
-            // const columns = '*'; 
-            // const table =  'ads'; 
-            // const priceValue = 'price';
-            // const idValue = 'car_id';
-
-
+            const columns = '*'; 
+            const table =  'ads'; 
             const owner_email = req.user.email;
-            // const theCar = await adModel.specificAd(columns, table, parseInt(idValue));
-            // const thePrice = await adModel.carPrice(); 
-            // console.log(thePrice); 
-
+            const {car_id} = req.body; 
+            const theCar = await adModel.specificAd(columns, table, parseInt(car_id));
             const owner_data = await userModel.findMail(owner_email);
 
-            if (!owner_data.rows.length === 0) {
+            if (owner_data.rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
                     error: 'User not found!'
                 })
             };
+
+            if (theCar.rows.length === 0) {
+                return res.status(404).json({
+                    status: 404,
+                    error:  `Car number ${car_id} not found!`
+                })
+            };
             const {
                 rows
-            } = await orderModel.makeOrder(req.body, owner_data.rows[0].email);
+            } = await orderModel.makeOrder(req.body, owner_data.rows[0].email, theCar.rows[0].car_id);
 
 
             return res
             .status(201)
-            .json(new ResponseHandler(201, rows[0], null, "Purchase Order Successfully Created!").result());
+            .json(new ResponseHandler(201, lodash.omit(rows[0], ['new_price_offered', 'modified_on']), null, "Purchase Order Successfully Created!").result());
             
             
         } catch (err) {
@@ -62,31 +62,23 @@ class Order{
     // Buyer update the price of a purchase order when it's still pending.
     static async updateOrder(req, res) {
 
-        let new_price = req.body;
-        let m = moment();
-        const modified_on = m.format('hh:mm a, DD-MM-YYYY');
-
         try {
-            const findOrder = orders.find(order => order.order_id === parseInt(req.params.order_id));
-            if (!findOrder) {
+            
+            const {order_id} = req.params; 
+            const theOrder = await orderModel.findOrder(parseInt(order_id)); 
+
+            if(theOrder.rows.length === 0){
                 return res.status(404).json({
-                    status: 404,
-                    error: `Sorry, order number ${req.params.order_id} not found!`
+                    status: 404, 
+                    error: `Order number ${order_id} not found!`
                 })
-            };
+            }
+            if (theOrder.rows[0].status === 'pending') {
 
-            if (findOrder.status === 'pending') {
-
-                findOrder.old_price_offered = findOrder.new_price_offered;
-                Reflect.ownKeys(new_price).forEach(key => {
-                    findOrder.new_price_offered = "$" + new_price[key].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                });
-                findOrder.modified_on = modified_on;
-                return res.status(200).json({
-                    status: 200,
-                    message: 'Order\'s  Price Successfully Updated!',
-                    data: [lodash.omit(findOrder, ['price_offered'])]
-                })
+                const {rows} = await orderModel.theUpdater(order_id, req.body); 
+                return res
+                .status(200)
+                .json(new ResponseHandler(200, lodash.omit(rows[0], ['price_offered']), null, 'Order\'s  Price Successfully Updated!').result());
             } else {
                 return res.status(400).json({
                     status: 400,
