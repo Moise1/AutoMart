@@ -1,8 +1,9 @@
 import adModel from '../models/adModel';
 import userModel from '../models/userModel';
 import adFields from '../helpers/adValidator';
+import ResponseHandler from '../helpers/theResponse'; 
 import moment from 'moment';
-import { Cookie } from 'cookiejar';
+
 
 class Ad {
 
@@ -34,14 +35,10 @@ class Ad {
                 rows
             } = await adModel.makeAd(req.body, owner_data.rows[0].email);
 
-
-            return res.status(201).json({
-                status: 201,
-                message: 'Car sale ad successfully created!',
-                data: rows[0]
-            });
-
-
+            return res
+            .status(201)
+            .json(new ResponseHandler(201, rows[0], null, "Car sale successfully created!").result());
+            
         } catch (err) {
             return res.status(500).json({
                 status: 500,
@@ -62,6 +59,10 @@ class Ad {
             const thePrice = rows;
 
             if (req.query.status === 'available' && req.query.min_price >= thePrice && req.query.max_price <= thePrice) {
+
+                const {status, min_price, max_price} = req.query;
+
+                const {inRange} = await adModel.priceRange(status, min_price, max_price);   
 
                 // Available cars within a certain range. 
               
@@ -89,6 +90,12 @@ class Ad {
                const {rows}= await adModel.availableCars(status); 
                const justAvailable = rows;
 
+
+               if(!justAvailable) return res.status(404).json({
+                   status: 404, 
+                   error: 'No cars left in store'
+               })
+
                 return res.status(200).json({
                     status: 200,
                     message: 'Here are all available cars',
@@ -98,16 +105,21 @@ class Ad {
             };
 
             if(req.user.is_admin === true){
+
                 const columns = '*';
                 const tableName = 'ads';
                 const {rows} = await adModel.getData(columns, tableName); 
                 const  allTheCars = rows;
+                return res
+                .status(200)
+                .json(new ResponseHandler(200, allTheCars, null, "Here are all the cars!").result());
 
                 return res.status(200).json({
                     status: 200,
                     message: 'Here are all the cars!',
                     data: allTheCars
                 })
+
             }
 
             return res.status(403).json({
@@ -126,13 +138,19 @@ class Ad {
 
     // Seller get a single car/car ad. 
 
+
+    static async getOneAd(req, res) {
+
+        try {
+
+
     static async getOneAd(req, res) {
 
         try {
             const {car_id} = req.params; 
             const columns = '*';
             const table = 'ads';
-            const {rows} = await adModel.getData(columns, table , parseInt(car_id)); 
+            const {rows} = await adModel.specificAd(columns, table , parseInt(car_id)); 
             const theCar = rows; 
             if (theCar.length === 0){
                 return res.status(404).json({
@@ -197,6 +215,7 @@ class Ad {
             const {
                 car_id
             } = req.params
+
             const {
                 rows
             } = await adModel.specificAd(parseInt(car_id));

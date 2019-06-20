@@ -27,9 +27,9 @@ app.get('/', (req, res) =>{
 
 
 app.use('*', (req, res) =>{
-    return res.status(400).json({
-        status: 400,
-        message: 'Wrong Url or HTTP Request!'
+    return res.status(405).json({
+        status: 405,
+        message: 'Method Not Allowed!'
     });
 });
 

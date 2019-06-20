@@ -42,13 +42,19 @@ class CarSaleAd{
 
     }
 
+    async getData(dataInQuery, tableName){
+        const queryText = `SELECT ${dataInQuery} FROM ${tableName}`; 
+        const queryResult = await db.query(queryText) 
+        return queryResult;
+    }
 
-    async getData(dataInQuery, tableName, id){
+    async specificAd(dataInQuery, tableName, id){
         const queryText = `SELECT ${dataInQuery} FROM ${tableName} WHERE car_id=$1`; 
         const queryResult = await db.query(queryText, [id]) 
         return queryResult;
     }
-      
+
+   
     async theUpdater(id, input){
         const theMoment = moment(); 
         const {
@@ -73,6 +79,7 @@ class CarSaleAd{
         return queryResult;
     }
   
+
     //  Get a car's status
 
     async availableCars(theAvailable){
