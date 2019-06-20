@@ -30,16 +30,26 @@ class DBSetter {
              is_admin BOOL NOT NULL);
 
              CREATE TABLE IF NOT EXISTS ads(
-                car_id BIGSERIAL  UNIQUE  NOT NULL, 
+                car_id BIGSERIAL  UNIQUE  NOT NULL PRIMARY KEY, 
                 owner  VARCHAR(250) REFERENCES users(email) NOT NULL, 
                 manufacturer  VARCHAR(50) NOT NULL, 
                 body_type VARCHAR(50) NOT NULL, 
                 model VARCHAR(50) NOT NULL, 
                 state VARCHAR(50) NOT NULL, 
                 status VARCHAR(50), 
-                price FLOAT, 
+                price FLOAT NOT NULL, 
                 created_on DATE NOT NULL, 
-                modified_on DATE);`;
+                modified_on DATE);
+            
+                CREATE TABLE IF NOT EXISTS orders(
+                    order_id BIGSERIAL  UNIQUE  NOT NULL, 
+                    buyer  VARCHAR(250) REFERENCES users(email) NOT NULL, 
+                    car_id BIGINT REFERENCES ads(car_id),
+                    price_offered FLOAT NOT NULL,
+                    new_price_offered FLOAT, 
+                    status VARCHAR(50),
+                    created_on DATE NOT NULL, 
+                    modified_on DATE);`;
 
         this.pool.query(tables)
             .then((res) => {

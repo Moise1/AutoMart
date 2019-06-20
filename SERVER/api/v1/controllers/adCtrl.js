@@ -37,8 +37,7 @@ class Ad {
 
             return res
             .status(201)
-            .json(new ResponseHandler(201, rows[0], null, "Car sale successfully created!").result());
-            
+            .json(new ResponseHandler(201, rows[0], null, "Car sale successfully created!").result())
         } catch (err) {
             return res.status(500).json({
                 status: 500,
@@ -96,6 +95,7 @@ class Ad {
                    error: 'No cars left in store'
                })
 
+
                 return res.status(200).json({
                     status: 200,
                     message: 'Here are all available cars',
@@ -113,13 +113,6 @@ class Ad {
                 return res
                 .status(200)
                 .json(new ResponseHandler(200, allTheCars, null, "Here are all the cars!").result());
-
-                return res.status(200).json({
-                    status: 200,
-                    message: 'Here are all the cars!',
-                    data: allTheCars
-                })
-
             }
 
             return res.status(403).json({
@@ -137,11 +130,6 @@ class Ad {
     }
 
     // Seller get a single car/car ad. 
-
-
-    static async getOneAd(req, res) {
-
-        try {
 
 
     static async getOneAd(req, res) {

@@ -12,7 +12,7 @@ class MakeAdmin {
             connectionString: process.env.DATABASE_URL || CONFIG.dbPath
         });
         this.pool.on('connect', () => {
-            console.log('Connected to DB');
+            console.log('Admin created');
         });
         this.insertAdmin(); 
     }
