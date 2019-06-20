@@ -2,6 +2,8 @@ import adModel from '../models/adModel';
 import userModel from '../models/userModel';
 import adFields from '../helpers/adValidator';
 import ResponseHandler from '../helpers/theResponse'; 
+import moment from 'moment';
+
 
 class Ad {
 
@@ -36,7 +38,6 @@ class Ad {
             return res
             .status(201)
             .json(new ResponseHandler(201, rows[0], null, "Car sale successfully created!").result())
-
         } catch (err) {
             return res.status(500).json({
                 status: 500,
@@ -88,6 +89,7 @@ class Ad {
                const {rows}= await adModel.availableCars(status); 
                const justAvailable = rows;
 
+
                if(!justAvailable) return res.status(404).json({
                    status: 404, 
                    error: 'No cars left in store'
@@ -111,7 +113,6 @@ class Ad {
                 return res
                 .status(200)
                 .json(new ResponseHandler(200, allTheCars, null, "Here are all the cars!").result());
-              
             }
 
             return res.status(403).json({
@@ -129,6 +130,7 @@ class Ad {
     }
 
     // Seller get a single car/car ad. 
+
 
     static async getOneAd(req, res) {
 

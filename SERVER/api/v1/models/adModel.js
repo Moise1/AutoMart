@@ -53,13 +53,13 @@ class CarSaleAd{
         const queryResult = await db.query(queryText, [Idvalue]) 
         return queryResult;
     }
-
+  
     async carPrice(price){
         const queryText = 'SELECT * FROM ads WHERE price=$1'; 
         const queryResult = await db.query(queryText, [price]) 
         return queryResult;
     }
-      
+ 
     async theUpdater(id, input){
         const theMoment = moment(); 
         const {
