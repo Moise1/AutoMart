@@ -14,7 +14,7 @@ services:
   - postgresql 
     
 before_install: 
-  - psql -c 'create database automart_test;' -U postgres
+  - psql -c 'create database automart_test' -U postgres
     
 
 before_script:
@@ -27,7 +27,7 @@ after_script:
     - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 script:
-    - npm test
+    - npm run test
 
 after_success:
     - npm run coveralls
