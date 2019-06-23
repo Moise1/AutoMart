@@ -1,11 +1,11 @@
-import userModel from '../models/userModel';
-import tokenMan from '../helpers/tokenMan';
+import userModel from "../models/userModel";
+import tokenMan from "../helpers/tokenMan";
 import {
     signUpFields,
     loginFields
-} from '../helpers/userValidator';
-import decryptor from '../helpers/password';
-import lodash from 'lodash';
+} from "../helpers/userValidator";
+import decryptor from "../helpers/password";
+import lodash from "lodash";
 
 
 class User{
@@ -29,8 +29,8 @@ class User{
             if (oneMail.rows.length !== 0) {
                 return res.status(409).json({
                     status: 409,
-                    message: 'Email already taken!'
-                })
+                    message: "Email already taken!"
+                });
             }
             const {
                 rows
@@ -42,9 +42,9 @@ class User{
             });
             const returnedResponse = {
                 status: 201,
-                message: 'Successfully Signed Up!',
+                message: "Successfully Signed Up!",
                 userToken: token,
-                data: lodash.omit(rows[0], ['password'])
+                data: lodash.omit(rows[0], ["password"])
             };
             return res.status(201).json(returnedResponse);
 
@@ -52,7 +52,7 @@ class User{
             return res.status(500).json({
                 status: 500,
                 error: err.message
-            })
+            });
         }
     }
 
@@ -81,15 +81,15 @@ class User{
             if (rows.length == 0) {
                 return res.status(404).json({
                     status: 404,
-                    error: 'User with this email is not found!'
-                })
-            };
+                    error: "User with this email is not found!"
+                });
+            }
 
             const matcher = await decryptor.isSame(password, rows[0].password);
 
             if (!matcher) return res.status(401).json({
                 status: 401,
-                error: 'Invalid Password!'
+                error: "Invalid Password!"
             });
 
             const accessToken = tokenMan.tokenizer({
@@ -100,19 +100,19 @@ class User{
 
             const returnedResponse = {
                 status: 200,
-                message: 'Successfully Signed In!',
+                message: "Successfully Signed In!",
                 data: [{
                     accessToken
                 }]
-            }
+            };
 
-            return res.header('Authorization', `Bearer ${accessToken}`).status(200).json(returnedResponse);
+            return res.header("Authorization", `Bearer ${accessToken}`).status(200).json(returnedResponse);
 
         } catch (err) {
             return res.status(500).json({
                 status: 500,
                 error: err.message
-            })
+            });
         }
     }
     // Update the user's admin status.
@@ -132,7 +132,7 @@ class User{
         return res.status(404).json({
             status: 404,
             error: `User ${id} not found!`
-        })
+        });
     }
 
     const {
@@ -141,13 +141,13 @@ class User{
     return res.status(200).json({
         status: 200,
         message: `User number ${id} successfully updated!`,
-        data: lodash.omit(rows[0], ['password'])
-    })
+        data: lodash.omit(rows[0], ["password"])
+    });
         }catch(err){
             return res.status(500).json({
                 status: 500, 
                 error: err.message
-            })
+            });
         }
 
     }

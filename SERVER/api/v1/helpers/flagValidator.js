@@ -1,4 +1,4 @@
-import Joi from 'joi'; 
+import Joi from "joi"; 
 
 const flagFields = (flag) => {
     const schema = {
@@ -10,14 +10,14 @@ const flagFields = (flag) => {
 
     const options = {
         language: {
-            key: '{{key}} ',
+            key: "{{key}} ",
             string: {
                 regex: {
-                    base: 'must not have empty spaces'
+                    base: "must not have empty spaces"
                 }
             }
         }
-    }
+    };
 
     return Joi.validate(flag, schema, options);
 };

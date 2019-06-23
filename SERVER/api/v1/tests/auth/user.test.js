@@ -1,10 +1,10 @@
 import chai, {
     expect
-} from 'chai';
-import chaiHttp from 'chai-http';
-import app from '../../../../server';
-import dummyAuth from '../dummyData/dummyAuth';
-import tokenMan from '../../helpers/tokenMan';
+} from "chai";
+import chaiHttp from "chai-http";
+import app from "../../../../server";
+import dummyAuth from "../dummyData/dummyAuth";
+import tokenMan from "../../helpers/tokenMan";
 
 const {
     validSignUp,
@@ -14,7 +14,7 @@ const {
     updatedUser, 
     tokenizedAdmin, 
     anotherUser
-} = dummyAuth
+} = dummyAuth;
 
 
 const adminToken = tokenMan.tokenizer(tokenizedAdmin);
@@ -22,77 +22,77 @@ const adminToken = tokenMan.tokenizer(tokenizedAdmin);
 chai.use(chaiHttp);
 
 
-describe('User Authentication:', () => {
-    describe('Home Page', () => {
-        it('Should display "Welcome to AutoMart"', (done) => {
+describe("User Authentication:", () => {
+    describe("Home Page", () => {
+        it("Should display \"Welcome to AutoMart\"", (done) => {
 
             chai
                 .request(app)
-                .get('/')
+                .get("/")
                 .end((err, res) => {
-                    expect(res.body).to.be.an('object');
+                    expect(res.body).to.be.an("object");
                     expect(res.body.status).to.be.equal(200);
-                    expect(res.body.message).to.deep.equal('Welcome to AutoMart!');
-                    done();
-                })
-        });
-
-        it('Should warn a user when the url path is wrong', (done) => {
-            chai
-                .request(app)
-                .get('/fxd/hy')
-                .end((err, res) => {
-                    expect(res.body.status).to.be.equal(405);
-                    expect(res.body.message).to.be.equal('Method Not Allowed!');
+                    expect(res.body.message).to.deep.equal("Welcome to AutoMart!");
                     done();
                 });
-        })
+        });
+
+        it("Should warn a user when the url path is wrong", (done) => {
+            chai
+                .request(app)
+                .get("/fxd/hy")
+                .end((err, res) => {
+                    expect(res.body.status).to.be.equal(405);
+                    expect(res.body.message).to.be.equal("Method Not Allowed!");
+                    done();
+                });
+        });
     });
 
 
-    it('Should not sign up a new user',  (done) => {
+    it("Should not sign up a new user",  (done) => {
          chai
             .request(app)
-            .post('/api/v1/auth/signup')
+            .post("/api/v1/auth/signup")
             .send(invalidSignUp)
             .catch(err => err.message)
             .then(res => {
                 expect(res.status).to.be.equal(400);
-            })
+            });
             done();
 
     });
 
-    it('Should log in the existing user', (done)=>{
+    it("Should log in the existing user", (done)=>{
         chai
             .request(app)
-            .post('/api/v1/auth/signin')
+            .post("/api/v1/auth/signin")
             .send(validLogin)
             .end((err, res) => {
                 expect(res.body.status).to.be.eql(200);
-                expect(res.body).to.be.an('object'); 
-                expect(res.body.data).to.be.an('array'); 
-                expect(res.body.message).to.deep.equal('Successfully Signed In!');
+                expect(res.body).to.be.an("object"); 
+                expect(res.body.data).to.be.an("array"); 
+                expect(res.body.message).to.deep.equal("Successfully Signed In!");
                 done();
             });
-    })
-    it('Should not log in the existing user', (done)=>{
+    });
+    it("Should not log in the existing user", (done)=>{
         chai
             .request(app)
-            .post('/api/v1/auth/signin')
+            .post("/api/v1/auth/signin")
             .send(invalidLogin)
             .end((err, res) => {
                 expect(res.body.status).to.be.eql(401);
-                expect(res.body).to.be.an('object'); 
-                expect(res.body.error).to.deep.equal('Invalid Password!');
+                expect(res.body).to.be.an("object"); 
+                expect(res.body.error).to.deep.equal("Invalid Password!");
                 done();
             });
-    })
+    });
 
-    it('Should update the is_admin status of the existing user', (done)=>{
+    it("Should update the is_admin status of the existing user", (done)=>{
         chai
             .request(app)
-            .post('/api/v1/auth/signup')
+            .post("/api/v1/auth/signup")
             .send(anotherUser)
             .end(() => {
 
@@ -100,16 +100,16 @@ describe('User Authentication:', () => {
                 chai 
                 .request(app)
                 .patch(`/api/v1/users/${id}`)
-                .set('Authorization', `Bearer ${adminToken}`)
+                .set("Authorization", `Bearer ${adminToken}`)
                 .send(updatedUser) 
                 .end((err, res)=>{
-                    expect(res.body).to.be.an('object'); 
+                    expect(res.body).to.be.an("object"); 
                     expect(res.body.status).to.equal(200); 
-                    expect(res.body.data).to.be.an('object'); 
+                    expect(res.body.data).to.be.an("object"); 
                     expect(res.body.message).to.deep.equal(`User number ${id} successfully updated!`); 
                     done();
-                })
+                });
             });
-    })
+    });
 
-})
+});

@@ -1,7 +1,7 @@
-import { Pool } from 'pg';
+import { Pool } from "pg";
 
 // @Bring In Keys for DB from configuration folder
-import keys from '../config/config';
+import keys from "../config/config";
 
 // @Make connection to the Database Depending on the environment
 if (process.env.NODE_ENV === "production") {

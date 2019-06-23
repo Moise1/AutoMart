@@ -5,7 +5,7 @@ class ResponseHandler{
         this.status = status, 
         this.data = data, 
         this.error = error, 
-        this.message = message
+        this.message = message;
     }
 
     result(){
@@ -14,7 +14,7 @@ class ResponseHandler{
         finalRes.message = this.message; 
         if(this.data !== null){
           finalRes.data = this.data; 
-        }; 
+        } 
 
         if(this.error !== null){
             finalRes.error = this.error; 

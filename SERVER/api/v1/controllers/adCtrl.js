@@ -1,49 +1,45 @@
-import adModel from '../models/adModel';
-import userModel from '../models/userModel';
-import adFields from '../helpers/adValidator';
-import ResponseHandler from '../helpers/theResponse'; 
-import lodash from 'lodash';
+import adModel from "../models/adModel";
+import userModel from "../models/userModel";
+import adFields from "../helpers/adValidator";
+import ResponseHandler from "../helpers/theResponse"; 
+import lodash from "lodash";
 
 
 class Ad {
 
     // Create a new car/car ad. 
     static async createAd(req, res) {
+
         const {
             error
         } = adFields(req.body);
 
-        if (error) return res.status(400).json({
-            status: 400,
-            error: error.details[0].message
-        });
 
-
+        if(error) return res 
+        .status(400) 
+        .json(new ResponseHandler(400,  error.details[0].message, null).result());
+        
         try {
 
             const owner_id = req.user.id;
 
             const owner_data = await userModel.findUser(owner_id);
 
-            if (!owner_data.rows.length === 0) {
-                return res.status(404).json({
-                    status: 404,
-                    error: 'User not found!'
-                })
-            };
+            if (!owner_data.rows.length === 0) 
+            return res.status(404).json(new ResponseHandler(404, null, error, "User not found!").result());
             const {
                 rows
             } = await adModel.makeAd(req.body, owner_data.rows[0].id);
 
             return res
             .status(201)
-            .json(new ResponseHandler(201, lodash.omit(rows[0], ['modified_on']), null, "Car sale successfully created!").result());
+            .json(new ResponseHandler(201,  lodash.omit(rows[0], ["modified_on"]) , null, "Car sale successfully created!").result());
             
         } catch (err) {
             return res.status(500).json({
                 status: 500,
                 err: err.message
-            })
+            });
         }
 
     }
@@ -53,12 +49,12 @@ class Ad {
 
         try {
 
-            const columns = 'ads.price'; 
-            const tableName = 'ads'
+            const columns = "ads.price"; 
+            const tableName = "ads";
             const {rows} = await adModel.getData( columns, tableName);  
             const thePrice = rows;
 
-            if (req.query.status === 'available' && req.query.min_price >= thePrice && req.query.max_price <= thePrice) {  
+            if (req.query.status === "available" && req.query.min_price >= thePrice && req.query.max_price <= thePrice) {  
 
                 // Available cars within a certain range. 
               
@@ -67,17 +63,10 @@ class Ad {
                 const {inRange} = await adModel.priceRange(status, min_price, max_price);   
           
                 if (!theAVailable[0]) {
-                    return res.status(404).json({
-                        status: 404,
-                        error: 'No cars in that price range!'
-                    })
+                    return res.status(404).json(new ResponseHandler(404,  null, error, "No cars in that price range!"));
                 }
-                return res.status(200).json({
-                    staus: 200,
-                    message: 'Cars within that price range',
-                    data: inRange
-                });
-            };
+                return res.status(200).json(new ResponseHandler(200, inRange, null, "Cars within that price range").result());
+            }
 
             if (req.query.status === "available") {
 
@@ -87,40 +76,35 @@ class Ad {
                const justAvailable = rows;
 
 
-               if(!justAvailable) return res.status(404).json({
-                   status: 404, 
-                   error: 'No cars left in store'
-               })
+               if(!justAvailable) return res
+               .status(404)
+               .json(new ResponseHandler(404, error, null, "No cars left in store").result());
 
 
                 return res.status(200).json({
                     status: 200,
-                    message: 'Here are all available cars',
+                    message: "Here are all available cars",
                     data: justAvailable
 
                 });
-            };
+            }
 
             if(req.user.is_admin === true){
 
-                const columns = '*';
-                const tableName = 'ads';
+                const columns = "*";
+                const tableName = "ads";
                 const {rows} = await adModel.getData(columns, tableName); 
                 return res
                 .status(200)
                 .json(new ResponseHandler(200, rows, null, "Here are all the cars!").result());
             }
 
-            return res.status(403).json({
-                status: 403,
-                error: 'Sorry! Only admin authorized.'
-            });
+            return res.status(404).json(new ResponseHandler(404, null, "Sorry! No results could match your search.").result());
 
         } catch (err) {
-            return res.status(500).json({
-                status: 500,
-                error: err.message
-            })
+            return res
+            .status(500)
+            .json(new ResponseHandler(500, err, null, err.message).result());
         }
 
     }
@@ -137,12 +121,12 @@ class Ad {
                 return res.status(404).json({
                     status: 404,
                     error: `Car sale ad number ${car_id} is not found!`
-                })
-            };
+                });
+            }
 
             return res
             .status(200) 
-            .json(new ResponseHandler(200, lodash.omit(rows[0], ['modified_on']) , null, 'Congs, here\'s your result!').result());
+            .json(new ResponseHandler(200, lodash.omit(rows[0], ["modified_on"]) , null, "Congs, here's your result!").result());
  
 
         } catch (err) {
@@ -167,7 +151,7 @@ class Ad {
                     status: 404,
                     error: `Car sale ad number ${car_id} is not found!`
                 });
-            };
+            }
 
             const {
                 rows
@@ -175,7 +159,7 @@ class Ad {
 
             return res 
             .status(200) 
-            .json(new ResponseHandler(200, rows[0], null,  'The Ad\'s  successfully updated!').result());
+            .json(new ResponseHandler(200, rows[0], null,  "The Ad's  successfully updated!").result());
            
         } catch (err) {
             return res.status(500).json({
@@ -203,7 +187,7 @@ class Ad {
                     status: 404,
                     error: `Car sale ad number ${car_id} is not found!`
                 });
-            };
+            }
             await adModel.removeAd(car_id);
 
             return res 
@@ -214,7 +198,7 @@ class Ad {
             return res.status(500).json({
                 status: 500,
                 error: err.message
-            })
+            });
         }
 
     }

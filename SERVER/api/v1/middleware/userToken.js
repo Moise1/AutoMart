@@ -1,21 +1,21 @@
-import jwt from 'jsonwebtoken';
-import keys from '../config/config';
+import jwt from "jsonwebtoken";
+import keys from "../config/config";
 
 
 const tokenExists = (req, res, next) => {
     if (req.headers.authorization === undefined) return res.status(400).json({
         status: 400,
-        error: 'Sorry, no token provided!'
+        error: "Sorry, no token provided!"
     });
     next();
 };
 
 const userAccess = (req, res, next) => {
 
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.authorization.split(" ")[1];
     if (!token) return res.status(401).json({
         status: 401,
-        message: 'Access Denied.'
+        message: "Access Denied."
     });
     
     try {
@@ -37,7 +37,7 @@ const adminAccess = (req, res, next) => {
     } else {
         return res.status(403).json({
             status: 403,
-            messsage: 'Sorry! Only admin authorized!'
+            messsage: "Sorry! Only admin authorized!"
         });
     }
 };

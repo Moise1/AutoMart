@@ -1,4 +1,4 @@
-import Joi from 'joi'; 
+import Joi from "joi"; 
 
 const orderFields = (order) => {
     const schema = {
@@ -12,14 +12,14 @@ const orderFields = (order) => {
 
     const options = {
         language: {
-            key: '{{key}} ',
+            key: "{{key}} ",
             string: {
                 regex: {
-                    base: 'must not have empty spaces'
+                    base: "must not have empty spaces"
                 }
             }
         }
-    }
+    };
 
     return Joi.validate(order, schema, options);
 };

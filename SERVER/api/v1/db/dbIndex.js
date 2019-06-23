@@ -1,4 +1,4 @@
-import pool from './dbConnect';
+import pool from "./dbConnect";
 
 export default {
     query(queryText, params) {

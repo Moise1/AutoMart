@@ -1,5 +1,5 @@
-import db from '../db/dbIndex';
-import hasher from '../helpers/password';
+import db from "../db/dbIndex";
+import hasher from "../helpers/password";
 
 
 class AppUser {
@@ -17,10 +17,10 @@ class AppUser {
             encrypted_password, 
             address: address,  
             is_admin: false,
-        }
+        };
 
 
-        const queryText = 'INSERT INTO users(first_name, last_name, email, password, address, is_admin) VALUES($1, $2, $3, $4, $5, $6) RETURNING*';
+        const queryText = "INSERT INTO users(first_name, last_name, email, password, address, is_admin) VALUES($1, $2, $3, $4, $5, $6) RETURNING*";
 
         const values = [
             new_user.first_name,
@@ -36,21 +36,21 @@ class AppUser {
 
 
     async allUsers(){
-        const queryText = 'SELECT * FROM users'; 
+        const queryText = "SELECT * FROM users"; 
         const queryResult = await db.query(queryText); 
         return queryResult; 
 
-    }; 
+    } 
 
     async findMail(email){
-        const queryText = 'SELECT * FROM users WHERE email=$1';
+        const queryText = "SELECT * FROM users WHERE email=$1";
         const mailResult = email.toLowerCase();
         const mailData = await db.query(queryText, [mailResult]);
         return mailData;
     }
 
     async findUser(id){
-        const queryText = 'SELECT * FROM users WHERE id=$1';
+        const queryText = "SELECT * FROM users WHERE id=$1";
         const queryResult = await db.query(queryText, [id]);
         return queryResult; 
     }
@@ -63,7 +63,7 @@ class AppUser {
         } = await this.findUser(id);
         const is_admin = input.is_admin;
 
-        const queryText = 'UPDATE users SET is_admin=$1 WHERE id=$2 RETURNING *';
+        const queryText = "UPDATE users SET is_admin=$1 WHERE id=$2 RETURNING *";
         const queryResult = await db.query(queryText, [is_admin, rows[0].id]);
         return queryResult;
     }

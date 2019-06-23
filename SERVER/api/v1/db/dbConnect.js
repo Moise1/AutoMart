@@ -1,6 +1,6 @@
-import pool from './index';
+import pool from "./index";
 
-pool.on('connect', () => {
+pool.on("connect", () => {
    
   });
         

@@ -1,4 +1,4 @@
-import Joi from 'joi'; 
+import Joi from "joi"; 
 
 const signUpFields = (user) => {
     
@@ -12,14 +12,14 @@ const signUpFields = (user) => {
 
     const options = {
         language: {
-            key: '{{key}} ',
+            key: "{{key}} ",
             string: {
                 regex: {
-                    base: 'must not have empty spaces'
+                    base: "must not have empty spaces"
                 }
             }
         }
-    }
+    };
 
     return Joi.validate(user, schema, options);
 };
@@ -34,16 +34,16 @@ const loginFields = (userFinder) => {
 
     const options = {
         language: {
-            key: '{{key}} ',
+            key: "{{key}} ",
             string: {
                 regex: {
-                    base: 'must not have empty spaces'
+                    base: "must not have empty spaces"
                 }
             }
         }
-    }
+    };
 
     return Joi.validate(userFinder, schema, options);
-}
+};
 
 export {signUpFields, loginFields};

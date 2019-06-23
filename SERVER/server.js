@@ -1,8 +1,8 @@
-import express from 'express';  
-import userRouter from './api/v1/routes/userRouter';
-import adRouter from './api/v1/routes/adRouter';
-import orderRouter from './api/v1/routes/orderRouter';
-import flagRouter from './api/v1/routes/flagRouter'; 
+import express from "express";  
+import userRouter from "./api/v1/routes/userRouter";
+import adRouter from "./api/v1/routes/adRouter";
+import orderRouter from "./api/v1/routes/orderRouter";
+import flagRouter from "./api/v1/routes/flagRouter"; 
 
 
 const app = express();
@@ -18,18 +18,18 @@ app.use(orderRouter);
 
 
 
-app.get('/', (req, res) =>{
+app.get("/", (req, res) =>{
     return res.status(200).json({
         status: 200,
-        message: 'Welcome to AutoMart!'
+        message: "Welcome to AutoMart!"
     });
 });
 
 
-app.use('*', (req, res) =>{
+app.use("*", (req, res) =>{
     return res.status(405).json({
         status: 405,
-        message: 'Method Not Allowed!'
+        message: "Method Not Allowed!"
     });
 });
 
