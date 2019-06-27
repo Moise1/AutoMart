@@ -2,9 +2,9 @@ import db from "../db/dbIndex";
 import hasher from "../helpers/password";
 
 
-class AppUser {
+class UserModel {
 
-    async create(req){
+    static async create(req){
 
         const  { first_name, last_name, email, address, password } = req;
 
@@ -35,29 +35,29 @@ class AppUser {
     }
 
 
-    async allUsers(){
+    static async allUsers(){
         const queryText = "SELECT * FROM users"; 
         const queryResult = await db.query(queryText); 
         return queryResult; 
 
     } 
 
-    async findMail(email){
+    static async findMail(email){
         const queryText = "SELECT * FROM users WHERE email=$1";
         const mailResult = email.toLowerCase();
         const mailData = await db.query(queryText, [mailResult]);
         return mailData;
     }
 
-    async findUser(id){
+    static async findUser(id){
         const queryText = "SELECT * FROM users WHERE id=$1";
-        const queryResult = await db.query(queryText, [id]);
+        const queryResult = await db.query(queryText, [parseInt(id)]);
         return queryResult; 
     }
 
     // Admin update user's admin status. 
 
-    async updateUser(id, input) {
+    static async updateUser(id, input) {
         const {
             rows
         } = await this.findUser(id);
@@ -71,4 +71,4 @@ class AppUser {
 }
 
 
-export default new AppUser;
+export default UserModel;

@@ -1,9 +1,9 @@
 import db from "../db/dbIndex"; 
 import moment from "moment"; 
 
-class CarSaleAd{
+class AdModel{
 
-    async makeAd(req, owner){
+    static async makeAd(req, owner){
 
         let theMoment = moment(); 
         const created_on = theMoment.format("YYYY-MM-DD"); 
@@ -42,23 +42,29 @@ class CarSaleAd{
 
     }
 
-    async getData(dataInQuery, tableName){
-        const queryText = `SELECT ${dataInQuery} FROM ${tableName}`; 
+    static async getData(){
+        const queryText = "SELECT * FROM ads"; 
         const queryResult = await db.query(queryText); 
         return queryResult;
     }
 
-    async specificAd(Idvalue){
-        const queryText = "SELECT * FROM ads WHERE car_id=$1"; 
-        const queryResult = await db.query(queryText, [parseInt(Idvalue)]);
+    static async specificAd( idValue){
+        const queryText = "SELECT * FROM ads  WHERE car_id=$1"; 
+        const queryResult = await db.query(queryText, [parseInt(idValue)]);
         return queryResult;
     } 
 
-    async theUpdater(Idvalue, input){
+    static async specificOwner(ownerId){
+        const queryText = "SELECT ads.owner FROM ads WHERE owner=$1"; 
+        const queryResult = await db.query(queryText, [parseInt(ownerId)]);
+        return queryResult;
+    } 
+
+    static async theUpdater(anyValue, input){
         const theMoment = moment(); 
         const {
             rows
-        } = await this.specificAd(Idvalue);
+        } = await this.specificAd(column, table, anyValue);
         const status = input.status;
         const price = input.price;
         const modified_on = theMoment.format("YYYY-MM-DD");
@@ -68,7 +74,7 @@ class CarSaleAd{
 
     }
 
-    async removeAd(Idvalue) {
+    static async removeAd(Idvalue) {
         const {
             rows
         } = await this.specificAd(Idvalue);
@@ -77,13 +83,13 @@ class CarSaleAd{
         return queryResult;
     }
   
-    async carPrice(price){
+    static async carPrice(price){
         const queryText = "SELECT * FROM ads WHERE price=$1"; 
         const queryResult = await db.query(queryText, [price]); 
         return queryResult;
     }
  
-    async theUpdater(id, input){
+    static async theUpdater(id, input){
         const theMoment = moment(); 
         const {
             rows
@@ -98,7 +104,7 @@ class CarSaleAd{
 
     }
 
-    async removeAd(id) {
+    static async removeAd(id) {
         const {
             rows
         } = await this.specificAd(id);
@@ -109,18 +115,18 @@ class CarSaleAd{
   
     //  Get a car's status
 
-    async availableCars(theAvailable){
+    static async availableCars(theAvailable){
         const queryText = "SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.id  WHERE status=$1"; 
         const queryResult = await db.query(queryText, [theAvailable]); 
         return queryResult; 
     } 
 
     
-    async priceRange(carStatus, minimum, maximum){
+    static async priceRange(carStatus, minimum, maximum){
         const queryText = "SELECT ads.car_id,  users.email AS owner, ads.manufacturer, ads.body_type,  ads.model, ads.state, ads.status, ads.price FROM ads INNER JOIN  users ON ads.owner=users.email  WHERE ads.status=$1 AND ads.price >=$2 AND ads.price <=$3"; 
         const queryResult = await db.query(queryText, [carStatus, minimum, maximum]); 
         return queryResult;
     }
 }
 
-export default new CarSaleAd;
+export default AdModel;

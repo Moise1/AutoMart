@@ -1,10 +1,10 @@
 import pool from "./index";
 
 pool.on("connect", () => {
-   
-  });
-        
- const tables =`
+
+});
+
+const tables = `
             CREATE TABLE IF NOT EXISTS users(
              id BIGSERIAL UNIQUE NOT NULL PRIMARY KEY, 
              first_name  VARCHAR(50) NOT NULL, 
@@ -34,15 +34,23 @@ pool.on("connect", () => {
                     new_price_offered FLOAT, 
                     status VARCHAR(50),
                     created_on DATE NOT NULL, 
-                    modified_on DATE);`;
+                    modified_on DATE);
 
-    pool.query(tables)
-            .then((res) => {
+                    CREATE TABLE IF NOT EXISTS flags(
+                        id BIGSERIAL  UNIQUE  NOT NULL, 
+                        car_id BIGINT REFERENCES ads(car_id) NOT NULL, 
+                        reason VARCHAR(50) NOT NULL, 
+                        description VARCHAR(50)NOT NULL,
+                        created_on DATE NOT NULL, 
+                        modified_on DATE);`;
 
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+pool.query(tables)
+    .then((res) => {
+
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 
-module.exports= pool;
+module.exports = pool;

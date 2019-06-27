@@ -5,7 +5,7 @@ pool.on("connect", () => {
   });
 
         const removeTables = 
-        "DROP TABLE IF EXISTS users, ads, orders CASCADE;";
+        "DROP TABLE IF EXISTS users, ads, orders, flags CASCADE;";
 
          pool.query(removeTables)
          .then((res) => {

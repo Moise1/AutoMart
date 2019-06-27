@@ -1,62 +1,55 @@
-// import frauds from '../models/flagModel'; 
-// import flagFields from '../helpers/flagValidator';
-// import ads from '../models/adModel';
-// import moment from 'moment'; 
+import FlagModel from "../models/flagModel";
+import flagFields from "../helpers/flagValidator";
+import AdModel from "../models/adModel";
+import ResponseHandler from "../helpers/theResponse";
 
 
-// const Flag = {
+class Flag {
 
-//     async createFlag(req, res){
-//         const {
-//             error
-//         } = flagFields(req.body);
+    static async createFlag(req, res) {
+        const {
+            error
+        } = flagFields(req.body);
 
-//         if (error) return res.status(400).json({
-//             status: 400,
-//             error: error.details[0].message
-//         });
+        if (error) return res
+            .status(400)
+            .json(new ResponseHandler(400, null, error.details[0].message).result());
 
-//         let m = moment(); 
-//             const created_on = m.format('hh:mm a , DD-MM-YYYY');
-//             const {reason, description} = req.body; 
-    
-//             const findAd = ads.find(ad => ad.car_id === parseInt(req.body.car_id)); 
+        const {
+            car_id
+        } = req.body;
 
-//         try{
+        const theCar = await AdModel.specificAd(parseInt(car_id)); 
 
-//             if(!findAd) return res.status(404).json({
-//                 status: 404, 
-//                 error: `Sorry, car number ${req.body.car_id} not found!`
-//             })
-    
-//             const newFraud = {
-//                 id: frauds.length + 1, 
-//                 car_id: findAd.car_id, 
-//                 reason: reason, 
-//                 description: description, 
-//                 created_on: created_on
-//             }
+        try {
 
-//             // Checking whether the car has been flagged before.
+            if (theCar.rows.length === 0) return res
+                    .status(404)
+                    .json(new ResponseHandler(404, null, `Sorry, car number ${req.body.car_id} not found!`).result());
             
-//             if(frauds.some(fraud => fraud.car_id === newFraud.car_id)) return res.status(409).json({
-//                 status: 409, 
-//                 error: `Sorry! This car number ${req.body.car_id} is already flagged!`
-//             });
 
-//             frauds.push(newFraud); 
-//             return res.status(201).json({
-//                 status: 201, 
-//                 message: 'Fraud Report Created!', 
-//                 data: frauds[frauds.length -1]
-//             })
+            const theFraud = await FlagModel.specificFraud(theCar.rows[0].car_id);
 
-//         }catch(error){
-//             return error.message
-//         }
-//     }
-// }
+            if (theFraud.rows.length !== 0) return res
+                    .status(409)
+                    .json(new ResponseHandler(409, null, `Sorry! This car number ${req.body.car_id} is already flagged!`).result());
+            
+
+            const {
+                rows
+            } = await FlagModel.createFlag(req.body);
 
 
+            return res.status(201).json(new ResponseHandler(201, rows[0], null, "Fraud Report Created!").result());
 
-// export default Flag;
+        } catch (error) {
+            return res
+                .status(500)
+                .json(new ResponseHandler(500, error.message, null));
+        }
+    }
+}
+
+
+
+export default Flag;

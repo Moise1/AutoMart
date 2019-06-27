@@ -1,7 +1,8 @@
-import orderModel from "../models/orderModel";
+import OrderModel from "../models/orderModel";
 import orderFields from "../helpers/orderValidator";
-import adModel from "../models/adModel";
-import userModel from "../models/userModel"; 
+import AdModel from "../models/adModel"; 
+import FlagModel from "../models/flagModel";
+import UserModel from "../models/userModel"; 
 import ResponseHandler from "../helpers/theResponse";
 import lodash from "lodash";
 
@@ -23,9 +24,9 @@ class Order{
     
             const owner_id = req.user.id;
             const {car_id} = req.body; 
-            const theCar = await adModel.specificAd(parseInt(car_id));
+            const theCar = await AdModel.specificAd(parseInt(car_id));
 
-            const owner_data = await userModel.findUser(owner_id);
+            const owner_data = await UserModel.findUser(owner_id);
 
             if (owner_data.rows.length === 0) {
                 return res.status(404).json({
@@ -40,9 +41,17 @@ class Order{
                     error:  `Car number ${car_id} not found!`
                 });
             }
+
+            const theFraud = await FlagModel.specificFraud(theCar.rows[0].car_id);
+
+            if (theFraud.rows.length !== 0) return res
+                    .status(404)
+                    .json(new ResponseHandler(404, null, `Sorry! this car number ${req.body.car_id} was reported to be a fraud !`).result());
+            
+
             const {
                 rows
-            } = await orderModel.makeOrder(req.body, owner_data.rows[0].id, theCar.rows[0].car_id);
+            } = await OrderModel.makeOrder(req.body, owner_data.rows[0].id, theCar.rows[0].car_id);
 
 
             return res
@@ -65,7 +74,7 @@ class Order{
         try {
             
             const {order_id} = req.params; 
-            const theOrder = await orderModel.findOrder(parseInt(order_id)); 
+            const theOrder = await OrderModel.findOrder(parseInt(order_id)); 
 
             if(theOrder.rows.length === 0){
                 return res.status(404).json({
@@ -75,7 +84,7 @@ class Order{
             }
             if (theOrder.rows[0].status === "pending") {
 
-                const {rows} = await orderModel.theUpdater(order_id, req.body); 
+                const {rows} = await OrderModel.theUpdater(order_id, req.body); 
                 return res
                 .status(200)
                 .json(new ResponseHandler(200, lodash.omit(rows[0], ["price_offered"]), null, "Order's  Price Successfully Updated!").result());

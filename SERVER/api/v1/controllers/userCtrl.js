@@ -1,4 +1,4 @@
-import userModel from "../models/userModel";
+import UserModel from "../models/userModel";
 import tokenMan from "../helpers/tokenMan";
 import {
     signUpFields,
@@ -25,7 +25,7 @@ class User{
 
             // Find if email is already taken! 
 
-            const oneMail = await userModel.findMail(req.body.email);
+            const oneMail = await UserModel.findMail(req.body.email);
             if (oneMail.rows.length !== 0) {
                 return res.status(409).json({
                     status: 409,
@@ -34,7 +34,7 @@ class User{
             }
             const {
                 rows
-            } = await userModel.create(req.body);
+            } = await UserModel.create(req.body);
 
             const token = tokenMan.tokenizer({
                 id: rows[0].id,
@@ -76,7 +76,7 @@ class User{
             // Check if email exists.
             const {
                 rows
-            } = await userModel.findMail(email);
+            } = await UserModel.findMail(email);
 
             if (rows.length == 0) {
                 return res.status(404).json({
@@ -115,6 +115,10 @@ class User{
             });
         }
     }
+
+    static async resetPassword(req,res){
+        
+    }
     // Update the user's admin status.
 
      static async updateUser(req, res){
@@ -126,7 +130,7 @@ class User{
     } = req.params;
 
 
-    const uniqueUser = await userModel.findUser(id);
+    const uniqueUser = await UserModel.findUser(id);
 
     if(uniqueUser.rows.length === 0) {
         return res.status(404).json({
@@ -137,7 +141,7 @@ class User{
 
     const {
         rows
-    } = await userModel.updateUser(id, req.body);
+    } = await UserModel.updateUser(id, req.body);
     return res.status(200).json({
         status: 200,
         message: `User number ${id} successfully updated!`,

@@ -1,5 +1,5 @@
-import adModel from "../models/adModel";
-import userModel from "../models/userModel";
+import AdModel from "../models/adModel";
+import UserModel from "../models/userModel";
 import adFields from "../helpers/adValidator";
 import ResponseHandler from "../helpers/theResponse"; 
 import lodash from "lodash";
@@ -23,13 +23,15 @@ class Ad {
 
             const owner_id = req.user.id;
 
-            const owner_data = await userModel.findUser(owner_id);
+            const owner_data = await UserModel.findUser(owner_id);
 
-            if (!owner_data.rows.length === 0) 
-            return res.status(404).json(new ResponseHandler(404, null, error, "User not found!").result());
+            if(!owner_data.rows.length === 0) return res
+            .status(404)
+            .json(new ResponseHandler(404, null, error, "User not found!").result());
+
             const {
                 rows
-            } = await adModel.makeAd(req.body, owner_data.rows[0].id);
+            } = await AdModel.makeAd(req.body, owner_data.rows[0].id);
 
             return res
             .status(201)
@@ -49,9 +51,8 @@ class Ad {
 
         try {
 
-            const columns = "ads.price"; 
-            const tableName = "ads";
-            const {rows} = await adModel.getData( columns, tableName);  
+    
+            const {rows} = await AdModel.getData();  
             const thePrice = rows;
 
             if (req.query.status === "available" && req.query.min_price >= thePrice && req.query.max_price <= thePrice) {  
@@ -60,7 +61,7 @@ class Ad {
               
                 const {status, min_price, max_price} = req.query;
 
-                const {inRange} = await adModel.priceRange(status, min_price, max_price);   
+                const {inRange} = await AdModel.priceRange(status, min_price, max_price);   
           
                 if (!theAVailable[0]) {
                     return res.status(404).json(new ResponseHandler(404,  null, error, "No cars in that price range!"));
@@ -72,7 +73,7 @@ class Ad {
 
                 // cars with just "available" status.
                 const {status} = req.query;
-               const {rows}= await adModel.availableCars(status); 
+               const {rows}= await AdModel.availableCars(status); 
                const justAvailable = rows;
 
 
@@ -93,7 +94,7 @@ class Ad {
 
                 const columns = "*";
                 const tableName = "ads";
-                const {rows} = await adModel.getData(columns, tableName); 
+                const {rows} = await AdModel.getData(columns, tableName); 
                 return res
                 .status(200)
                 .json(new ResponseHandler(200, rows, null, "Here are all the cars!").result());
@@ -116,7 +117,7 @@ class Ad {
 
         try {
             const {car_id} = req.params; 
-            const {rows} = await adModel.specificAd(parseInt(car_id)); 
+            const {rows} = await AdModel.specificAd(parseInt(car_id)); 
             if (rows.length === 0) {
                 return res.status(404).json({
                     status: 404,
@@ -142,20 +143,28 @@ class Ad {
     static async updateCarAd(req, res) {
 
         const {car_id} = req.params; 
-
+        
         try {
-
-            const theCar = await adModel.specificAd(parseInt(car_id));
-            if (theCar.rows.length === 0) {
-                return res.status(404).json({
-                    status: 404,
-                    error: `Car sale ad number ${car_id} is not found!`
-                });
+            
+            const owner_id = req.user.id;
+            const user_data = await UserModel.findUser(owner_id);
+            const theCar = await AdModel.specificAd(car_id);  
+            const theOwner = await AdModel.specificOwner(user_data.rows[0].id);
+            
+            if(theCar.rows.length === 0){
+                return res
+                .status(404)
+                .json(new ResponseHandler(404, null,  `Car sale ad number ${car_id} is not found!`).result());
             }
+
+
+            if(theOwner.rows.length === 0) return res 
+            .status(401) 
+            .json(new ResponseHandler(401, null, "Sorry! You can only edit the ads you posted.").result());
 
             const {
                 rows
-            } = await adModel.theUpdater(car_id, req.body);
+            } = await AdModel.theUpdater(car_id, req.body);
 
             return res 
             .status(200) 
@@ -180,7 +189,7 @@ class Ad {
             
             const {
                 rows
-            } = await adModel.specificAd(parseInt(car_id));
+            } = await AdModel.specificAd(parseInt(car_id));
 
             if (rows.length === 0) {
                 return res.status(404).json({
@@ -188,7 +197,7 @@ class Ad {
                     error: `Car sale ad number ${car_id} is not found!`
                 });
             }
-            await adModel.removeAd(car_id);
+            await AdModel.removeAd(car_id);
 
             return res 
             .status(200)

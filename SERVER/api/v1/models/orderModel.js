@@ -1,9 +1,9 @@
 import db from "../db/dbIndex"; 
 import moment from "moment"; 
 
-class PurchaseOrder{
+class OrderModel{
 
-    async makeOrder(req, buyer){
+    static async makeOrder(req, buyer){
 
         let theMoment = moment(); 
         const created_on = theMoment.format("YYYY-MM-DD"); 
@@ -33,14 +33,14 @@ class PurchaseOrder{
 
     }
 
-    async findOrder(id){
+    static async findOrder(id){
         const queryText = "SELECT * FROM orders WHERE order_id=$1";
         const queryResult = await db.query(queryText, [parseInt(id)]);
         return queryResult;
 
     }
 
-    async theUpdater(id, input){
+    static async theUpdater(id, input){
         const theMoment = moment();
         const {
             rows
@@ -56,4 +56,4 @@ class PurchaseOrder{
    
 }
 
-export default new PurchaseOrder;
+export default OrderModel;
