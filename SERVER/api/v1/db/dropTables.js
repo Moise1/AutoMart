@@ -1,7 +1,7 @@
 import pool from "./index";
 
 pool.on("connect", () => {
-    // console.log('Now Our Auto-Mart app is connected to the Database successfully!')
+    // console.log('Tables dropped!')
   });
 
         const removeTables = 

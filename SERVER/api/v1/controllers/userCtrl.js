@@ -8,10 +8,12 @@ import decryptor from "../helpers/password";
 import lodash from "lodash";
 
 
-class User{
+
+
+class User {
 
     // User Sign Up
-     static async userSignUp (req, res){
+    static async userSignUp(req, res) {
         const {
             error
         } = signUpFields(req.body);
@@ -116,40 +118,37 @@ class User{
         }
     }
 
-    static async resetPassword(req,res){
-        
-    }
+
     // Update the user's admin status.
+    static async updateUser(req, res) {
 
-     static async updateUser(req, res){
+        try {
 
-        try{
-               
-    const {
-        id
-    } = req.params;
+            const {
+                id
+            } = req.params;
 
 
-    const uniqueUser = await UserModel.findUser(id);
+            const uniqueUser = await UserModel.findUser(id);
 
-    if(uniqueUser.rows.length === 0) {
-        return res.status(404).json({
-            status: 404,
-            error: `User ${id} not found!`
-        });
-    }
+            if (uniqueUser.rows.length === 0) {
+                return res.status(404).json({
+                    status: 404,
+                    error: `User ${id} not found!`
+                });
+            }
 
-    const {
-        rows
-    } = await UserModel.updateUser(id, req.body);
-    return res.status(200).json({
-        status: 200,
-        message: `User number ${id} successfully updated!`,
-        data: lodash.omit(rows[0], ["password"])
-    });
-        }catch(err){
+            const {
+                rows
+            } = await UserModel.updateUser(id, req.body);
+            return res.status(200).json({
+                status: 200,
+                message: `User number ${id} successfully updated!`,
+                data: lodash.omit(rows[0], ["password"])
+            });
+        } catch (err) {
             return res.status(500).json({
-                status: 500, 
+                status: 500,
                 error: err.message
             });
         }

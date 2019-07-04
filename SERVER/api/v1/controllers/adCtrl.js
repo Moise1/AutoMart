@@ -110,9 +110,8 @@ class Ad {
 
     }
 
+    
     // Seller get a single car/car ad. 
-
-
     static async getOneAd(req, res) {
 
         try {

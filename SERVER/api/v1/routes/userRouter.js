@@ -16,5 +16,4 @@ userRouter.post("/api/v1/auth/signin", User.userSignIn);
 userRouter.patch("/api/v1/users/:id", tokenExists, userAccess, adminAccess, User.updateUser);
 
 
-
 export default userRouter;

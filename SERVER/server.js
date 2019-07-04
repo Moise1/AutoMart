@@ -4,11 +4,12 @@ import adRouter from "./api/v1/routes/adRouter";
 import orderRouter from "./api/v1/routes/orderRouter";
 import flagRouter from "./api/v1/routes/flagRouter"; 
 
-
-const app = express();
+const app = express(); 
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(express.static(__dirname));
+
 app.use(userRouter);
 app.use(adRouter);
 app.use(orderRouter);
