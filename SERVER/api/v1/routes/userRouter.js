@@ -13,7 +13,7 @@ userRouter.use(json());
 
 userRouter.post("/api/v1/auth/signup", User.userSignUp);
 userRouter.post("/api/v1/auth/signin", User.userSignIn);
-userRouter.patch("/api/v1/users/:id", tokenExists, userAccess, adminAccess, User.updateUser);
+userRouter.patch("/api/v1/users/:user_id", tokenExists, userAccess, adminAccess, User.updateUser);
 
 
 export default userRouter;

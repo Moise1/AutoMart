@@ -90,7 +90,7 @@ class User {
             const matcher = await decryptor.isSame(password, rows[0].password);
 
             if (!matcher) return res.status(401).json({
-                status: 401,
+                status: 401,    
                 error: "Invalid Password!"
             });
 
